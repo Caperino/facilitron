@@ -31,7 +31,10 @@ class JwtAuthenticationFilter(
     ) {
         // TODO --> exclude public pages from this filter
         // skip if public path
-        if (request.requestURI.startsWith("/auth/") || request.requestURI == "/" || request.requestURI == "/public"){
+        if (request.requestURI.startsWith(DefaultURL.AUTHENTICATION_PREFIX) ||
+            request.requestURI == DefaultURL.PUBLIC_LANDING_URL ||
+            request.requestURI == DefaultURL.PUBLIC_TEMP_TESTING
+            ){
             filterChain.doFilter(request, response)
             return
         }
@@ -55,7 +58,6 @@ class JwtAuthenticationFilter(
         if (!fromCookie && !authHeader.startsWith("Bearer ")){
             println("invalid token format")
 
-            // TODO pass error information for proper response
             response.sendRedirect(DefaultURL.LOGIN_PAGE_URL)
             return
         }
@@ -70,7 +72,6 @@ class JwtAuthenticationFilter(
 
         try {
             userMail = jwtService.extractUsermail(jwt)
-            println("UserMail: $userMail")
         }
         catch (e: Exception){
             println("token examination failed")

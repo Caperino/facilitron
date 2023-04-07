@@ -2,21 +2,13 @@ package at.fhj.ima.facilitron.controller
 
 import at.fhj.ima.facilitron.model.*
 import at.fhj.ima.facilitron.security.*
-import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import lombok.RequiredArgsConstructor
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.ResponseEntity
-import org.springframework.security.web.savedrequest.RequestCache
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
-import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
 
 @Controller
 class AuthenticationController(
@@ -49,7 +41,7 @@ class AuthenticationController(
 
         // add authentication cookie
         resp.addCookie(authCookie)
-        resp.sendRedirect(DefaultURL.AUTHENTICATED_LANDING_URL)
+        resp.sendRedirect(DefaultURL.POST_LOGIN_URL)
 
         // ----- Logging -----
         println("successful authentication, redirect set")
@@ -60,7 +52,6 @@ class AuthenticationController(
 
     @PostMapping(DefaultURL.REGISTER_PAGE_URL)
     fun registerHandler(
-        //@RequestBody request: UnsafeRegisterRequest,
         req: HttpServletRequest,
         resp: HttpServletResponse,
         model:Model,
@@ -110,7 +101,7 @@ class AuthenticationController(
         return DefaultView.REDIRECTOR
     }
 
-    @PostMapping("/auth/logout")
+    @PostMapping(DefaultURL.LOGOUT_PAGE_URL)
     fun logout(
         req:HttpServletRequest,
         resp:HttpServletResponse
