@@ -5,6 +5,7 @@ import at.fhj.ima.facilitron.security.*
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.PostMapping
@@ -117,6 +118,22 @@ class AuthenticationController(
         // ----- /Logging -----
 
         return DefaultView.REDIRECTOR
+    }
+
+    /**
+     * NOT PRODUCTION READY blueprint for future role assignments
+     * @param mail used to identify the employee
+     * @param role which role should be assigned
+     * @author TK Inc.
+     */
+    @PostMapping("/auth/addrole")
+    fun addRole(
+        @RequestParam mail:String,
+        @RequestParam role:String
+    ):ResponseEntity<String>{
+        // TODO exception handling
+        service.updateRoleAssignments(mail = mail, role = role)
+        return ResponseEntity.ok("worked!")
     }
 
 }

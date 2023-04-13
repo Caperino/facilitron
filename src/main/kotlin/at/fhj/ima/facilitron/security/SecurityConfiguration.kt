@@ -28,7 +28,7 @@ class SecurityConfiguration(
             .authorizeHttpRequests()
             .requestMatchers("/auth/**").permitAll()
             .requestMatchers("/", "/public").permitAll()
-            //.requestMatchers("/content/hello-admin").hasAuthority("EMPLOYEE")
+            .requestMatchers("/hidden-admin").hasAuthority("ADMIN")
             .anyRequest().authenticated()
             .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

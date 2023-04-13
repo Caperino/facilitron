@@ -23,6 +23,11 @@ class PublicController{
         return "hidden"
     }
 
+    @GetMapping("/hidden-admin")
+    fun hiddenAdminPage(model: Model):String{
+        return "hiddenadmin"
+    }
+
     @GetMapping(DefaultURL.PUBLIC_TEMP_TESTING)
     fun newPublicPage(model: Model):String{
         return "public"

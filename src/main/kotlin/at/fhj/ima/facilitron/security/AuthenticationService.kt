@@ -2,6 +2,7 @@ package at.fhj.ima.facilitron.security
 
 import at.fhj.ima.facilitron.model.*
 import at.fhj.ima.facilitron.repository.EmployeeRepository
+import at.fhj.ima.facilitron.repository.SecurityRoleRepository
 import lombok.RequiredArgsConstructor
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.AuthenticationManager
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service
  */
 class AuthenticationService(
     @Autowired val employeeRepository: EmployeeRepository,
+    @Autowired val securityRoleRepository: SecurityRoleRepository,
     @Autowired val passwordEncoder: PasswordEncoder,
     @Autowired val jwtService: JwtService,
     @Autowired val authenticationManager: AuthenticationManager
@@ -72,5 +74,28 @@ class AuthenticationService(
         val jwtToken = jwtService.generateToken(em)
 
         return AuthenticationResponse(token = jwtToken)
+    }
+
+    /**
+     * blueprint for future role assignments
+     * @param mail identifies the employee
+     * @author TK Inc.
+     */
+    fun updateRoleAssignments(mail:String, role:String){
+        val em:Employee
+        try {
+            em = employeeRepository.findEmployeeByMail(mail = mail)
+        } catch (e:Exception){
+            println("exception when trying to find user - ${e.cause}")
+            return
+        }
+
+        // TODO exception handling
+        val newRole = securityRoleRepository.findByName(role)
+
+        em.addAuthority(newRole)
+
+        employeeRepository.save(em)
+        return
     }
 }

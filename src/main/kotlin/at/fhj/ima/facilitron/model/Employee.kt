@@ -1,10 +1,7 @@
 package at.fhj.ima.facilitron.model
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.Index
+import jakarta.persistence.*
+import org.hibernate.engine.internal.Cascade
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
@@ -30,13 +27,24 @@ class Employee(
     private val password:String,
     private val phone:String? = null,
     private val accountStatus:AccountStatus = AccountStatus.ACTIVE,
-    private val roles:MutableList<Role> = mutableListOf(Role.EMPLOYEE),
+    //private val roles:MutableList<Role> = mutableListOf(Role.EMPLOYEE),
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "employee_roles",
+        joinColumns = [JoinColumn(name = "employee_id", referencedColumnName = "id")],
+        inverseJoinColumns = [JoinColumn(name = "role_id", referencedColumnName = "id")]
+    )
+    val roles:MutableSet<SecurityRole> = mutableSetOf()
 ) : UserDetails {
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         return roles.map { SimpleGrantedAuthority(it.name) } as MutableList<out GrantedAuthority>
     }
 
-    fun addAuthority(role:Role){
+    /*fun addAuthority(role:Role){
+        roles.add(role)
+    }*/
+
+    fun addAuthority(role:SecurityRole){
         roles.add(role)
     }
 
