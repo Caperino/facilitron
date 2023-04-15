@@ -11,12 +11,17 @@ class FacilitronApplication{
 
 	@Bean
 	fun init(securityRoleService: SecurityRoleService) = CommandLineRunner{
-		// TODO initialise all available roles (DEV ONLY)
+
+		// ----- ROLES -----
 		securityRoleService.saveRole("EMPLOYEE")
 		securityRoleService.saveRole("HR")
 		securityRoleService.saveRole("SUPPORT")
 		securityRoleService.saveRole("SECTIONMANAGER")
 		securityRoleService.saveRole("ADMIN")
+		// TODO initialise all available roles (DEV ONLY)
+
+		// ----- EMPLOYEES -----
+
 	}
 
 }

@@ -21,8 +21,8 @@ import org.springframework.security.core.userdetails.UserDetails
 class Employee(
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     val id:Int? = null,
-    private val firstName:String,
-    private val secondName:String,
+    val firstName:String,
+    val secondName:String,
     private val mail:String,
     private val password:String,
     private val phone:String? = null,
@@ -70,6 +70,17 @@ class Employee(
 
     override fun isEnabled(): Boolean {
         return accountStatus == AccountStatus.ACTIVE
+    }
+
+    /**
+     * extracts basic information about employee saved in JWT
+     */
+    operator fun get(parameter: String): String {
+        return when (parameter){
+            "firstName" -> firstName
+            "secondName" -> firstName
+            else -> ""
+        }
     }
 
 }

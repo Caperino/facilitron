@@ -34,7 +34,7 @@ class AuthenticationService(
         if (employeeRepository.findByMail(request.mail) != null) return RegisterResponse(exception = SecurityException.EMPLOYEEALREADYEXISTS)
 
         // building new employee
-        val em = Employee(null, firstName = request.firstname, secondName = request.secondname, mail = request.mail,
+        val em = Employee(id = null, firstName = request.firstname, secondName = request.secondname, mail = request.mail,
             password = passwordEncoder.encode(request.password), phone = request.phone)
         employeeRepository.save(em)
 
@@ -71,7 +71,15 @@ class AuthenticationService(
         }
 
         // TODO save extra claims
-        val jwtToken = jwtService.generateToken(em)
+        //val jwtToken = jwtService.generateToken(em)
+
+        val claimMap = mutableMapOf<String, String>()
+        DefaultClaim.claimSet.forEach { claimMap[it] = em[it] }
+
+        val jwtToken = jwtService.generateToken(
+            subject = em.username,
+            extraClaims = claimMap
+        )
 
         return AuthenticationResponse(token = jwtToken)
     }

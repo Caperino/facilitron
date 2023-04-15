@@ -31,6 +31,25 @@ class JwtService {
         return extractClaim(token, Claims::getSubject)
     }
 
+    /**
+     * gets extra employee information for personalised display
+     * @author TK Inc.
+     * @param token the JWT to examine
+     */
+    fun extractPersonalDetails(token:String) : Map<String, String>{
+        val claims =  extractAllClaims(token = token)
+
+        return try {val returnMap:MutableMap<String, String> = mutableMapOf()
+            DefaultClaim.claimSet.forEach { returnMap[it] = claims[it] as String }
+            returnMap.forEach { (t, u) -> println("$t, $u") }
+
+            returnMap
+        } catch(e:Exception){
+            println("claim extraction failed - ${e.cause}")
+            mapOf()
+        }
+    }
+
     // gets expiration date of token
     private fun extractExpiration(token: String): Date {
         return extractClaim(token, Claims::getExpiration)
@@ -54,13 +73,13 @@ class JwtService {
     // ------------------------------------------------------------------------------------------
 
     fun generateToken (
-        userDetails : UserDetails,
+        subject : String,
         extraClaims : Map<String, Any> = mapOf()
     ):String{
         return Jwts
             .builder()
             .setClaims(extraClaims)
-            .setSubject(userDetails.username)
+            .setSubject(subject)
             .setIssuedAt(Date(System.currentTimeMillis()))
             .setExpiration(Date(System.currentTimeMillis() + 1000*60*5)) // 5 minutes legitimacy
             .signWith(getSigningKey(), SignatureAlgorithm.HS256)

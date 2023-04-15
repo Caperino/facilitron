@@ -68,10 +68,14 @@ class JwtAuthenticationFilter(
         } else {
             authHeader
         }
+
+        // employee information container
         val userMail:String
+        val userInfo : Map<String, String>
 
         try {
             userMail = jwtService.extractUsermail(jwt)
+            userInfo = jwtService.extractPersonalDetails(jwt)
         }
         catch (e: Exception){
             println("token examination failed")
@@ -97,6 +101,9 @@ class JwtAuthenticationFilter(
                 SecurityContextHolder.getContext().authentication = authToken
             }
         }
+
+        // providing information for visual output
+        DefaultClaim.claimSet.forEach { request.setAttribute(it, userInfo[it]) }
 
         filterChain.doFilter(request, response)
     }

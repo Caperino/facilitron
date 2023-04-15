@@ -18,12 +18,12 @@ class AuthenticationController(
 ){
 
     @PostMapping(DefaultURL.LOGIN_PAGE_URL)
-    fun newLogin(
-        model: Model,
-        req:HttpServletRequest,
-        resp:HttpServletResponse,
-        @RequestParam mail:String,
-        @RequestParam password:String
+    fun loginHandler(
+        model : Model,
+        req : HttpServletRequest,
+        resp : HttpServletResponse,
+        @RequestParam mail : String,
+        @RequestParam password : String
     ):String{
         val authResponse = service.authenticate(AuthenticationRequest(mail, password))
 
@@ -34,9 +34,14 @@ class AuthenticationController(
             println("ERROR AUTHENTICATION - redirecting to login page")
             // ----- /Logging -----
 
+            // TODO use response message in page (SEE BELOW)
+            // authResponse.exception.message
+
             resp.status = 401
             return DefaultView.LOGIN_VIEW
         }
+
+        req.remoteAddr
 
         val authCookie = internalCookieService.generateAuthCookie(authResponse.token)
 
@@ -103,7 +108,7 @@ class AuthenticationController(
     }
 
     @PostMapping(DefaultURL.LOGOUT_PAGE_URL)
-    fun logout(
+    fun logoutHandler(
         req:HttpServletRequest,
         resp:HttpServletResponse
     ):String{
