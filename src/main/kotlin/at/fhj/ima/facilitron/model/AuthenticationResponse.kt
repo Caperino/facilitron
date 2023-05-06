@@ -2,6 +2,6 @@ package at.fhj.ima.facilitron.model
 
 class AuthenticationResponse(
     val token:String,
-    val exception:SecurityException? = null
+    val exception:SecurityWarning? = null
 ){
 }

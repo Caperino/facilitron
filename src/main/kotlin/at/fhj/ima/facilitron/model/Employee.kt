@@ -27,7 +27,6 @@ class Employee(
     private val password:String,
     private val phone:String? = null,
     private val accountStatus:AccountStatus = AccountStatus.ACTIVE,
-    //private val roles:MutableList<Role> = mutableListOf(Role.EMPLOYEE),
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "employee_roles",
@@ -39,10 +38,6 @@ class Employee(
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         return roles.map { SimpleGrantedAuthority(it.name) } as MutableList<out GrantedAuthority>
     }
-
-    /*fun addAuthority(role:Role){
-        roles.add(role)
-    }*/
 
     fun addAuthority(role:SecurityRole){
         roles.add(role)
@@ -78,7 +73,9 @@ class Employee(
     operator fun get(parameter: String): String {
         return when (parameter){
             "firstName" -> firstName
-            "secondName" -> firstName
+            "secondName" -> secondName
+            "mail" -> username
+            "roles" -> (roles.fold("") { acc, securityRole -> acc + securityRole.name + ";" }).removeSuffix(";")
             else -> ""
         }
     }

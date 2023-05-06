@@ -41,7 +41,7 @@ class JwtService {
 
         return try {val returnMap:MutableMap<String, String> = mutableMapOf()
             DefaultClaim.claimSet.forEach { returnMap[it] = claims[it] as String }
-            returnMap.forEach { (t, u) -> println("$t, $u") }
+            returnMap.forEach { (t, u) -> println("$t --> $u") }
 
             returnMap
         } catch(e:Exception){
@@ -86,15 +86,19 @@ class JwtService {
             .compact()
     }
 
+    @Deprecated("userDetails will not be support further", level = DeprecationLevel.WARNING)
     fun isTokenValid(token:String, userDetails: UserDetails):Boolean{
         val tokenUsermail = extractUsermail(token)
         return (tokenUsermail == userDetails.username && !isTokenExpired(token))
+    }
+
+    fun isTokenValid(token:String):Boolean{
+        return !isTokenExpired(token = token)
     }
 
     // checks if token is expired
     private fun isTokenExpired(token: String): Boolean {
         return extractExpiration(token).before(Date(System.currentTimeMillis()))
     }
-
 
 }

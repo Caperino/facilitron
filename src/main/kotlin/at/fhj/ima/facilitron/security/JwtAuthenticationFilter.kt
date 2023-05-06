@@ -1,5 +1,6 @@
 package at.fhj.ima.facilitron.security
 
+import at.fhj.ima.facilitron.model.JwtUserDetails
 import jakarta.servlet.FilterChain
 import jakarta.servlet.ServletException
 import jakarta.servlet.http.Cookie
@@ -8,6 +9,8 @@ import jakarta.servlet.http.HttpServletResponse
 import lombok.RequiredArgsConstructor
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
@@ -19,8 +22,9 @@ import kotlin.text.Typography.section
 @Component
 @RequiredArgsConstructor
 class JwtAuthenticationFilter(
-    @Autowired val jwtService:JwtService,
-    @Autowired val userDetailsService: UserDetailsService
+    val jwtService:JwtService,
+    val userDetailsService: UserDetailsService,
+    val internalCookieService: InternalCookieService
 ) : OncePerRequestFilter() {
 
     @Throws(ServletException::class, IOException::class)
@@ -58,6 +62,7 @@ class JwtAuthenticationFilter(
         if (!fromCookie && !authHeader.startsWith("Bearer ")){
             println("invalid token format")
 
+            response.addCookie(internalCookieService.deleteAuthCookie())
             response.sendRedirect(DefaultURL.LOGIN_PAGE_URL)
             return
         }
@@ -70,40 +75,43 @@ class JwtAuthenticationFilter(
         }
 
         // employee information container
-        val userMail:String
-        val userInfo : Map<String, String>
+        val userInformation : JwtUserDetails
 
-        try {
-            userMail = jwtService.extractUsermail(jwt)
-            userInfo = jwtService.extractPersonalDetails(jwt)
-        }
-        catch (e: Exception){
-            println("token examination failed")
-            println(e.message)
+        if (SecurityContextHolder.getContext().authentication == null){
+            if (jwtService.isTokenValid(token = jwt)){
+                //val userInformation:JwtUserDetails
+                try {
+                    val information = jwtService.extractPersonalDetails(jwt)
+                    println(information["roles"])
+                    val authorities = information["roles"]?.split(";")!!
+                    userInformation = JwtUserDetails(information["mail"]!!, information["firstName"]!!, information["secondName"]!!, if (authorities.contains("")) listOf() else authorities)
+                }catch(e:Exception){
+                    println("----- - EXCEPTION FILTER - -----")
+                    println("invalid token")
+                    println("----- EXCEPTION FILTER END -----")
+                    response.sendRedirect(DefaultURL.LOGIN_PAGE_URL)
+                    return
+                }
 
-            response.sendRedirect(DefaultURL.LOGIN_PAGE_URL)
+                val authToken = UsernamePasswordAuthenticationToken(
+                    userInformation,
+                    null,
+                    userInformation.authorities
+                )
+                authToken.details = WebAuthenticationDetailsSource().buildDetails(request)
+                SecurityContextHolder.getContext().authentication = authToken
+            } else {
+                println("token expired")
+                response.sendRedirect(DefaultURL.LOGIN_PAGE_URL)
+                return
+            }
+        } else {
+            filterChain.doFilter(request, response)
             return
         }
 
-        if (SecurityContextHolder.getContext().authentication == null){
-            val userDetails = userDetailsService.loadUserByUsername(userMail)
-            if (jwtService.isTokenValid(jwt, userDetails)){
-                val authToken = UsernamePasswordAuthenticationToken(
-                    userDetails,
-                    null,
-                    userDetails.authorities
-                )
-
-                println(userDetails.authorities)
-
-                authToken.details = WebAuthenticationDetailsSource().buildDetails(request)
-
-                SecurityContextHolder.getContext().authentication = authToken
-            }
-        }
-
         // providing information for visual output
-        DefaultClaim.claimSet.forEach { request.setAttribute(it, userInfo[it]) }
+        DefaultClaim.claimSet.forEach { request.setAttribute(it, userInformation[it]) }
 
         filterChain.doFilter(request, response)
     }

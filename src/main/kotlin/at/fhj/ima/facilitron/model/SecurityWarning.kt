@@ -1,6 +1,6 @@
 package at.fhj.ima.facilitron.model
 
-enum class SecurityException(
+enum class SecurityWarning(
     val message:String
 ) {
     // Authentication Process

@@ -41,8 +41,6 @@ class AuthenticationController(
             return DefaultView.LOGIN_VIEW
         }
 
-        req.remoteAddr
-
         val authCookie = internalCookieService.generateAuthCookie(authResponse.token)
 
         // add authentication cookie
@@ -70,7 +68,7 @@ class AuthenticationController(
         val unsafeRegisterRequest = UnsafeRegisterRequest(firstname, secondname, mail, password, phone)
 
         if (!unsafeRegisterRequest.evaluateState()){
-            model.addAttribute("error", RegisterResponse(exception = SecurityException.MISSINGVALUES))
+            model.addAttribute("error", RegisterResponse(exception = SecurityWarning.MISSINGVALUES))
             model.addAttribute("registerData", unsafeRegisterRequest)
 
             // ----- Logging -----

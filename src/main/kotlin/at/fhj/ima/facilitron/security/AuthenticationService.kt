@@ -31,7 +31,7 @@ class AuthenticationService(
      */
     fun register(request: RegisterRequest): RegisterResponse {
 
-        if (employeeRepository.findByMail(request.mail) != null) return RegisterResponse(exception = SecurityException.EMPLOYEEALREADYEXISTS)
+        if (employeeRepository.findByMail(request.mail) != null) return RegisterResponse(exception = SecurityWarning.EMPLOYEEALREADYEXISTS)
 
         // building new employee
         val em = Employee(id = null, firstName = request.firstname, secondName = request.secondname, mail = request.mail,
@@ -58,7 +58,7 @@ class AuthenticationService(
             println("Exception in authenticate:\n${e}")
             // ----- /Logging -----
 
-            return AuthenticationResponse(token = "", SecurityException.FAILEDAUTHENTICATION)
+            return AuthenticationResponse(token = "", SecurityWarning.FAILEDAUTHENTICATION)
         }
 
         // safe employee retrieval
@@ -67,7 +67,7 @@ class AuthenticationService(
             em = employeeRepository.findEmployeeByMail(request.mail)
         }
         catch (e:Exception){
-            return AuthenticationResponse(token = "", SecurityException.FAILEDDATARETRIEVAL)
+            return AuthenticationResponse(token = "", SecurityWarning.FAILEDDATARETRIEVAL)
         }
 
         // TODO save extra claims
@@ -76,6 +76,7 @@ class AuthenticationService(
         val claimMap = mutableMapOf<String, String>()
         DefaultClaim.claimSet.forEach { claimMap[it] = em[it] }
 
+        println(claimMap.toString())
         val jwtToken = jwtService.generateToken(
             subject = em.username,
             extraClaims = claimMap
