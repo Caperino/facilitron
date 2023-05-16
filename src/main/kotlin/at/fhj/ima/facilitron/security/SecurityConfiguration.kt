@@ -2,6 +2,7 @@ package at.fhj.ima.facilitron.security
 
 import lombok.RequiredArgsConstructor
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationProvider
@@ -26,9 +27,11 @@ class SecurityConfiguration(
         http
             .csrf().disable()
             .authorizeHttpRequests()
+            .requestMatchers("/public/**").permitAll()
             .requestMatchers("/auth/**").permitAll()
+            // when changing --> ALSO IN DefaultURL !!!
             .requestMatchers("/", "/public").permitAll()
-            .requestMatchers("/hidden-admin").hasAuthority("ADMIN")
+            .requestMatchers("/hidden-admin").hasAuthority("ADMIN") // example for authority
             .anyRequest().authenticated()
             .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

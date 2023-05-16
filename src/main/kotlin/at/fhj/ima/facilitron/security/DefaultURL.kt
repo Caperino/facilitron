@@ -16,4 +16,5 @@ object DefaultURL {
 
     // URL Filter Exceptions
     const val AUTHENTICATION_PREFIX = "/auth/"
+    const val STATIC_PREFIX = "/public"
 }
