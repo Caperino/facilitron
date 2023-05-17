@@ -37,7 +37,8 @@ class JwtAuthenticationFilter(
         // skip if public path
         if (request.requestURI.startsWith(DefaultURL.AUTHENTICATION_PREFIX) ||
             request.requestURI == DefaultURL.PUBLIC_LANDING_URL ||
-            request.requestURI == DefaultURL.PUBLIC_TEMP_TESTING
+            request.requestURI == DefaultURL.PUBLIC_TEMP_TESTING ||
+            request.requestURI.startsWith(DefaultURL.STATIC_PREFIX)
             ){
             filterChain.doFilter(request, response)
             return
