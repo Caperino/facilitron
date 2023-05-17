@@ -14,6 +14,10 @@
   <label for="password">PW</label>
   <input type="text" id="password" name="password">
   <input id="submitter" type="submit" value="Submit">
+  <div>
+    <p th:text="${testCode}"></p>
+    <img th:src="${'data:image/jpeg;charset=utf-8;base64,' + qr}" alt="">
+  </div>
 </form>
 </body>
 </html>

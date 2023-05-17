@@ -17,6 +17,12 @@
 		<java.version>17</java.version>
 		<kotlin.version>1.7.22</kotlin.version>
 	</properties>
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -69,7 +75,6 @@
 			<artifactId>jjwt-jackson</artifactId>
 			<version>0.11.5</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -95,6 +100,16 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.github.robinohs</groupId>
+			<artifactId>totp-kt</artifactId>
+			<version>v2.0.1-alpha</version>
+		</dependency>
+		<dependency>
+			<groupId>io.github.g0dkar</groupId>
+			<artifactId>qrcode-kotlin-jvm</artifactId>
+			<version>3.3.0</version>
 		</dependency>
 	</dependencies>
 
