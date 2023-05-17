@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
+import jdk.jfr.Timespan
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Service
 import java.security.Key
@@ -39,7 +40,8 @@ class JwtService {
     fun extractPersonalDetails(token:String) : Map<String, String>{
         val claims =  extractAllClaims(token = token)
 
-        return try {val returnMap:MutableMap<String, String> = mutableMapOf()
+        return try {
+            val returnMap:MutableMap<String, String> = mutableMapOf()
             DefaultClaim.claimSet.forEach { returnMap[it] = claims[it] as String }
             returnMap.forEach { (t, u) -> println("$t --> $u") }
 
@@ -53,6 +55,16 @@ class JwtService {
     // gets expiration date of token
     private fun extractExpiration(token: String): Date {
         return extractClaim(token, Claims::getExpiration)
+    }
+
+    /**
+     * JWT ID used for possible extension
+     * @param token JWT used
+     * @author TK Inc.
+     * @return current token iteration [0 - 1]
+     */
+    private fun extractId(token:String):String{
+        return extractClaim(token, Claims::getId)
     }
 
     // gets all information saved inside JWT
@@ -74,14 +86,17 @@ class JwtService {
 
     fun generateToken (
         subject : String,
-        extraClaims : Map<String, Any> = mapOf()
+        extraClaims : Map<String, Any> = mapOf(),
+        extensionId : String = "0"
     ):String{
         return Jwts
             .builder()
             .setClaims(extraClaims)
             .setSubject(subject)
+            .setId(extensionId)
             .setIssuedAt(Date(System.currentTimeMillis()))
-            .setExpiration(Date(System.currentTimeMillis() + 1000*60*5)) // 5 minutes legitimacy
+            .setExpiration(Date(System.currentTimeMillis() + 1000*60*60*4)) // 4 hours legitimacy
+            //.setExpiration(Date(System.currentTimeMillis() + 1000*60*16)) // 16 minutes legitimacy
             .signWith(getSigningKey(), SignatureAlgorithm.HS256)
             .compact()
     }
@@ -96,9 +111,33 @@ class JwtService {
         return !isTokenExpired(token = token)
     }
 
-    // checks if token is expired
+    /**
+     * use to identify whether tokens are subject to extension
+     * @authorTK Inc.
+     * @param token currently given token
+     */
+    fun allowTokenExtension(token:String):Boolean{
+        return extractId(token) == "0"
+    }
+
+    /**
+     * returns a new token with 4 hours validity
+     * @param token the soon expiring token
+     * @author TK Inc.
+     * @return a new valid token
+     */
+    fun extendToken(token:String):String{
+        return generateToken(extractUsermail(token), extractPersonalDetails(token), "1")
+    }
+
+    /**
+     * check token validity
+     * @param token user JWT token
+     * @throws Exception instead of false
+     * @author TK Inc.
+     */
     private fun isTokenExpired(token: String): Boolean {
-        return extractExpiration(token).before(Date(System.currentTimeMillis()))
+        return extractExpiration(token).toInstant().minusMillis(1000*60*15).isBefore(Date(System.currentTimeMillis()).toInstant())
     }
 
 }
