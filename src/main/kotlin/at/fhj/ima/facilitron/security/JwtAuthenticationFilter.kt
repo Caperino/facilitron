@@ -77,35 +77,81 @@ class JwtAuthenticationFilter(
 
         // employee information container
         val userInformation : JwtUserDetails
+        val newAuthCookie:Cookie
 
         if (SecurityContextHolder.getContext().authentication == null){
-            if (jwtService.isTokenValid(token = jwt)){
-                //val userInformation:JwtUserDetails
+            val tokenState:Boolean
+
+            try {
+                tokenState = jwtService.isTokenValid(token = jwt)
+            }catch(e : Exception){
+                println("token fully expired")
+                response.addCookie(internalCookieService.deleteAuthCookie())
+                response.sendRedirect(DefaultURL.LOGIN_PAGE_URL)
+                return
+            }
+
+            if (tokenState){
                 try {
                     val information = jwtService.extractPersonalDetails(jwt)
                     println(information["roles"])
                     val authorities = information["roles"]?.split(";")!!
-                    userInformation = JwtUserDetails(information["mail"]!!, information["firstName"]!!, information["secondName"]!!, if (authorities.contains("")) listOf() else authorities)
+                    userInformation = JwtUserDetails(
+                        information["mail"]!!,
+                        information["firstName"]!!,
+                        information["secondName"]!!,
+                        if (authorities.contains("")) listOf() else authorities
+                    )
                 }catch(e:Exception){
+                    println("----- - EXCEPTION FILTER - -----")
+                    println("invalid token")
+                    println("----- EXCEPTION FILTER END -----")
+
+                    response.addCookie(internalCookieService.deleteAuthCookie())
+                    response.sendRedirect(DefaultURL.LOGIN_PAGE_URL)
+                    return
+                }
+            } else if (!jwtService.allowTokenExtension(token = jwt)){
+                response.addCookie(internalCookieService.deleteAuthCookie())
+                response.sendRedirect(DefaultURL.LOGIN_PAGE_URL)
+                return
+            }
+            else
+            {
+                println("token subject to extension")
+                val newAuthToken = jwtService.extendToken(token = jwt)
+                newAuthCookie = internalCookieService.generateAuthCookie(newAuthToken)
+                response.addCookie(newAuthCookie)
+                println("token extended")
+
+                // token validation
+                try {
+                    val information = jwtService.extractPersonalDetails(newAuthCookie.value)
+                    println(information["roles"])
+                    val authorities = information["roles"]?.split(";")!!
+                    userInformation = JwtUserDetails(
+                        information["mail"]!!,
+                        information["firstName"]!!,
+                        information["secondName"]!!,
+                        if (authorities.contains("")) listOf() else authorities
+                    )
+                } catch (e: Exception) {
                     println("----- - EXCEPTION FILTER - -----")
                     println("invalid token")
                     println("----- EXCEPTION FILTER END -----")
                     response.sendRedirect(DefaultURL.LOGIN_PAGE_URL)
                     return
                 }
-
-                val authToken = UsernamePasswordAuthenticationToken(
-                    userInformation,
-                    null,
-                    userInformation.authorities
-                )
-                authToken.details = WebAuthenticationDetailsSource().buildDetails(request)
-                SecurityContextHolder.getContext().authentication = authToken
-            } else {
-                println("token expired")
-                response.sendRedirect(DefaultURL.LOGIN_PAGE_URL)
-                return
             }
+
+            val authToken = UsernamePasswordAuthenticationToken(
+                userInformation,
+                null,
+                userInformation.authorities
+            )
+            authToken.details = WebAuthenticationDetailsSource().buildDetails(request)
+            SecurityContextHolder.getContext().authentication = authToken
+            // ----- ----- END VALIDATION ----- -----
         } else {
             filterChain.doFilter(request, response)
             return
@@ -114,6 +160,7 @@ class JwtAuthenticationFilter(
         // providing information for visual output
         DefaultClaim.claimSet.forEach { request.setAttribute(it, userInformation[it]) }
 
+        // resuming to standard filter chain
         filterChain.doFilter(request, response)
     }
 }
