@@ -106,3 +106,6 @@ a.header-dark:hover, a.footer-dark:hover {
 .departments-container{
     padding: 3%;
 }
+.search-container{
+    background: linear-gradient(to right, #1e88e5, #3f51b5);
+}
