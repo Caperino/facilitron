@@ -4,6 +4,7 @@
     Dark-Blue: #1e88e5
     Purple: #3f51b5
 
+    Content-Gray: #bdbdbd
     Light-Gray: #f5f5f5
     Dark-Gray: #424242
 */
@@ -26,4 +27,32 @@ a.header-dark:hover, a.footer-dark:hover {
 .custom-toggler .navbar-toggler-icon {
     background-image: url(
     "data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1.0)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+.heading {
+    color: #1e88e5
+}
+hr {
+    height: 0.4vh;
+    background-color: #bdbdbd;
+    color: #424242;
+}
+.rounded-content{
+    border-radius: 0.5rem;
+    background-color: #bdbdbd;
+    padding: 1rem;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 1vw;
+}
+.grid-item {
+    padding: 0.2rem;
+}
+.profile-image {
+    width: 50%;
+    max-width: 300px;
+}
+.table-item {
+    background-color: #f5f5f5;
 }
