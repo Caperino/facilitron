@@ -136,6 +136,9 @@ a.header-dark:hover, a.footer-dark:hover {
     fill: #1e88e5;
     height: 1.5em;
 }
+.fac-image{
+    height: 2.25em;
+}
 .fac-list-item{
     text-align: center;
     margin: auto;
