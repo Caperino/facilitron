@@ -17,7 +17,8 @@ class PublicController{
         model: Model,
         @RequestParam or:String?
     ):String{
-        return "index"
+        // return "index"
+        return "ticket_overview"
     }
 
     @GetMapping("/hidden")
