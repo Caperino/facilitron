@@ -150,3 +150,28 @@ a.header-dark:hover, a.footer-dark:hover {
 .fac-employee-search{
     width: 20em;
 }
+/* TICKETDETAILS */
+.rounded-details{
+    border-radius: 0.5rem;
+    background-color: white;
+    padding: 1rem;
+}
+.rounded-support-reply{
+    border-radius: 0.5rem;
+    background-color: #1e88e5;
+    max-width: 65%;
+    color: white;
+    padding: 1rem;
+}
+.rounded-employee-reply{
+    border-radius: 0.5rem;
+    background-color: white;
+    max-width: 65%;
+    padding: 1rem;
+}
+.fac-btn-red{
+    background-color: #e53935;
+    min-width: 7.5em;
+    box-shadow: 0 5px 2px -2px rgba(0, 0, 0, 0.4);
+    border: #e53935;
+}
