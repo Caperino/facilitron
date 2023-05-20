@@ -147,3 +147,22 @@ a.header-dark:hover, a.footer-dark:hover {
 .fac-employee-search{
     width: 20em;
 }
+/* TICKETDETAILS */
+.rounded-details{
+    border-radius: 0.5rem;
+    background-color: white;
+    padding: 1rem;
+}
+.rounded-support-reply{
+    border-radius: 0.5rem;
+    background-color: #1e88e5;
+    max-width: 65%;
+    color: white;
+    padding: 1rem;
+}
+.rounded-employee-reply{
+    border-radius: 0.5rem;
+    background-color: white;
+    max-width: 65%;
+    padding: 1rem;
+}
