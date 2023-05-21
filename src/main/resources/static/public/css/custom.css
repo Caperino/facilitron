@@ -36,7 +36,8 @@ a.header-dark:hover, a.footer-dark:hover {
 }
 .rounded-content{
     border-radius: 0.5rem;
-    background-color: #bdbdbd;
+    /* background-color: #bdbdbd; */
+    background-color: rgba(189, 189, 189, 0.5);
     padding: 1rem;
 }
 .grid-container {
