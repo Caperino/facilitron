@@ -10,7 +10,7 @@
 <body>
 <div th:insert="~{header :: header}" class="header"></div>
 
-<div class="container content">
+<div class="container-md px-3 py-4 content">
 
   <!-- BREADCRUMB -->
   <div class="d-flex justify-content-start p-3">
@@ -24,47 +24,65 @@
   </div>
 
   <!-- PICTURE -->
-  <div class="d-flex justify-content-center">
+  <div class="d-flex justify-content-center mb-2">
     <img src="/public/images/ticket.png" alt="Ticket" class="profile-image">
   </div>
 
   <!-- NAME -->
-  <div class="d-flex justify-content-center">
+  <div class="d-flex justify-content-center mb-4">
     <!--<h3 class="heading mt-2" th:text="${ticket.details}"></h3>-->
     <h3 class="fac-headline mt-2">Ticketname</h3>
   </div>
 
-  <div style="margin-left: 5%; margin-right: 5%">
+  <div class="mx-2 mx-md-4">
     <!--PERSONAL INFO -->
-    <h3 class="fac-headline border-2 border-bottom mb-4 pt-2">Ticket Details</h3>
-    <div class="rounded-content">
-      <div class="grid-container">
-        <div class="grid-item">
-          <div class="col">
-            <div class="col-sm-4"><b>Opened by:</b></div>
+    <h2 class="fac-headline mb-4 p-2 border-2 border-bottom">Ticket Details</h2>
+
+    <div class="rounded-content mb-4">
+      <div class="row">
+        <div class="col-md mb-3 mb-md-0">
+          <div class="d-inline-flex d-md-block text-center">
+            <div class="d-inline-flex">
+              <svg stroke="currentColor" class="fac-icon me-2" stroke-width="0" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"></path>
+              </svg>
+              <p class="text-dark-gray my-auto text-center me-2 me-md-0"><b>Opened by</b></p>
+            </div>
+            <p class="text-dark-gray my-auto text-center">Hans</p>
             <!-- <div class="col-sm-8" th:text="ticket.owner"></div> -->
-            <div class="col-sm-8 p-1">Hans</div>
           </div>
         </div>
-        <div class="grid-item">
-          <div class="col">
-            <div class="col-sm-4"><b>Date opened:</b></div>
+
+        <div class="col-md mb-3 mb-md-0">
+          <div class="d-inline-flex d-md-block text-center">
+            <div class="d-inline-flex">
+              <svg stroke="currentColor" class="fac-icon me-2" stroke-width="0" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V192H0v272zm320-196c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM192 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM64 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zM400 64h-48V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H160V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H48C21.5 64 0 85.5 0 112v48h448v-48c0-26.5-21.5-48-48-48z"></path>
+              </svg>
+              <p class="text-dark-gray my-auto text-center me-2 me-md-0"><b>Date opened</b></p>
+            </div>
+            <p class="text-dark-gray my-auto text-center">23/23/23</p>
             <!-- <div class="col-sm-8" th:text="ticket.openeddate"></div> -->
-            <div class="col-sm-8 p-1">23/23/23</div>
           </div>
         </div>
-        <div class="grid-item">
-          <div class="col">
-            <div class="col-sm-4"><b>Priority:</b></div>
+
+        <div class="col-md">
+          <div class="d-inline-flex d-md-block text-center">
+            <div class="d-inline-flex">
+              <svg stroke="currentColor" class="fac-icon me-2" stroke-width="0" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
+              </svg>
+              <p class="text-dark-gray my-auto text-center me-2 me-md-0"><b>Priority</b></p>
+            </div>
+            <p class="text-dark-gray my-auto text-center">High</p>
             <!-- <div class="col-sm-8" th:text="ticket.priority"></div> -->
-            <div class="col-sm-8 p-1">High</div>
           </div>
         </div>
       </div>
     </div>
 
     <div class="col p-4">
-      <div class="col rounded-details">
+      <div class="col rounded-details mb-4">
           <div class="col"><b>Ticket description:</b></div>
           <!-- <div class="col-sm-8" th:text="ticket.description"></div> -->
           <div class="col p-2">Lorem Ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum
@@ -75,8 +93,8 @@
     </div>
 
     <!-- COMPANY INFO -->
-    <h3 class="fac-headline border-2 border-bottom mb-4">Comment History</h3>
-    <div class="rounded-content">
+    <h2 class="fac-headline border-2 border-bottom mb-4">Comment History</h2>
+    <div class="rounded-content mb-4">
 
       <!-- <div th:each="comment : ${comments}"> -->
       <div>
@@ -114,17 +132,17 @@
     </div>
 
     <!-- New Comment -->
-    <h3 class="fac-headline border-2 border-bottom mb-4 pt-4">New Comment</h3>
-    <div class="form-group">
+    <h2 class="fac-headline mb-4 p-2 border-2 border-bottom">New Comment</h2>
+    <div class="form-group mb-4">
       <div class="col p-2">
-        <textarea class="form-control" name="newComment" id="newComment" rows="3"></textarea>
+        <textarea class="form-control" name="newComment" id="newComment" rows="7"></textarea>
       </div>
     </div>
 
     <!-- BUTTONS -->
-    <div class="d-flex justify-content-end">
-      <a href="#" class="btn btn-danger fac-btn-red m-4">Close Ticket</a>
-      <a href="#" type="submit" class="btn btn-primary fac-btn-dark-blue mt-4 mb-4">Reply</a>
+    <div class="d-flex justify-content-end mb-4">
+      <a href="#" class="btn btn-primary fac-btn-dark-blue me-3">Close Ticket</a>
+      <a href="#" type="submit" class="btn btn-primary fac-btn-dark-blue">Reply</a>
     </div>
   </div>
 </div>
