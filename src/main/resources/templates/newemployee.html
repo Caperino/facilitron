@@ -10,7 +10,7 @@
 <body>
 <div th:insert="~{header :: header}" class="header"></div>
 
-<div class="container content">
+<div class="container-md px-3 py-4 content">
 
   <!-- BREADCRUMB -->
   <div class="d-flex justify-content-start p-3">
@@ -23,48 +23,49 @@
     </nav>
   </div>
 
-  <div style="margin-left: 5%; margin-right: 5%">
+  <div class="mx-2 mx-md-4">
     <!--PERSONAL INFO -->
-    <h3 class="fac-headline border-2 border-bottom pb-1">Personal Info</h3>
-    <div class="rounded-content pt-2">
-      <div class="row">
-        <div class="col">
-          <div class="col pt-2 pb-1"><b>Firstname</b></div>
-          <input type="text" name="firstname" id="firstname" class="form-control">
+    <h1 class="fac-headline mb-4 p-2 border-2 border-bottom">Personal Info</h1>
+    <div class="rounded-content mb-4">
+      <div class="row mb-4">
+        <div class="col-md-6 mb-4 mb-md-0">
+          <p class="text-dark-gray">Firstname</p>
+          <input type="text" name="firstname" id="firstname" class="form-control text-dark-gray">
         </div>
-        <div class="col">
-          <div class="col pt-2 pb-1"><b>Lastname</b></div>
-          <input type="text" name="lastname" id="lastname" class="form-control">
+        <div class="col-md-6">
+          <p class="text-dark-gray">Lastname</p>
+          <input type="text" name="lastname" id="lastname" class="form-control text-dark-gray">
         </div>
       </div>
-      <div class="row">
-        <div class="col">
-          <div class="col pt-3 pb-1"><b>Birthday</b></div>
-          <input type="date" name="birthday" id="birthday" class="form-control"/>
+      <div class="row mb-4">
+        <div class="col-md-6 mb-4 mb-md-0">
+          <p class="text-dark-gray">Birthday</p>
+          <input type="date" name="birthday" id="birthday" class="form-control text-dark-gray"/>
         </div>
-        <div class="col">
-          <div class="col pt-3 pb-1"><b>Gender</b></div>
-          <select id="gender" name="gender" class="form-select">
+        <div class="col-md-6">
+          <p class="text-dark-gray">Gender</p>
+          <select id="gender" name="gender" class="form-select text-dark-gray">
             <option selected>Male</option>
             <option value="1">Female</option>
             <option value="2">Toaster</option>
+            <option value="3">Boeing AH-64 Apache</option>
           </select>
         </div>
       </div>
       <div class="col">
-        <div class="col pt-3 pb-1"><b>Profile Picture</b></div>
-        <input id="profilepicture" name="profilepicture" class="form-control" type="file"/>
+        <p class="text-dark-gray">Profile Picture</p>
+        <input id="profilepicture" name="profilepicture" class="form-control text-dark-gray" type="file"/>
       </div>
     </div>
 
     <!-- COMPANY INFO -->
-    <h3 class="fac-headline border-2 border-bottom pb-1 pt-4">Company Info</h3>
-    <div class="rounded-content pt-2">
-      <div class="col">
+    <h1 class="fac-headline mb-4 p-2 border-2 border-bottom">Company Info</h1>
+    <div class="rounded-content mb-4">
+      <div class="row mb-4">
         <div class="col">
-          <div class="col pt-3 pb-1"><b>Roles</b></div>
+          <p class="text-dark-gray">Roles</p>
           <!--<select class="form-select" multiple> -->
-          <select class="form-select" id="roles" data-placeholder="Choose anything" multiple>
+          <select class="form-select text-dark-gray" id="roles" data-placeholder="Choose anything" multiple>
             <!-- th:each="role:${roles}" -->
             <option value="1">Administrator</option>
             <option value="2">Support</option>
@@ -73,24 +74,30 @@
             <option value="5">Gsindl</option>
           </select>
         </div>
+      </div>
 
+      <div class="row mb-4">
         <div class="col">
-          <div class="col pt-2 pb-1"><b>Working Type</b></div>
-          <select id="workingtype" name="workingtype" class="form-select">
+          <p class="text-dark-gray">Profile Picture</p>
+          <select id="workingtype" name="workingtype" class="form-select text-dark-gray">
             <option selected>Full Time (40 hrs)</option>
             <option value="1">Full Time (38,5 hrs)</option>
             <option value="2">Part Time (20 hrs)</option>
           </select>
         </div>
+      </div>
 
+      <div class="row mb-4">
         <div class="col">
-          <div class="col pt-2 pb-1"><b>Entry Date</b></div>
-          <input type="date" name="entrydate" id="entrydate" class="form-control">
+          <p class="text-dark-gray">Entry Date</p>
+          <input type="date" name="entrydate" id="entrydate" class="form-control text-dark-gray">
         </div>
+      </div>
 
+      <div class="row">
         <div class="col">
-          <div class="col pt-2 pb-1"><b>Password</b></div>
-          <input type="password" name="password" id="password" class="form-control">
+          <p class="text-dark-gray">Password</p>
+          <input type="password" name="password" id="password" class="form-control text-dark-gray">
         </div>
       </div>
 
