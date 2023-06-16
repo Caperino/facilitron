@@ -14,10 +14,14 @@
   <label for="password">PW</label>
   <input type="text" id="password" name="password">
   <input id="submitter" type="submit" value="Submit">
-  <div>
-    <p th:text="${testCode}"></p>
-    <img th:src="${'data:image/jpeg;charset=utf-8;base64,' + qr}" alt="">
-  </div>
 </form>
+  <div>
+    <img th:src="${'data:image/jpeg;charset=utf-8;base64,' + qr}" alt="">
+    <form action="/public/test" method="post">
+      <label for="code">2-FA Code</label>
+      <input id="code" name="code" type="number" max="999999" maxlength="6">
+      <input id="sda" type="submit" value="Submint">
+    </form>
+  </div>
 </body>
 </html>

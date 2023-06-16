@@ -35,7 +35,7 @@ class FacilitronApplication{
 		val generator = TotpGenerator()
 		generator.codeLength = 6
 		generator.algorithm = HashAlgorithm.SHA1
-		generator.timePeriod = Duration.ofSeconds(20)
+		generator.timePeriod = Duration.ofSeconds(30)
 		return generator
 	}
 

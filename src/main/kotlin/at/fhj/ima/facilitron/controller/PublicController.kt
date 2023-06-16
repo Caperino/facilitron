@@ -4,6 +4,7 @@ import at.fhj.ima.facilitron.security.DefaultClaim
 import at.fhj.ima.facilitron.security.DefaultURL
 import dev.robinohs.totpkt.otp.totp.TotpGenerator
 import dev.robinohs.totpkt.otp.totp.timesupport.generateCode
+import dev.robinohs.totpkt.otp.totp.timesupport.isCodeValid
 import dev.robinohs.totpkt.recovery.RecoveryCodeGenerator
 import dev.robinohs.totpkt.secret.SecretGenerator
 import io.github.g0dkar.qrcode.QRCode
@@ -14,6 +15,7 @@ import org.springframework.http.MediaType.IMAGE_PNG_VALUE
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
 import java.io.ByteArrayOutputStream
 import java.io.FileOutputStream
@@ -36,9 +38,15 @@ class PublicController(
         QRCode("otpauth://totp/Facilitron?secret="+secret.secretAsString).render().writeImage(imageOut)
         val imageBytes = imageOut.toByteArray()
         val image = Base64.getEncoder().encodeToString(imageBytes);
-        model.addAttribute("testCode",totpGenerator.generateCode(secret.secretAsByteArray))
+        model.addAttribute("secret",secret.secretAsByteArray)
         model.addAttribute("qr", image)
         return "index"
+    }
+
+    @PostMapping("/public/test")
+    fun testFunc(model: Model, @RequestParam code: String){
+        println(totpGenerator.isCodeValid(model.getAttribute("secret").toString().toByteArray(),code))
+
     }
 
     @GetMapping("/hidden")
