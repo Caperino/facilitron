@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails
  * @param mail is used as Username
  * @param accountStatus information about employee status
  * @param roles contains access authority of user
+ * @param department is the employees assigned department
  */
 @Entity
 class Employee(
@@ -33,7 +34,9 @@ class Employee(
         joinColumns = [JoinColumn(name = "employee_id", referencedColumnName = "id")],
         inverseJoinColumns = [JoinColumn(name = "role_id", referencedColumnName = "id")]
     )
-    val roles:MutableSet<SecurityRole> = mutableSetOf()
+    val roles:MutableSet<SecurityRole> = mutableSetOf(),
+    @ManyToOne(fetch = FetchType.EAGER)
+    val department: Department? = null
 ) : UserDetails {
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         return roles.map { SimpleGrantedAuthority(it.name) } as MutableList<out GrantedAuthority>
