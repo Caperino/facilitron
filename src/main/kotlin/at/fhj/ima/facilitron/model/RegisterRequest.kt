@@ -1,11 +1,15 @@
 package at.fhj.ima.facilitron.model
 
+import java.time.LocalDate
+
 class RegisterRequest(
     val firstname:String,
     val secondname:String,
     val mail:String,
     val password:String,
-    val phone:String? = null
+    val phone:String? = null,
+    val gender:Gender,
+    val birthday: LocalDate
 ) {
 }
 
@@ -18,7 +22,9 @@ class UnsafeRegisterRequest(
     val secondname:String?,
     val mail:String?,
     val password:String?,
-    val phone:String? = null
+    val phone:String? = null,
+    val gender:Gender?,
+    val birthday:LocalDate?
 ) : UnsafeData {
 
     override fun evaluateState():Boolean{
