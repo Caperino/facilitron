@@ -35,7 +35,7 @@ class AuthenticationService(
 
         // building new employee
         val em = Employee(id = null, firstName = request.firstname, secondName = request.secondname, mail = request.mail,
-            password = passwordEncoder.encode(request.password), phone = request.phone)
+            password = passwordEncoder.encode(request.password), phone = request.phone, gender = request.gender, birthday = request.birthday)
         employeeRepository.save(em)
 
         return RegisterResponse()

@@ -1,7 +1,7 @@
 package at.fhj.ima.facilitron.model
 
 import jakarta.persistence.*
-import java.sql.Time
+import java.time.LocalDate
 
 /**
  * Base Class for all tickets
@@ -25,10 +25,10 @@ class Ticket (
     @ManyToOne(fetch = FetchType.EAGER)
     val category: Category,
     val description:String? = null,
-    val opened:Time = Time(System.currentTimeMillis()),
+    val opened:LocalDate = LocalDate.now(),
     @ManyToOne(fetch = FetchType.EAGER)
     val openedBy: Employee,
-    val closed:Time? = null,
+    val closed:LocalDate? = null,
     @ManyToOne(fetch = FetchType.EAGER)
     val closedBy: Employee?,
     val ticketStatus: TicketStatus = TicketStatus.OPEN,

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
+import java.time.LocalDate
 
 @Controller
 class AuthenticationController(
@@ -63,9 +64,11 @@ class AuthenticationController(
         @RequestParam secondname:String?,
         @RequestParam mail:String?,
         @RequestParam password:String?,
-        @RequestParam phone:String?
+        @RequestParam phone:String?,
+        @RequestParam gender:Gender?,
+        @RequestParam birthday: LocalDate?
     ): String {
-        val unsafeRegisterRequest = UnsafeRegisterRequest(firstname, secondname, mail, password, phone)
+        val unsafeRegisterRequest = UnsafeRegisterRequest(firstname, secondname, mail, password, phone, gender, birthday)
 
         if (!unsafeRegisterRequest.evaluateState()){
             model.addAttribute("error", RegisterResponse(exception = SecurityWarning.MISSINGVALUES))
@@ -83,7 +86,9 @@ class AuthenticationController(
             unsafeRegisterRequest.secondname!!,
             unsafeRegisterRequest.mail!!,
             unsafeRegisterRequest.password!!,
-            unsafeRegisterRequest.phone)
+            unsafeRegisterRequest.phone,
+            unsafeRegisterRequest.gender!!,
+            unsafeRegisterRequest.birthday!!)
         )
 
         if (regResponse.exception != null){

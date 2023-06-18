@@ -43,4 +43,5 @@ class ApplicationConfig(
     fun authenticationManager(config: AuthenticationConfiguration): AuthenticationManager {
         return config.authenticationManager
     }
+
 }
