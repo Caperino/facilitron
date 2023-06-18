@@ -4,7 +4,7 @@ import jakarta.persistence.*
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
-import java.sql.Time
+import java.time.LocalDate
 
 /**
  * Base Class for all users
@@ -27,8 +27,12 @@ class Employee(
     val firstName:String,
     val secondName:String,
     private val mail:String,
+    @ManyToOne(fetch = FetchType.EAGER)
+    private val gender:Gender,
     private val password:String,
     private val phone:String? = null,
+    private val birthday:LocalDate,
+    private val picturePath:String? = null,
     private val accountStatus:AccountStatus = AccountStatus.ACTIVE,
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -39,7 +43,7 @@ class Employee(
     val roles:MutableSet<SecurityRole> = mutableSetOf(),
     @ManyToOne(fetch = FetchType.EAGER)
     val department: Department? = null,
-    private val entryDate: Time = Time(System.currentTimeMillis()),
+    private val entryDate: LocalDate = LocalDate.now(),
     private val workingType: WorkingType = WorkingType.FULLTIME,
 ) : UserDetails {
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
@@ -62,7 +66,7 @@ class Employee(
         return true
     }
 
-    fun getEntryDate(): Time {
+    fun getEntryDate(): LocalDate {
         return entryDate
     }
 

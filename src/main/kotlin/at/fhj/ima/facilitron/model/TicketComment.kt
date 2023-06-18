@@ -1,7 +1,7 @@
 package at.fhj.ima.facilitron.model
 
 import jakarta.persistence.*
-import java.sql.Time
+import java.time.LocalDate
 
 /**
  * Base Class for all ticket-comments
@@ -18,5 +18,5 @@ class TicketComment (
     val comment:String,
     @ManyToOne
     val commenter:Employee,
-    val postedTime:Time = Time(System.currentTimeMillis())
+    val postedTime:LocalDate = LocalDate.now()
 )
