@@ -29,6 +29,8 @@ class Employee(
     private val mail:String,
     private val password:String,
     private val phone:String? = null,
+    private val birthday:Time,
+    private val picturePath:String? = null,
     private val accountStatus:AccountStatus = AccountStatus.ACTIVE,
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
