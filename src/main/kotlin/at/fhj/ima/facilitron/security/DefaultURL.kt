@@ -22,5 +22,6 @@ object DefaultURL {
     // standard URLs
     const val TICKET_URL = "/tickets"
     const val TICKET_DETAILS_URL = "/ticket_details"
+    const val TICKET_COMMENT_URL = "/ticket_comment"
 
 }

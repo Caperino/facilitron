@@ -30,12 +30,12 @@ class Ticket (
     val opened:LocalDate = LocalDate.now(),
     @ManyToOne(fetch = FetchType.EAGER)
     val openedBy: Employee,
-    val closed:LocalDate? = null,
+    var closed:LocalDate? = null,
     @ManyToOne(fetch = FetchType.EAGER)
-    val closedBy: Employee?,
-    val ticketStatus: TicketStatus = TicketStatus.OPEN,
-    @OneToMany(fetch = FetchType.EAGER)
-    val comments:MutableSet<TicketComment> = mutableSetOf(),
+    var closedBy: Employee?,
+    var ticketStatus: TicketStatus = TicketStatus.OPEN,
+    /*@OneToMany(fetch = FetchType.EAGER)
+    val comments:MutableSet<TicketComment> = mutableSetOf(),*/
 ) {
     fun isClosed():Boolean {
         return ticketStatus == TicketStatus.CLOSED;

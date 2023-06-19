@@ -18,5 +18,7 @@ class TicketComment (
     val comment:String,
     @ManyToOne
     val commenter:Employee,
-    val postedTime:LocalDate = LocalDate.now()
+    val postedTime:LocalDate = LocalDate.now(),
+    @ManyToOne
+    val ticket:Ticket
 )

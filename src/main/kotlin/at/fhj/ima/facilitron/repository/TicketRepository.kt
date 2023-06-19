@@ -1,9 +1,6 @@
 package at.fhj.ima.facilitron.repository
 
-import at.fhj.ima.facilitron.model.Category
-import at.fhj.ima.facilitron.model.Employee
-import at.fhj.ima.facilitron.model.Ticket
-import at.fhj.ima.facilitron.model.TicketStatus
+import at.fhj.ima.facilitron.model.*
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 
