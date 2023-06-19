@@ -100,7 +100,8 @@ class JwtAuthenticationFilter(
                         information["mail"]!!,
                         information["firstName"]!!,
                         information["secondName"]!!,
-                        if (authorities.contains("")) listOf() else authorities
+                        if (authorities.contains("")) listOf() else authorities,
+                        information["id"]!!
                     )
                 }catch(e:Exception){
                     println("----- - EXCEPTION FILTER - -----")
@@ -133,7 +134,8 @@ class JwtAuthenticationFilter(
                         information["mail"]!!,
                         information["firstName"]!!,
                         information["secondName"]!!,
-                        if (authorities.contains("")) listOf() else authorities
+                        if (authorities.contains("")) listOf() else authorities,
+                        information["id"]!!
                     )
                 } catch (e: Exception) {
                     println("----- - EXCEPTION FILTER - -----")

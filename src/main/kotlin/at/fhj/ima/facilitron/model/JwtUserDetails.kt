@@ -9,7 +9,8 @@ class JwtUserDetails(
     val firstName : String,
     val secondName : String,
     //val authorities : MutableCollection<out GrantedAuthority>,
-    private val roles : List<String>
+    private val roles : List<String>,
+    val id : String
 ) : UserDetails{
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         return roles.map { SimpleGrantedAuthority(it) } as MutableList<out GrantedAuthority>
@@ -41,6 +42,7 @@ class JwtUserDetails(
 
     operator fun get(parameter: String): String {
         return when (parameter){
+            "id" -> id
             "firstName" -> firstName
             "secondName" -> secondName
             "mail" -> sub

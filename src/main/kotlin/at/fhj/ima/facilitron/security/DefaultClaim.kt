@@ -9,6 +9,6 @@ object DefaultClaim {
     /**
      * all claim keys for extraction
      */
-    val claimSet = setOf("firstName", "secondName", "roles", "mail")
+    val claimSet = setOf("id","firstName", "secondName", "roles", "mail")
 
 }
