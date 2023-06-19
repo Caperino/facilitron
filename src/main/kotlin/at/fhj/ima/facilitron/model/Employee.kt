@@ -27,7 +27,6 @@ class Employee(
     val firstName:String,
     val secondName:String,
     private val mail:String,
-    @ManyToOne(fetch = FetchType.EAGER)
     private val gender:Gender,
     private val password:String,
     private val phone:String? = null,
