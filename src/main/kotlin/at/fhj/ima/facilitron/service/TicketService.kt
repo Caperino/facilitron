@@ -29,10 +29,16 @@ class TicketService (
 
     }*/
 
-    fun closeTicket(tk: Ticket, employee: Employee) {
-        tk.closed = LocalDate.now();
-        tk.closedBy = employee;
-        tk.ticketStatus = TicketStatus.CLOSED;
-        ticketRepository.save(tk)
+    fun closeTicket(tk: Ticket, employee: Employee):Boolean {
+        try {
+            tk.closed = LocalDate.now()
+            tk.closedBy = employee;
+            tk.ticketStatus = TicketStatus.CLOSED
+            ticketRepository.save(tk)
+            return true;
+        } catch (e:Exception) {
+            return false;
+        }
+
     }
 }

@@ -22,7 +22,7 @@ class TicketController (
     val employeeService: EmployeeService
 ) {
     @GetMapping(DefaultURL.TICKET_URL)
-    fun getPageWithAllTickets (
+    fun getPageWithAllTickets(
         req: HttpServletRequest,
         model: Model,
         @RequestParam(required = false) q:String = ""
@@ -60,10 +60,16 @@ class TicketController (
     fun closeTicket(
         model: Model,
         @RequestParam id: Int
-    ) {
+    ): String {
         val employee = employeeService.getEmployeeById(model.getAttribute("id").toString().toInt())
         val tk = ticketService.getTicketDetails(id)
-        ticketService.closeTicket(tk, employee)
+        return if (ticketService.closeTicket(tk, employee)) {
+            model.addAttribute("tickets",ticketService.getAllTickets())
+            "ticket_overview"
+        } else {
+            model.addAttribute("error", "Ticket couldn't be deleted!")
+            "ticket_overview"
+        }
     }
 
 }
