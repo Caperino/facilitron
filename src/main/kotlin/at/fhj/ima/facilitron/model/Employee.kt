@@ -90,6 +90,7 @@ class Employee(
      */
     operator fun get(parameter: String): String {
         return when (parameter){
+            "id" -> id.toString()
             "firstName" -> firstName
             "secondName" -> secondName
             "mail" -> username
