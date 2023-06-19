@@ -19,4 +19,8 @@ object DefaultURL {
     const val AUTHENTICATION_PREFIX = "/auth/"
     const val STATIC_PREFIX = "/public"
 
+    // standard URLs
+    const val TICKET_URL = "/tickets"
+    const val TICKET_DETAILS_URL = "/ticket_details"
+
 }
