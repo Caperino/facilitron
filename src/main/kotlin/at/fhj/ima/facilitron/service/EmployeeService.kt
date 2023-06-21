@@ -14,4 +14,16 @@ class EmployeeService(
     fun getEmployeeById(id: Int):Employee {
         return employeeRepository.getEmployeeById(id)
     }
+
+    fun getAllEmployees():List<Employee> {
+        return employeeRepository.findAll().iterator().asSequence().toList()
+    }
+
+    fun findEmployessByName(search: String): List<Employee> {
+        return employeeRepository.findEmployeeByFirstNameContainingIgnoreCaseOrSecondNameContainingIgnoreCase(search, search)
+    }
+
+    fun saveEmployee(emp: Employee) {
+        employeeRepository.save(emp)
+    }
 }

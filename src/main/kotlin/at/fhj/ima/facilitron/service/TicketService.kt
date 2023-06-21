@@ -39,6 +39,9 @@ class TicketService (
         } catch (e:Exception) {
             return false;
         }
+    }
 
+    fun openTicket(tk: Ticket) {
+        ticketRepository.save(tk)
     }
 }

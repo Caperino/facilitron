@@ -13,15 +13,21 @@ object DefaultURL {
 
     // for register redirects
     const val REGISTER_PAGE_URL = "/auth/register"      // TODO set correct URL
-    const val POST_REGISTER_URL = "/public"             // TODO set correct URL
 
     // URL Filter Exceptions
     const val AUTHENTICATION_PREFIX = "/auth/"
     const val STATIC_PREFIX = "/public"
 
     // standard URLs
-    const val TICKET_URL = "/tickets"
+    const val TICKET_URL = "/ticket_overview"
     const val TICKET_DETAILS_URL = "/ticket_details"
     const val TICKET_COMMENT_URL = "/ticket_comment"
+    const val TICKET_CREATE_URL = "/ticket_create"
+    const val USER_URL = "/user_overview"
+    const val USER_DETAILS = "/user_details"
+    const val USER_CREATE ="/user_create"
+
+    // APU URLs
+    const val API_SAVE_TIME = "/api/v1/saveTime"
 
 }

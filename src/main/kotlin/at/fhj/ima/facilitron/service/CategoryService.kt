@@ -11,4 +11,12 @@ class CategoryService (
     fun getCategoriesByName(search: String):List<Category> {
         return categoryRepository.findCategoriesByNameContainingIgnoreCase(search)
     }
+
+    fun getCategoryByName(search: String):Category {
+        return categoryRepository.findCategoryByName(search)
+    }
+
+    fun getAllCategories():List<Category> {
+        return categoryRepository.findAll().iterator().asSequence().toList()
+    }
 }

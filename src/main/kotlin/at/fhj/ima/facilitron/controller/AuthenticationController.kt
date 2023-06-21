@@ -2,6 +2,8 @@ package at.fhj.ima.facilitron.controller
 
 import at.fhj.ima.facilitron.model.*
 import at.fhj.ima.facilitron.security.*
+import at.fhj.ima.facilitron.service.StringToDate
+import at.fhj.ima.facilitron.service.StringToGender
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.beans.factory.annotation.Autowired
@@ -65,10 +67,10 @@ class AuthenticationController(
         @RequestParam mail:String?,
         @RequestParam password:String?,
         @RequestParam phone:String?,
-        @RequestParam gender:Gender?,
-        @RequestParam birthday: LocalDate?
+        @RequestParam gender:String?,
+        @RequestParam birthday: String?
     ): String {
-        val unsafeRegisterRequest = UnsafeRegisterRequest(firstname, secondname, mail, password, phone, gender, birthday)
+        val unsafeRegisterRequest = UnsafeRegisterRequest(firstname, secondname, mail, password, phone, StringToGender().convert(gender?: "DIV"), StringToDate().convert(birthday?: "1.1.1970"))
 
         if (!unsafeRegisterRequest.evaluateState()){
             model.addAttribute("error", RegisterResponse(exception = SecurityWarning.MISSINGVALUES))
@@ -78,7 +80,7 @@ class AuthenticationController(
             println("ERROR REGISTERING - incomplete parameter list")
             // ----- /Logging -----
 
-            return DefaultView.REGISTER_VIEW
+            return "forward:"+DefaultURL.USER_CREATE
         }
 
         val regResponse = service.register(RegisterRequest(
@@ -99,13 +101,13 @@ class AuthenticationController(
             println("ERROR REGISTERING - leading back to register page")
             // ----- /Logging -----
 
-            return DefaultView.REGISTER_VIEW
+            return "forward:"+DefaultURL.USER_CREATE
         } else {
             // ----- Logging -----
             println("successful registering, redirect set")
             // ----- /Logging -----
 
-            resp.sendRedirect(DefaultURL.POST_REGISTER_URL)
+            resp.sendRedirect(DefaultURL.USER_URL)
         }
         return DefaultView.REDIRECTOR
     }

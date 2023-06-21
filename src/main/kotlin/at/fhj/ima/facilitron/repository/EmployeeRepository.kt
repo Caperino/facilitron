@@ -17,9 +17,9 @@ interface EmployeeRepository : CrudRepository<Employee, Int> {
     fun findEmployeeByFirstNameContainingIgnoreCaseOrSecondNameContainingIgnoreCase(
         firstName: String,
         secondName: String
-    ):List<Employee>?
+    ):List<Employee>
 
-    fun findEmployeeByDepartmentNameContainingIgnoreCase(departmentName: String):List<Employee>?
+    fun findEmployeeByDepartmentNameContainingIgnoreCase(departmentName: String):List<Employee>
 
     fun findEmployeeById(id: Int):Employee?
 

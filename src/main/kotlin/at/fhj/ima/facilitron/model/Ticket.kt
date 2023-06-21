@@ -32,7 +32,7 @@ class Ticket (
     val openedBy: Employee,
     var closed:LocalDate? = null,
     @ManyToOne(fetch = FetchType.EAGER)
-    var closedBy: Employee?,
+    var closedBy: Employee? = null,
     var ticketStatus: TicketStatus = TicketStatus.OPEN,
     /*@OneToMany(fetch = FetchType.EAGER)
     val comments:MutableSet<TicketComment> = mutableSetOf(),*/

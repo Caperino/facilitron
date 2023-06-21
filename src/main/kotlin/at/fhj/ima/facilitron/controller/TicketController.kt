@@ -1,12 +1,10 @@
 package at.fhj.ima.facilitron.controller
 
+import at.fhj.ima.facilitron.model.Priority
 import at.fhj.ima.facilitron.model.Ticket
 import at.fhj.ima.facilitron.model.TicketComment
 import at.fhj.ima.facilitron.security.DefaultURL
-import at.fhj.ima.facilitron.service.CategoryService
-import at.fhj.ima.facilitron.service.EmployeeService
-import at.fhj.ima.facilitron.service.TicketCommentService
-import at.fhj.ima.facilitron.service.TicketService
+import at.fhj.ima.facilitron.service.*
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -72,4 +70,29 @@ class TicketController (
         }
     }
 
+    @GetMapping(DefaultURL.TICKET_CREATE_URL)
+    fun createTicket(
+        model: Model,
+        req : HttpServletRequest,
+        @RequestParam(required = false) subject: String,
+        @RequestParam(required = false) priority: String,
+        @RequestParam(required = false) category: String,
+        @RequestParam(required = false) description: String
+    ): String {
+        if (req.getParameter("subject").isNotEmpty() || req.getParameter("priority").isNotEmpty() || req.getParameter("category").isNotEmpty() || req.getParameter("description").isNotEmpty()) {
+            return try {
+                val prio = StringToPriority().convert(priority)!!
+                val cat = categoryService.getCategoryByName(category)
+                val employee = employeeService.getEmployeeById(model.getAttribute("id").toString().toInt())
+                val tk = Ticket(priority = prio, category = cat, subject = subject, description = description, openedBy = employee)
+                "ticket_overview"
+            } catch (e: Exception) {
+                model.addAttribute("error", "Couldn't open the Ticket!")
+                "newticket"
+            }
+        } else {
+            model.addAttribute("category", categoryService.getAllCategories())
+            return "newticket"
+        }
+    }
 }

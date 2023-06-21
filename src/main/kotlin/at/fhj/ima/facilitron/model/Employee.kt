@@ -31,7 +31,6 @@ class Employee(
     private val password:String,
     private val phone:String? = null,
     private val birthday:LocalDate,
-    private val picturePath:String? = null,
     private val accountStatus:AccountStatus = AccountStatus.ACTIVE,
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -44,6 +43,10 @@ class Employee(
     val department: Department? = null,
     private val entryDate: LocalDate = LocalDate.now(),
     private val workingType: WorkingType = WorkingType.FULLTIME,
+    @OneToOne
+    val profilePic:File? = null,
+    @ManyToOne(fetch = FetchType.EAGER)
+    val ocupation:Ocupation? = null
 ) : UserDetails {
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         return roles.map { SimpleGrantedAuthority(it.name) } as MutableList<out GrantedAuthority>

@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository
 interface SecurityRoleRepository : CrudRepository<SecurityRole, Int> {
 
     fun findByName(name:String):SecurityRole
+
 }

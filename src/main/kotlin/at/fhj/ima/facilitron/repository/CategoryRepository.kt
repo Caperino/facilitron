@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository
 interface CategoryRepository : CrudRepository<Category, Int> {
 
     fun findCategoriesByNameContainingIgnoreCase(name: String):List<Category>
+
+    fun findCategoryByName(name: String):Category
 }
