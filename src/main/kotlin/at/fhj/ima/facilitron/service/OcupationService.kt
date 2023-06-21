@@ -12,4 +12,8 @@ class OcupationService (
     fun saveOcupation(oc: Ocupation) {
         ocupationRepository.save(oc)
     }
+
+    fun getOcupationOfEmployee(id: Int): List<Ocupation>{
+        return ocupationRepository.findByEmployee_id(id)
+    }
 }

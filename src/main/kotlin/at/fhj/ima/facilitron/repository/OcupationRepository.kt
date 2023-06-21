@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface OcupationRepository : CrudRepository<Ocupation, Int> {
+
+    fun findByEmployee_id(id: Int):List<Ocupation>
 }
