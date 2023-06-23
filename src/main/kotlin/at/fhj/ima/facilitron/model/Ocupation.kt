@@ -9,7 +9,6 @@ class Ocupation (
     val id:Int? = null,
     val type:String? = null,
     val time:LocalDate = LocalDate.now(),
-    val workload:String? = null,
-    val employee_id:Int
+    val workload:String? = null
 ) {
 }

@@ -31,15 +31,12 @@ class EmployeeController (
         return if (req.getParameter("id").isNotEmpty()){
             val emp = employeeService.getEmployeeById(id)
             model.addAttribute("employee",emp)
-            model.addAttribute("working_history",ocupationService.getOcupationOfEmployee(emp.id!!))
             if (emp.profilePic != null) {
                 model.addAttribute("profilePic", emp.profilePic)
             }
             "employeedetails"
         } else {
             val emp = employeeService.getEmployeeById(model.getAttribute("id").toString().toInt())
-            model.addAttribute("working_history",ocupationService.getOcupationOfEmployee(emp.id!!))
-            model.addAttribute("working_history")
             if (emp.profilePic != null) {
                 model.addAttribute("profilePic", emp.profilePic)
             }

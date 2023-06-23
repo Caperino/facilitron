@@ -46,7 +46,6 @@ class Employee(
     @OneToOne
     val profilePic:File? = null,
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name="employee_id")
     val ocupation:MutableSet<Ocupation>? = null
 ) : UserDetails {
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
