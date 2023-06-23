@@ -54,7 +54,7 @@ class TicketController (
         return "ticketdetails"
     }
 
-    @DeleteMapping(DefaultURL.TICKET_DETAILS_URL)
+    @GetMapping(DefaultURL.TICKET_CLOSE_URL)
     fun closeTicket(
         model: Model,
         @RequestParam id: Int

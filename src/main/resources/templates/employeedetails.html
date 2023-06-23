@@ -30,8 +30,7 @@
 
     <!-- NAME -->
     <div class="d-flex justify-content-center mb-4">
-        <!--<h3 class="fac-headline mt-2" th:text="${employee.firstName}, ${employee.lastName}"></h3>-->
-        <h3 class="fac-headline mt-2">Firstname, Lastname</h3>
+        <h3 class="fac-headline mt-2" th:text="${employee.firstName} + ' ' + ${employee.secondName}"></h3>
     </div>
 
     <div class="mx-2 mx-md-4">
@@ -48,8 +47,7 @@
                             </svg>
                             <p class="text-dark-gray my-auto text-center me-2 me-md-0"><b>Birthday</b></p>
                         </div>
-                        <p class="text-dark-gray my-auto text-center">05/05/2002</p>
-                        <!-- <div class="col-sm-8" th:text="employee.birthday"></div> -->
+                        <div class="text-dark-gray my-auto text-center" th:text="${employee.birthday}"></div>
                     </div>
                 </div>
                 <div class="col-md mb-3 mb-md-0">
@@ -58,10 +56,9 @@
                             <svg stroke="currentColor" class="fac-icon me-2" stroke-width="0" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"></path>
                             </svg>
-                            <p class="text-dark-gray my-auto text-center me-2 me-md-0"><b>Gender</b></p>
-                            <!-- <div class="col-sm-8" th:text="employee.gender"></div> -->
+                            <div class="text-dark-gray my-auto text-center me-2 me-md-0"><b>Gender</b></div>
                         </div>
-                        <p class="text-dark-gray my-auto text-center">Toaster</p>
+                        <p class="text-dark-gray my-auto text-center" th:text="${employee.gender}"></p>
                     </div>
                 </div>
                 <div class="col-md">
@@ -72,8 +69,7 @@
                             </svg>
                             <p class="text-dark-gray my-auto text-center"><b>E-Mail</b></p>
                         </div>
-                        <p class="text-dark-gray my-auto" style="color: #1e88e5">fistname<wbr>.lastname<wbr>@facilitron.com</p>
-                        <!-- <div class="col-sm-8" th:text="employee.email"></div> -->
+                        <div class="text-dark-gray my-auto" style="color: #1e88e5" th:text="${employee.mail}"></div>
                     </div>
                 </div>
             </div>
@@ -91,8 +87,7 @@
                             </svg>
                             <p class="text-dark-gray my-auto text-center me-2 me-md-0"><b>Entry Date</b></p>
                         </div>
-                        <p class="text-dark-gray my-auto text-center">05/05/2023</p>
-                        <!-- <div class="col-sm-8" th:text="employee.entrydate"></div> -->
+                        <p class="text-dark-gray my-auto text-center" th:text="${employee.entryDate}"></p>
                     </div>
                 </div>
                 <div class="col-md mb-3 mb-md-0">
@@ -103,8 +98,7 @@
                             </svg>
                             <p class="text-dark-gray my-auto text-center"><b>Roles</b></p>
                         </div>
-                        <p class="text-dark-gray my-auto"><b>Admin</b>, <wbr>Employee<wbr></p>
-                        <!-- <li th:each="role : ${employee.roles}"> </li>-->
+                        <p class="text-dark-gray my-auto" th:each="role : ${employee.roles}" th:text="${role.name}"></p>
                     </div>
                 </div>
                 <div class="col-md">
@@ -115,8 +109,7 @@
                             </svg>
                             <p class="text-dark-gray my-auto text-center me-2 me-md-0"><b>Working Type</b></p>
                         </div>
-                        <p class="text-dark-gray my-auto text-center">Full Time (40 hrs)</p>
-                        <!-- <div class="col-sm-8" th:text="employee.workingtype"></div> -->
+                        <p class="text-dark-gray my-auto text-center" th:text="${employee.workingType}"></p>
                     </div>
                 </div>
             </div>
@@ -136,35 +129,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="table-item">
-                        <th scope="row">05/05/2022</th>
-                        <td>8:12</td>
-                        <td>18:43</td>
-                        <td>Footer</td>
-                    </tr>
-                    <tr class="table-item">
-                        <th scope="row">04/05/2022</th>
-                        <td>8:12</td>
-                        <td>18:43</td>
-                        <td>Header</td>
-                    </tr>
-                    <tr class="table-item">
-                        <th scope="row">03/05/2022</th>
-                        <td>8:12</td>
-                        <td>18:43</td>
-                        <td>Ich weiß nicht</td>
-                    </tr>
-                    <tr class="table-item">
-                        <th scope="row">03/05/2022</th>
-                        <td>8:12</td>
-                        <td>18:43</td>
-                        <td>Ich weiß nicht</td>
-                    </tr>
-                    <tr class="table-item">
-                        <th scope="row" style="border-bottom-left-radius: 0.5rem">03/05/2022</th>
-                        <td>8:12</td>
-                        <td>18:43</td>
-                        <td style="border-bottom-right-radius: 0.5rem">Ich weiß nicht</td>
+                    <tr class="table-item" th:each="occup : ${employee.ocupation}">
+                        <th scope="row" th:text="${occup.time}"></th>
+                        <td th:text="${occup.arrival}"></td>
+                        <td th:text="${occup.departure}"></td>
+                        <td th:text="${occup.workload}"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -172,9 +141,9 @@
         </div>
 
         <!-- BUTTONS -->
-        <div class="d-flex justify-content-end">
+        <!--<div class="d-flex justify-content-end">
             <a href="#" class="btn btn-primary fac-btn-dark-blue mt-4 mb-4">Change Password</a>
-        </div>
+        </div> -->
     </div>
 </div>
 

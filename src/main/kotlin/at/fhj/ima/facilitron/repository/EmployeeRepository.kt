@@ -14,9 +14,10 @@ interface EmployeeRepository : CrudRepository<Employee, Int> {
 
     fun findByMail(mail:String):Employee?
 
-    fun findEmployeeByFirstNameContainingIgnoreCaseOrSecondNameContainingIgnoreCase(
+    fun findEmployeeByFirstNameContainingIgnoreCaseOrSecondNameContainingIgnoreCaseOrDepartmentNameContainingIgnoreCase(
         firstName: String,
-        secondName: String
+        secondName: String,
+        departmentName: String
     ):List<Employee>
 
     fun findEmployeeByDepartmentNameContainingIgnoreCase(departmentName: String):List<Employee>

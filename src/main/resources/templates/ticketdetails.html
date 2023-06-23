@@ -30,14 +30,12 @@
 
   <!-- NAME -->
   <div class="d-flex justify-content-center mb-4">
-    <!--<h3 class="heading mt-2" th:text="${ticket.details}"></h3>-->
-    <h3 class="fac-headline mt-2">Ticketname</h3>
+    <h3 class="heading mt-2" th:text="${ticketDetails.subject}"></h3>
   </div>
 
   <div class="mx-2 mx-md-4">
-    <!--PERSONAL INFO -->
+    <!--TICKET INFO -->
     <h2 class="fac-headline mb-4 p-2 border-2 border-bottom">Ticket Details</h2>
-
     <div class="rounded-content mb-4">
       <div class="row">
         <div class="col-md mb-3 mb-md-0">
@@ -48,8 +46,7 @@
               </svg>
               <p class="text-dark-gray my-auto text-center me-2 me-md-0"><b>Opened by</b></p>
             </div>
-            <p class="text-dark-gray my-auto text-center">Hans</p>
-            <!-- <div class="col-sm-8" th:text="ticket.owner"></div> -->
+            <p class="text-dark-gray my-auto text-center" th:text="${ticketDetails.openedBy.firstName} + ' ' + ${ticketDetails.openedBy.secondName}"></p>
           </div>
         </div>
 
@@ -61,8 +58,7 @@
               </svg>
               <p class="text-dark-gray my-auto text-center me-2 me-md-0"><b>Date opened</b></p>
             </div>
-            <p class="text-dark-gray my-auto text-center">23/23/23</p>
-            <!-- <div class="col-sm-8" th:text="ticket.openeddate"></div> -->
+            <p class="text-dark-gray my-auto text-center" th:text="${ticketDetails.opened}"></p>
           </div>
         </div>
 
@@ -74,8 +70,7 @@
               </svg>
               <p class="text-dark-gray my-auto text-center me-2 me-md-0"><b>Priority</b></p>
             </div>
-            <p class="text-dark-gray my-auto text-center">High</p>
-            <!-- <div class="col-sm-8" th:text="ticket.priority"></div> -->
+            <p class="text-dark-gray my-auto text-center" th:text="${ticketDetails.priority}"></p>
           </div>
         </div>
       </div>
@@ -84,11 +79,7 @@
     <div class="col p-4">
       <div class="col rounded-details mb-4">
           <div class="col"><b>Ticket description:</b></div>
-          <!-- <div class="col-sm-8" th:text="ticket.description"></div> -->
-          <div class="col p-2">Lorem Ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum
-            , lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum
-            , lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum
-          </div>
+          <div class="col p-2" th:text="${ticketDetails.description}"></div>
         </div>
     </div>
 
@@ -96,53 +87,48 @@
     <h2 class="fac-headline border-2 border-bottom mb-4">Comment History</h2>
     <div class="rounded-content mb-4">
 
-      <!-- <div th:each="comment : ${comments}"> -->
-      <div>
+      <div th:each="comment : ${ticketComments}">
+        <div th:switch="${comment.commenter}">
 
-        <!-- <div th:switch="comment.owner"> -->
-        <!-- Support Reply -->
-        <!-- <div th:case="support"> -->
-        <div>
-          <div class="d-flex justify-content-end">
-            <div class="col rounded-support-reply">
-              Welcome to the tech Support. We are investigating your issue.
-            </div>
-          </div>
-          <div class="d-flex justify-content-end p-1">
-            <p> 23/23/23, 23:23</p>
-          </div>
-        </div>
-
-        <!-- Employee Reply -->
-          <!-- <div th:case="*"> -->
-          <div>
+          <!-- Employee Reply -->
+          <div th:case="${ticketDetails.openedBy}">
             <div class="d-flex justify-content-start">
-              <div class="col rounded-employee-reply">
-                OK HEAST GSINDL!
-              </div>
+              <div class="col rounded-employee-reply" th:text="${comment.comment}"></div>
             </div>
             <div class="d-flex justify-content-start p-1">
-              <p> 23/23/23, 23:23</p>
+              <p th:text="${comment.postedTime}"></p>
             </div>
           </div>
 
-        <!-- </div> -->
+          <!-- Support Reply -->
+          <div th:case="*">
+            <div class="d-flex justify-content-end">
+              <div class="col rounded-support-reply" th:text="${comment.comment}"></div>
+            </div>
+            <div class="d-flex justify-content-end p-1">
+              <p th:text="${comment.postedTime}"></p>
+            </div>
+          </div>
 
+        </div>
       </div>
     </div>
 
     <!-- New Comment -->
     <h2 class="fac-headline mb-4 p-2 border-2 border-bottom">New Comment</h2>
-    <div class="form-group mb-4">
-      <div class="col p-2">
-        <textarea class="form-control" name="newComment" id="newComment" rows="7"></textarea>
+    <form action="/ticket_comment" method="post">
+      <input hidden="hidden" name="ticketId" th:value="${ticketDetails.id}">
+      <div class="form-group mb-4">
+        <div class="col p-2">
+          <textarea class="form-control" name="comment" id="comment" rows="7"></textarea>
+        </div>
+        <button type="submit" id="CommentSubmitter" class="btn btn-primary fac-btn-dark-blue">Reply</button>
       </div>
-    </div>
+    </form>
 
     <!-- BUTTONS -->
     <div class="d-flex justify-content-end mb-4">
-      <a href="#" class="btn btn-primary fac-btn-dark-blue me-3">Close Ticket</a>
-      <a href="#" type="submit" class="btn btn-primary fac-btn-dark-blue">Reply</a>
+      <a href="/ticket_close" class="btn btn-primary fac-btn-dark-blue me-3">Close Ticket</a>
     </div>
   </div>
 </div>

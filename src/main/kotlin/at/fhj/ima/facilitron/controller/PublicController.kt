@@ -31,7 +31,7 @@ class PublicController (
     ):String{
         // add default personal details inside JWT to model
         // ONLY VALID FOR AUTHENTICATED RESOURCES
-        DefaultClaim.claimSet.forEach { model.addAttribute(req.getAttribute(it))  }
+        DefaultClaim.claimSet.forEach { model.addAttribute(it, req.getAttribute(it))  }
 
         return "hidden"
     }

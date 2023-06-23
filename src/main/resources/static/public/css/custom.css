@@ -160,7 +160,7 @@ a.header-dark:hover, a.footer-dark:hover, a.header-dark:focus, a.footer-dark:foc
     width: 16em;
 }
 .fac-employee-search{
-    width: 20em;
+    min-width: 20em;
 }
 /* TICKETDETAILS */
 .rounded-details{

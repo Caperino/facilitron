@@ -26,11 +26,11 @@ class Employee(
     val id:Int? = null,
     val firstName:String,
     val secondName:String,
-    private val mail:String,
-    private val gender:Gender,
+    val mail:String,
+    val gender:Gender,
     private val password:String,
     private val phone:String? = null,
-    private val birthday:LocalDate,
+    val birthday:LocalDate,
     private val accountStatus:AccountStatus = AccountStatus.ACTIVE,
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

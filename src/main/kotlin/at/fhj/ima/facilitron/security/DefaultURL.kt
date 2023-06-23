@@ -7,9 +7,9 @@ object DefaultURL {
     const val CONTACT_URL = "/contact"
 
     // for authentication redirects
-    const val LOGIN_PAGE_URL = "/#Login"                // TODO set correct URL POST TO AUTH
-    const val POST_LOGIN_URL = "/hidden"                // TODO set correct URL
-    const val LOGOUT_PAGE_URL = "/auth/logout"          // TODO set correct URL
+    const val LOGIN_PAGE_URL = "/auth/login"                // TODO set correct URL POST TO AUTH
+    const val POST_LOGIN_URL = "/hidden"                    // TODO set correct URL
+    const val LOGOUT_PAGE_URL = "/auth/logout"              // TODO set correct URL
 
     // for register redirects
     const val REGISTER_PAGE_URL = "/auth/register"      // TODO set correct URL
@@ -21,6 +21,7 @@ object DefaultURL {
     // standard URLs
     const val TICKET_URL = "/ticket_overview"
     const val TICKET_DETAILS_URL = "/ticket_details"
+    const val TICKET_CLOSE_URL = "/ticket_close"
     const val TICKET_COMMENT_URL = "/ticket_comment"
     const val TICKET_CREATE_URL = "/ticket_create"
     const val USER_URL = "/user_overview"

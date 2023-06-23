@@ -19,8 +19,8 @@ class EmployeeService(
         return employeeRepository.findAll().iterator().asSequence().toList()
     }
 
-    fun findEmployessByName(search: String): List<Employee> {
-        return employeeRepository.findEmployeeByFirstNameContainingIgnoreCaseOrSecondNameContainingIgnoreCase(search, search)
+    fun findEmployeesByName(search: String): List<Employee> {
+        return employeeRepository.findEmployeeByFirstNameContainingIgnoreCaseOrSecondNameContainingIgnoreCaseOrDepartmentNameContainingIgnoreCase(search, search, search)
     }
 
     fun saveEmployee(emp: Employee) {

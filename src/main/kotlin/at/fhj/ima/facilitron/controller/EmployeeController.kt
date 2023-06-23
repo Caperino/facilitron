@@ -26,9 +26,9 @@ class EmployeeController (
     fun userDetails(
         req: HttpServletRequest,
         model: Model,
-        @RequestParam(required = false) id:Int
+        @RequestParam(required = false) id:Int?
     ):String {
-        return if (req.getParameter("id").isNotEmpty()){
+        return if (id != null){
             val emp = employeeService.getEmployeeById(id)
             model.addAttribute("employee",emp)
             if (emp.profilePic != null) {
@@ -36,7 +36,8 @@ class EmployeeController (
             }
             "employeedetails"
         } else {
-            val emp = employeeService.getEmployeeById(model.getAttribute("id").toString().toInt())
+            val emp = employeeService.getEmployeeById(req.getAttribute("id").toString().toInt())
+            model.addAttribute("employee",emp)
             if (emp.profilePic != null) {
                 model.addAttribute("profilePic", emp.profilePic)
             }
@@ -48,10 +49,10 @@ class EmployeeController (
     fun getPageWithAllUser(
         req: HttpServletRequest,
         model: Model,
-        @RequestParam(required = false) q:String = ""
+        @RequestParam(required = false) q:String? = ""
     ): String {
-        return if (req.getParameter("q").isNotEmpty()){
-            val emp = employeeService.findEmployessByName(q)
+        return if (req.getParameter("q") != null){
+            val emp = employeeService.findEmployeesByName(q!!)
             model.addAttribute("employees",emp)
             "employeeoverview"
         } else {
@@ -62,11 +63,15 @@ class EmployeeController (
 
     @GetMapping(DefaultURL.USER_CREATE)
     fun userCreate(
-        model: Model
+        model: Model,
+        @RequestParam(required = false) emplID:Int?
     ):String {
+        if (emplID != null){
+            model.addAttribute("employee", employeeService.getEmployeeById(emplID))
+        }
         model.addAttribute("departments", departmentService.getAllDepartments())
         model.addAttribute("roles",roleService.getAllRoles())
-        return "employeedetails"
+        return "newemployee"
     }
 
 }

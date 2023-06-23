@@ -12,7 +12,7 @@
 
 <div class="container-md px-3 py-4 content">
 
-    <!-- BREADCRUMB -->
+  <!-- BREADCRUMB -->
   <div class="d-flex justify-content-start p-3">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
@@ -23,7 +23,7 @@
     </nav>
   </div>
 
-  <form action="/auth/register" method="post">
+  <form action="{TODO}" method="post">
     <div class="mx-2 mx-md-4">
       <!--PERSONAL INFO -->
       <h1 class="fac-headline mb-4 p-2 border-2 border-bottom">Personal Info</h1>
@@ -31,17 +31,17 @@
         <div class="row mb-4">
           <div class="col-md-6 mb-4 mb-md-0">
             <p class="text-dark-gray">Firstname</p>
-            <input type="text" name="firstName" id="firstName" class="form-control text-dark-gray">
+            <input type="text" name="firstName" id="firstName" class="form-control text-dark-gray" th:text="${employee} != null ? ${employee.firstName} : ''">
           </div>
           <div class="col-md-6">
             <p class="text-dark-gray">Lastname</p>
-            <input type="text" name="secondName" id="secondName" class="form-control text-dark-gray">
+            <input type="text" name="secondName" id="secondName" class="form-control text-dark-gray" th:text="${employee} != null ? ${employee.secondName} : ''">
           </div>
         </div>
         <div class="row mb-4">
           <div class="col-md-6 mb-4 mb-md-0">
             <p class="text-dark-gray">Birthday</p>
-            <input type="date" name="birthday" id="birthday" class="form-control text-dark-gray"/>
+            <input type="date" name="birthday" id="birthday" class="form-control text-dark-gray" th:text="${employee} != null ? ${employee.birthday} : ''"/>
           </div>
           <div class="col-md-6">
             <p class="text-dark-gray">Gender</p>
@@ -52,12 +52,59 @@
             </select>
           </div>
         </div>
+        <div class="col">
+          <p class="text-dark-gray">Profile Picture</p>
+          <input id="profilepicture" name="profilepicture" class="form-control text-dark-gray" type="file"/>
+        </div>
+      </div>
+
+      <!-- COMPANY INFO -->
+      <h1 class="fac-headline mb-4 p-2 border-2 border-bottom">Company Info</h1>
+      <div class="rounded-content mb-4">
+        <div class="row mb-4">
+          <div class="col">
+            <p class="text-dark-gray">Roles</p>
+            <select class="form-select text-dark-gray" id="roles" data-placeholder="Choose anything" multiple>
+              <option th:each="role : ${roles}" th:text="${role.name}" th:value="${role.name}"></option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <div class="col">
+            <p class="text-dark-gray">Working Type</p>
+            <select id="workingType" name="workingType" class="form-select text-dark-gray">
+              <option selected>FULLTIME</option>
+              <option value="1">PARTTIME</option>
+              <option value="2">MINIMAL</option>
+              <option value="3">VOLUNTARY</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <div class="col">
+            <p class="text-dark-gray">Departments</p>
+            <select id="department" name="department" class="form-select text-dark-gray">
+              <option th:each="department : ${departments}" th:text="${department.name}" th:value="${department.name}"></option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <div class="col">
+            <p class="text-dark-gray">Entry Date</p>
+            <input type="date" name="entryDate" id="entryDate" class="form-control text-dark-gray" th:text="${employee} != null ? ${employee.entryDate} : ''">
+          </div>
+        </div>
+
         <div class="row">
           <div class="col">
             <p class="text-dark-gray">Password</p>
             <input type="password" name="password" id="password" class="form-control text-dark-gray">
           </div>
         </div>
+
       </div>
 
       <!-- BUTTONS -->

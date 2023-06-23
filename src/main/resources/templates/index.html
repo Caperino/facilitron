@@ -33,11 +33,11 @@
         <p class="landing-text-block mb-5">Facilitron is a Web Application that allows you to manage your Employees and Organization in an innovative and efficient way.</p>
         <div>
           <p class="text-center border-2 border-bottom mb-2 pb-2 landing-quote">"We value customer satisfaction and quality."</p>
-          <p class="text-end landing-quote">- TK Inc.</p>
+          <p class="text-end landing-quote">- Facilitron</p>
         </div>
       </div>
       <div class="col-md-4 text-center">
-        <img src="/public/images/Facilitron.jpg" alt="Facilitron" class="landing-logo"/>
+        <img src="/public/images/Facilitron.svg" alt="Facilitron" class="landing-logo"/>
       </div>
     </div>
   </div>
@@ -49,79 +49,37 @@
 
   <div class="landing-head-block-inverted" id="Login">
     <div class="form-container p-4 p-md-5">
-      <form>
+      <form action="/auth/login" method="post">
         <h1 class="mb-4 mb-md-5 text-dark-gray">Employee Login</h1>
         <div class="form-group mb-4">
-          <input type="email" class="form-control form-field"  name="mail" id="mail" aria-describedby="emailHelp" placeholder="Email Address">
+          <input type="email" class="form-control form-field" name="mail" id="mail" aria-describedby="emailHelp" placeholder="Email Address">
         </div>
         <div class="form-group mb-4 mb-md-5 ">
-          <input type="password" class="form-control form-field" id="password" placeholder="Password">
-        </div>
-        <div class="form-check mb-3">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1">
-          <label class="form-check-label text-dark-gray" for="exampleCheck1">Remember me</label>
+          <input type="password" class="form-control form-field" name="password" id="password" placeholder="Password">
         </div>
         <div class="text-end">
-          <button type="submit" id="submitter" class="btn btn-primary fac-btn-dark-blue">Login</button>
+          <button type="submit" id="Loginsubmitter" class="btn btn-primary fac-btn-dark-blue">Login</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <div>
+    <p class="text-dark-gray">Roles</p>
+    <div class="col" th:each="department : ${departments}">
+      <p th:text="${department.name}"></p>
     </div>
   </div>
 
   <div class="departments-container" id="Departments">
     <h1 class="fac-headline mb-4 p-2 border-2 border-bottom">Our Departments</h1>
     <div class="row">
-      <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+      <div class="col-lg-4 col-md-6 col-sm-12 mb-4" th:each="department : ${departments}">
         <div class="card mx-auto" style="width: 18rem;">
           <img src="https://picsum.photos/300/200" class="card-img-top" alt="...">
           <div class="card-body">
-            <h5 class="card-title text-dark-gray">Department 1</h5>
-            <p class="card-text text-muted">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-primary fac-btn-dark-blue">View Employees</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-        <div class="card mx-auto" style="width: 18rem;">
-          <img src="https://picsum.photos/300/200" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title text-dark-gray">Department 2</h5>
-            <p class="card-text text-muted">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-primary fac-btn-dark-blue">View Employees</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-        <div class="card mx-auto" style="width: 18rem;">
-          <img src="https://picsum.photos/300/200" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title text-dark-gray">Department 3</h5>
-            <p class="card-text text-muted">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-primary fac-btn-dark-blue">View Employees</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-        <div class="card mx-auto" style="width: 18rem;">
-          <img src="https://picsum.photos/300/200" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title text-dark-gray">Department 4</h5>
-            <p class="card-text text-muted">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-primary fac-btn-dark-blue">View Employees</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-        <div class="card mx-auto" style="width: 18rem;">
-          <img src="https://picsum.photos/300/200" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title text-dark-gray">Department 5</h5>
-            <p class="card-text text-muted">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-primary fac-btn-dark-blue">View Employees</a>
+            <h5 class="card-title text-dark-gray" th:text="${department.name}"></h5>
+            <p class="card-text text-muted" th:text="${department.description}"></p>
           </div>
         </div>
       </div>
@@ -130,19 +88,19 @@
 
   <div class="landing-head-block-purple" id="Contact">
     <div class="form-container p-4 p-md-5">
-      <form>
+      <form action="/contact" method="post">
         <h1 class="mb-4 mb-md-5 text-dark-gray">Contact</h1>
         <div class="form-group mb-4">
-          <input type="text" class="form-control form-field" id="contact-name" placeholder="Password">
+          <input type="text" class="form-control form-field" id="name" placeholder="Name">
         </div>
         <div class="form-group mb-4">
-          <input type="email" class="form-control form-field" id="contact-mail" aria-describedby="emailHelp" placeholder="Email Address">
+          <input type="email" class="form-control form-field" id="email" aria-describedby="emailHelp" placeholder="Email Address">
         </div>
         <div class="form-group mb-4 mb-md-5 ">
-          <textarea class="form-control" id="contact-textarea" rows="7"></textarea>
+          <textarea class="form-control" id="message" rows="7"></textarea>
         </div>
         <div class="text-end">
-          <button type="submit" class="btn btn-primary fac-btn-purple">Submit</button>
+          <button type="submit" id="Contactsubmitter" class="btn btn-primary fac-btn-purple">Submit</button>
         </div>
       </form>
     </div>
