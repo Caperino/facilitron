@@ -100,4 +100,8 @@ class Employee(
         }
     }
 
+    fun concatRoles():String{
+        return roles.fold("") { acc, securityRole -> acc + "${securityRole.name}, " }.removeSuffix(", ")
+    }
+
 }
