@@ -2,7 +2,9 @@ package at.fhj.ima.facilitron
 
 import at.fhj.ima.facilitron.model.Employee
 import at.fhj.ima.facilitron.model.Gender
+import at.fhj.ima.facilitron.model.Ocupation
 import at.fhj.ima.facilitron.service.EmployeeService
+import at.fhj.ima.facilitron.service.OcupationService
 import at.fhj.ima.facilitron.service.SecurityRoleService
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -16,7 +18,7 @@ import java.time.LocalDate
 class FacilitronApplication(private val passwordEncoder: PasswordEncoder) {
 
 	@Bean
-	fun init(securityRoleService: SecurityRoleService, employeeService: EmployeeService) = CommandLineRunner{
+	fun init(securityRoleService: SecurityRoleService, employeeService: EmployeeService, ocupationService: OcupationService) = CommandLineRunner{
 
 		// ----- ROLES -----
 		securityRoleService.saveRole("EMPLOYEE")
@@ -28,7 +30,8 @@ class FacilitronApplication(private val passwordEncoder: PasswordEncoder) {
 
 		// ----- EMPLOYEES -----
 		employeeService.saveEmployee(Employee(firstName = "Max", secondName = "Mustermann", mail="max.mustermann@mustermail.com",gender=Gender.MALE, password = BCryptPasswordEncoder().encode("testpassword"), birthday = LocalDate.now()))
-
+		ocupationService.saveOcupation(Ocupation(type="Arrival", employee = employeeService.getEmployeeById(1)))
+		ocupationService.saveOcupation(Ocupation(type="Departure", employee = employeeService.getEmployeeById(1), workload = "Something"))
 	}
 
 }

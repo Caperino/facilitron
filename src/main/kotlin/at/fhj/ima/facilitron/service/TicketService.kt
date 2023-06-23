@@ -4,6 +4,7 @@ import at.fhj.ima.facilitron.model.*
 import at.fhj.ima.facilitron.repository.TicketRepository
 import org.springframework.stereotype.Service
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Service
 class TicketService (
@@ -31,7 +32,7 @@ class TicketService (
 
     fun closeTicket(tk: Ticket, employee: Employee):Boolean {
         try {
-            tk.closed = LocalDate.now()
+            tk.closed = LocalDateTime.now()
             tk.closedBy = employee;
             tk.ticketStatus = TicketStatus.CLOSED
             ticketRepository.save(tk)

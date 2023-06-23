@@ -44,9 +44,7 @@ class Employee(
     private val entryDate: LocalDate = LocalDate.now(),
     private val workingType: WorkingType = WorkingType.FULLTIME,
     @OneToOne
-    val profilePic:File? = null,
-    @OneToMany(fetch = FetchType.EAGER)
-    val ocupation:MutableSet<Ocupation>? = null
+    val profilePic:File? = null
 ) : UserDetails {
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         return roles.map { SimpleGrantedAuthority(it.name) } as MutableList<out GrantedAuthority>

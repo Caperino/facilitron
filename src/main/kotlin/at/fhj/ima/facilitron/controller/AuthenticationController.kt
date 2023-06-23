@@ -61,7 +61,7 @@ class AuthenticationController(
     fun registerHandler(
         req: HttpServletRequest,
         resp: HttpServletResponse,
-        model:Model,
+        model: Model,
         @RequestParam firstname:String?,
         @RequestParam secondname:String?,
         @RequestParam mail:String?,
