@@ -25,7 +25,7 @@
 
     <!-- PICTURE -->
     <div class="d-flex justify-content-center mb-2">
-        <img src="/public/images/noprofilepicture.png" alt="User Profile" class="profile-image">
+        <img th:src="${employee.getProfilePic() != null} ? '/public/images/' + ${employee.getProfilePic().originalFileName} + ${employee.getProfilePic().getContentType()} : '/public/images/noprofilepicture.png'" alt="User Profile" class="profile-image">
     </div>
 
     <!-- NAME -->
@@ -98,7 +98,7 @@
                             </svg>
                             <p class="text-dark-gray my-auto text-center"><b>Roles</b></p>
                         </div>
-                        <p class="text-dark-gray my-auto" th:each="role : ${employee.roles}" th:text="${role.name}"></p>
+                        <p class="text-dark-gray my-auto" th:text="${employee.concatRoles()}"></p>
                     </div>
                 </div>
                 <div class="col-md">
@@ -129,10 +129,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="table-item" th:each="occup : ${employee.ocupation}">
-                        <th scope="row" th:text="${occup.time}"></th>
-                        <td th:text="${occup.arrival}"></td>
-                        <td th:text="${occup.departure}"></td>
+                    <tr class="table-item" th:each="occup : ${ocuptions}">
+                        <th scope="row" th:text="${occup.getDate()}"></th>
+                        <td th:text="${occup.getArrivalTime()}"></td>
+                        <td th:text="${occup.getDepartureTime()}"></td>
                         <td th:text="${occup.workload}"></td>
                     </tr>
                     </tbody>
