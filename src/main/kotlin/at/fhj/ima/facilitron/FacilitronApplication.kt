@@ -35,12 +35,12 @@ class FacilitronApplication(private val passwordEncoder: PasswordEncoder) {
 		employeeService.saveEmployee(Employee(firstName = "Susi", secondName = "Unbesorgt", mail="test@idk.com",gender=Gender.FEMALE, password = BCryptPasswordEncoder().encode("1234"), birthday = LocalDate.now(), roles = mutableSetOf(securityRoleRepository.findByName("HR"), securityRoleRepository.findByName("EMPLOYEE")), workingType = WorkingType.PARTTIME))
 
 		// Occupations
-		ocupationService.saveOcupation(Ocupation(type="Arrival", employee = employeeService.getEmployeeById(1)))
-		ocupationService.saveOcupation(Ocupation(type="Departure", employee = employeeService.getEmployeeById(1), workload = "Something"))
-		ocupationService.saveOcupation(Ocupation(type="Arrival", employee = employeeService.getEmployeeById(2)))
-		ocupationService.saveOcupation(Ocupation(type="Departure", employee = employeeService.getEmployeeById(2), workload = "Security Audits"))
-		ocupationService.saveOcupation(Ocupation(type="Arrival", employee = employeeService.getEmployeeById(2)))
-		ocupationService.saveOcupation(Ocupation(type="Departure", employee = employeeService.getEmployeeById(2), workload = "Bug Fixes"))
+		ocupationService.saveOcupation(Ocupation(type=OcupationType.ARRIVAL, employee = employeeService.getEmployeeById(1)))
+		ocupationService.saveOcupation(Ocupation(type=OcupationType.DEPATURE, employee = employeeService.getEmployeeById(1), workload = "Something"))
+		ocupationService.saveOcupation(Ocupation(type=OcupationType.ARRIVAL, employee = employeeService.getEmployeeById(2)))
+		ocupationService.saveOcupation(Ocupation(type=OcupationType.DEPATURE, employee = employeeService.getEmployeeById(2), workload = "Security Audits"))
+		ocupationService.saveOcupation(Ocupation(type=OcupationType.ARRIVAL, employee = employeeService.getEmployeeById(2)))
+		ocupationService.saveOcupation(Ocupation(type=OcupationType.DEPATURE, employee = employeeService.getEmployeeById(2), workload = "Bug Fixes"))
 
 		// Departments
 		departmentRepository.save(Department(name = "Business", description = "taking your money...", head = employeeService.getEmployeeById(1)))
