@@ -10,6 +10,7 @@ import java.time.LocalDate
  * @param comment is the actual comment text
  * @param commenter is the employee who wrote the comment
  * @param postedTime is the time the comment was posted
+ * @param ticket is the link to the ticket
  */
 @Entity
 class TicketComment (

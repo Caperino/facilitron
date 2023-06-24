@@ -17,7 +17,6 @@ import java.time.LocalDateTime
  * @param closed is the time the ticket was closed
  * @param closedBy is the employee that closed the ticket
  * @param ticketStatus is the current status of the ticket
- * @param comments is the chat history
  */
 @Entity
 class Ticket (
@@ -34,9 +33,7 @@ class Ticket (
     var closed:LocalDateTime? = null,
     @ManyToOne(fetch = FetchType.EAGER)
     var closedBy: Employee? = null,
-    var ticketStatus: TicketStatus = TicketStatus.OPEN,
-    /*@OneToMany(fetch = FetchType.EAGER)
-    val comments:MutableSet<TicketComment> = mutableSetOf(),*/
+    var ticketStatus: TicketStatus = TicketStatus.OPEN
 ) {
     fun isClosed():Boolean {
         return ticketStatus == TicketStatus.CLOSED;
