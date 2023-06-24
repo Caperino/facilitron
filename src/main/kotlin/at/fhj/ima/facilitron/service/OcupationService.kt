@@ -24,4 +24,8 @@ class OcupationService (
             ocupationRepository.save(oc)
         }
     }
+
+    fun getOcuptationOfEmployee(employee: Employee):List<Ocupation> {
+        return ocupationRepository.getOcupationsByEmployee(employee)
+    }
 }

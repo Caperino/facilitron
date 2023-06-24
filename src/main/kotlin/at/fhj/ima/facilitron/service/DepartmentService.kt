@@ -11,4 +11,8 @@ class DepartmentService (
     fun getAllDepartments():List<Department>{
         return departmentRepository.findAll().iterator().asSequence().toList()
     }
+
+    fun saveDepartment(department: Department) {
+        departmentRepository.save(department)
+    }
 }

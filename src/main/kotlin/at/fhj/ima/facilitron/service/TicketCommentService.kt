@@ -22,4 +22,8 @@ class TicketCommentService (
             false
         }
     }
+
+    fun saveTicketComment(comment: TicketComment) {
+        ticketCommentRepository.save(comment)
+    }
 }

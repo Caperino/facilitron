@@ -24,25 +24,25 @@ import java.time.LocalDate
 class Employee(
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     val id:Int? = null,
-    val firstName:String,
-    val secondName:String,
-    val mail:String,
-    val gender:Gender,
-    private val password:String,
-    private val phone:String? = null,
+    var firstName:String,
+    var secondName:String,
+    var mail:String,
+    var gender:Gender,
+    private var password:String,
+    private var phone:String? = null,
     val birthday:LocalDate,
-    private val accountStatus:AccountStatus = AccountStatus.ACTIVE,
+    private var accountStatus:AccountStatus = AccountStatus.ACTIVE,
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "employee_roles",
         joinColumns = [JoinColumn(name = "employee_id", referencedColumnName = "id")],
         inverseJoinColumns = [JoinColumn(name = "role_id", referencedColumnName = "id")]
     )
-    val roles:MutableSet<SecurityRole> = mutableSetOf(),
+    var roles:MutableSet<SecurityRole> = mutableSetOf(),
     @ManyToOne(fetch = FetchType.EAGER)
-    val department: Department? = null,
-    private val entryDate: LocalDate = LocalDate.now(),
-    private val workingType: WorkingType = WorkingType.FULLTIME,
+    var department: Department? = null,
+    private var entryDate: LocalDate = LocalDate.now(),
+    private var workingType: WorkingType = WorkingType.FULLTIME,
     @OneToOne
     val profilePic:File? = null
 ) : UserDetails {

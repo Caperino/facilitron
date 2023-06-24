@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository
 interface OcupationRepository : CrudRepository<Ocupation, Int> {
 
     fun getOcupationByDepartureTimeIsNullAndEmployee(employee: Employee):Ocupation
+
+    fun getOcupationsByEmployee(employee: Employee):List<Ocupation>
 }

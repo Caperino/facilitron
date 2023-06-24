@@ -19,4 +19,8 @@ class CategoryService (
     fun getAllCategories():List<Category> {
         return categoryRepository.findAll().iterator().asSequence().toList()
     }
+
+    fun saveCategory(category: Category) {
+        categoryRepository.save(category)
+    }
 }

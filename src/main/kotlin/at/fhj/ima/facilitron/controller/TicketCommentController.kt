@@ -28,6 +28,7 @@ class TicketCommentController(
         val ticket = ticketService.getTicketDetails(ticketId)
         val ticketComment = TicketComment(comment = comment, commenter = employee, ticket = ticket)
         model.addAttribute("ticketComments",ticketCommentService.findTicketCommentsByTicket(ticket))
+        ticketCommentService.addTicketComment(ticketComment)
         return "ticketdetails"
     }
 }
