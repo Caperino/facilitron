@@ -6,13 +6,16 @@ import at.fhj.ima.facilitron.service.*
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import jakarta.validation.Valid
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
 import java.awt.image.BufferedImage
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.time.LocalDate
 import java.util.*
 import javax.imageio.ImageIO
 
@@ -91,17 +94,31 @@ class EmployeeController (
     @PostMapping(DefaultURL.USER_EDIT)
     fun userEditSave(
         model: Model,
+        @RequestParam id:Int? = null,
         @RequestParam firstname:String? = null,
         @RequestParam lastname:String? = null,
+        @RequestParam mail:String? = null,
         @RequestParam birthday:String? = null,
         @RequestParam gender:String? = null,
         @RequestParam roles:List<String>? = null,
         @RequestParam workingtype:String? = null,
         @RequestParam entryDate:String? = null,
-        @RequestParam department:String? = null
+        @RequestParam department:String? = null,
+        @RequestParam password:String? = null,
+        @RequestParam profilepicture: MultipartFile? = null
     ): String{
-        if (firstname != null && lastname != null && birthday != null && gender != null && roles != null && workingtype != null && entryDate != null && department != null) {
-
+        if (id != null)
+            if (firstname != null && lastname != null && birthday != null && gender != null && roles != null && workingtype != null && entryDate != null && department != null && password != null) {
+            if (password == "_edit_") {
+                val employee = employeeService.getEmployeeById(id);
+                val pic = fileService.createFile(profilepicture!!)
+                val emp = Employee(id = id, firstName = firstname, secondName = lastname, mail = mail!!, birthday = StringToDate().convert(birthday)!!, gender = StringToGender().convert(gender)!!, password = employee.password,
+                    workingType = StringToWorkingType().convert(workingtype)!!, department = departmentService.getDepartmentByName(department), profilePic = pic, roles = roleService.getRolesByName(roles))
+            } else {
+                val pic = fileService.createFile(profilepicture!!)
+                val emp = Employee(id = id, firstName = firstname, secondName = lastname, mail = mail!!, birthday = StringToDate().convert(birthday)!!, gender = StringToGender().convert(gender)!!, password = BCryptPasswordEncoder().encode(password),
+                    workingType = StringToWorkingType().convert(workingtype)!!, department = departmentService.getDepartmentByName(department), profilePic = pic, roles = roleService.getRolesByName(roles))
+            }
         }
 
         /*if (bindingResult.hasErrors()){

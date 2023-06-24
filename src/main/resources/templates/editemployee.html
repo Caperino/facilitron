@@ -23,7 +23,9 @@
     </nav>
   </div>
 
-  <form action="/user_edit" method="post">
+  <form action="/user_edit" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="id" th:value="${employee.id}">
+    <input type="hidden" name="mail" th:value="${employee.mail}">
     <div class="mx-2 mx-md-4">
       <!--PERSONAL INFO -->
       <h1 class="fac-headline mb-4 p-2 border-2 border-bottom">Personal Info</h1>
@@ -105,7 +107,7 @@
           </div>
         </div>
 
-        <input th:if="${!isCreate}" type="hidden" name="password" id="password-hidden" value="_edit_">
+        <input th:if="${!isCreate}" type="hidden" name="password" id="password-hidden" value="default">
 
 
       </div>

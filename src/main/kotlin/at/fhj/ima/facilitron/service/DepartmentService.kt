@@ -15,4 +15,8 @@ class DepartmentService (
     fun saveDepartment(department: Department) {
         departmentRepository.save(department)
     }
+
+    fun getDepartmentByName(name: String):Department {
+        return departmentRepository.getDepartmentByNameContainingIgnoreCase(name);
+    }
 }

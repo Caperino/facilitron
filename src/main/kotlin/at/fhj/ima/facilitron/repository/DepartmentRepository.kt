@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface DepartmentRepository : CrudRepository<Department, Int> {
 
+    fun getDepartmentByNameContainingIgnoreCase(name: String):Department
+
 }
