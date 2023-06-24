@@ -48,7 +48,7 @@ class AuthenticationController(
 
         // add authentication cookie
         resp.addCookie(authCookie)
-        resp.sendRedirect(DefaultURL.POST_LOGIN_URL)
+        resp.sendRedirect(DefaultURL.NAVPAGE_URL)
 
         // ----- Logging -----
         println("successful authentication, redirect set")
