@@ -16,14 +16,14 @@
   <div class="d-flex justify-content-start p-3">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">Employees</a></li>
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/user_overview">Employees</a></li>
         <li class="breadcrumb-item active" aria-current="page">Create Employee</li>
       </ol>
     </nav>
   </div>
 
-  <form action="{TODO}" method="post">
+  <form action="/user_edit" method="post">
     <div class="mx-2 mx-md-4">
       <!--PERSONAL INFO -->
       <h1 class="fac-headline mb-4 p-2 border-2 border-bottom">Personal Info</h1>
@@ -31,24 +31,24 @@
         <div class="row mb-4">
           <div class="col-md-6 mb-4 mb-md-0">
             <p class="text-dark-gray">Firstname</p>
-            <input type="text" name="firstName" id="firstName" class="form-control text-dark-gray" th:text="${employee} != null ? ${employee.firstName} : ''">
+            <input type="text" name="firstName" id="firstName" class="form-control text-dark-gray" th:value="${employee} != null ? ${employee.firstName} : ''">
           </div>
           <div class="col-md-6">
             <p class="text-dark-gray">Lastname</p>
-            <input type="text" name="secondName" id="secondName" class="form-control text-dark-gray" th:text="${employee} != null ? ${employee.secondName} : ''">
+            <input type="text" name="secondName" id="secondName" class="form-control text-dark-gray" th:value="${employee} != null ? ${employee.secondName} : ''">
           </div>
         </div>
         <div class="row mb-4">
           <div class="col-md-6 mb-4 mb-md-0">
             <p class="text-dark-gray">Birthday</p>
-            <input type="date" name="birthday" id="birthday" class="form-control text-dark-gray" th:text="${employee} != null ? ${employee.birthday} : ''"/>
+            <input type="date" name="birthday" id="birthday" class="form-control text-dark-gray" th:value="${employee} != null ? ${employee.birthday} : ''"/>
           </div>
           <div class="col-md-6">
             <p class="text-dark-gray">Gender</p>
             <select id="gender" name="gender" class="form-select text-dark-gray">
-              <option selected>MALE</option>
-              <option value="1">FEMALE</option>
-              <option value="2">DIV</option>
+              <option th:selected="${employee.gender.name == 'MALE'}" value="0">MALE</option>
+              <option th:selected="${employee.gender.name == 'FEMALE'}" value="1">FEMALE</option>
+              <option th:selected="${employee.gender.name == 'DIV'}" value="2">DIV</option>
             </select>
           </div>
         </div>
@@ -64,8 +64,8 @@
         <div class="row mb-4">
           <div class="col">
             <p class="text-dark-gray">Roles</p>
-            <select class="form-select text-dark-gray" id="roles" data-placeholder="Choose anything" multiple>
-              <option th:each="role : ${roles}" th:text="${role.name}" th:value="${role.name}"></option>
+            <select name="roles" class="form-select text-dark-gray" id="roles" data-placeholder="Choose anything" multiple>
+              <option th:each="role : ${roles}" th:selected="${employee.roles.contains(role)}" th:text="${role.name}" th:value="${role.name}"></option>
             </select>
           </div>
         </div>
@@ -74,10 +74,10 @@
           <div class="col">
             <p class="text-dark-gray">Working Type</p>
             <select id="workingType" name="workingType" class="form-select text-dark-gray">
-              <option selected>FULLTIME</option>
-              <option value="1">PARTTIME</option>
-              <option value="2">MINIMAL</option>
-              <option value="3">VOLUNTARY</option>
+              <option th:selected="${employee.workingType.name == 'FULLTIME'}" value="0">FULLTIME</option>
+              <option th:selected="${employee.workingType.name == 'PARTTIME'}" value="1">PARTTIME</option>
+              <option th:selected="${employee.workingType.name == 'MINIMAL'}" value="2">MINIMAL</option>
+              <option th:selected="${employee.workingType.name == 'VOLUNTARY'}" value="3">VOLUNTARY</option>
             </select>
           </div>
         </div>
@@ -94,16 +94,19 @@
         <div class="row mb-4">
           <div class="col">
             <p class="text-dark-gray">Entry Date</p>
-            <input type="date" name="entryDate" id="entryDate" class="form-control text-dark-gray" th:text="${employee} != null ? ${employee.entryDate} : ''">
+            <input type="date" name="entryDate" id="entryDate" class="form-control text-dark-gray" th:value="${employee} != null ? ${employee.entryDate} : ''">
           </div>
         </div>
 
-        <div class="row">
+        <div th:if="${isCreate}" class="row">
           <div class="col">
             <p class="text-dark-gray">Password</p>
-            <input type="password" name="password" id="password" class="form-control text-dark-gray">
+            <input type="password" name="password" id="password" class="form-control text-dark-gray" placeholder="Password...">
           </div>
         </div>
+
+        <input th:if="${!isCreate}" type="hidden" name="password" id="password-hidden" value="_edit_">
+
 
       </div>
 

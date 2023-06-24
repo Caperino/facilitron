@@ -9,10 +9,7 @@ import jakarta.validation.Valid
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.ModelAttribute
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.*
 import java.awt.image.BufferedImage
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -75,6 +72,7 @@ class EmployeeController (
     ):String {
         model.addAttribute("departments", departmentService.getAllDepartments())
         model.addAttribute("roles",roleService.getAllRoles())
+        model.addAttribute("isCreate", true)
         return "newemployee"
     }
 
@@ -86,10 +84,11 @@ class EmployeeController (
         model.addAttribute("employee",employeeService.getEmployeeById(id))
         model.addAttribute("departments", departmentService.getAllDepartments())
         model.addAttribute("roles",roleService.getAllRoles())
+        model.addAttribute("isCreate", false)
         return "editemployee"
     }
 
-    @PutMapping(DefaultURL.USER_EDIT)
+    @PostMapping(DefaultURL.USER_EDIT)
     fun userEditSave(
         /*model: Model,
         @RequestParam firstname:String,
@@ -100,11 +99,17 @@ class EmployeeController (
         @RequestParam workingType:String,
         @RequestParam entryDate:String,
         @RequestParam department:String*/
-        @ModelAttribute @Valid employee: Employee,
+        @ModelAttribute @Valid employee: Employee?,
         bindingResult: BindingResult,
         model: Model,
     ): String{
-        employeeService.saveEmployee(employee)
-        return "redirect:employeedetails?id=${employee.id}"
+        if (bindingResult.hasErrors()){
+            println("binding errors")
+            return "redirect:/user_overview"
+        }
+        if (employee != null) {
+            employeeService.saveEmployee(employee)
+        }
+        return "redirect:employeedetails?id=${employee?.id}"
     }
 }
