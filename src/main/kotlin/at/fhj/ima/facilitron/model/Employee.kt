@@ -45,7 +45,7 @@ class Employee(
     var roles:MutableSet<SecurityRole> = mutableSetOf(),
     @ManyToOne(fetch = FetchType.EAGER)
     var department: Department? = null,
-    private var entryDate: LocalDate = LocalDate.now(),
+    var entryDate: LocalDate = LocalDate.now(),
     private var workingType: WorkingType = WorkingType.FULLTIME,
     @OneToOne
     val profilePic:File? = null
@@ -70,9 +70,9 @@ class Employee(
         return true
     }
 
-    fun getEntryDate(): LocalDate {
+    /*fun getEntryDate(): LocalDate {
         return entryDate
-    }
+    }*/
 
     fun getWorkingType(): WorkingType {
         return workingType
@@ -106,6 +106,11 @@ class Employee(
 
     fun concatRoles():String{
         return roles.fold("") { acc, securityRole -> acc + "${securityRole.name}, " }.removeSuffix(", ")
+    }
+
+    fun evaluateState():Boolean{
+        return firstName.isNotEmpty() && firstName.isNotBlank() && secondName.isNotEmpty() && secondName.isNotBlank() &&
+                mail.isNotBlank() && mail.isNotEmpty()  && roles.isNotEmpty() && department != null
     }
 
 }

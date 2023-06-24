@@ -24,8 +24,9 @@
   </div>
 
   <form action="/user_edit" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="id" th:value="${employee.id}">
-    <input type="hidden" name="mail" th:value="${employee.mail}">
+    <input type="hidden" name="id" th:value="${employee != null}? ${employee.id}">
+    <input type="hidden" name="mail" th:value="${employee != null}? ${employee.mail}">
+    <input type="hidden" name="mail" th:value="${employee != null}? ${employee.entryDate}">
     <div class="mx-2 mx-md-4">
       <!--PERSONAL INFO -->
       <h1 class="fac-headline mb-4 p-2 border-2 border-bottom">Personal Info</h1>
@@ -33,30 +34,30 @@
         <div class="row mb-4">
           <div class="col-md-6 mb-4 mb-md-0">
             <p class="text-dark-gray">Firstname</p>
-            <input type="text" name="firstName" id="firstName" class="form-control text-dark-gray" th:value="${employee} != null ? ${employee.firstName} : ''">
+            <input required type="text" name="firstName" id="firstName" class="form-control text-dark-gray" th:value="${employee} != null ? ${employee.firstName} : ''">
           </div>
           <div class="col-md-6">
             <p class="text-dark-gray">Lastname</p>
-            <input type="text" name="secondName" id="secondName" class="form-control text-dark-gray" th:value="${employee} != null ? ${employee.secondName} : ''">
+            <input required type="text" name="secondName" id="secondName" class="form-control text-dark-gray" th:value="${employee} != null ? ${employee.secondName} : ''">
           </div>
         </div>
         <div class="row mb-4">
           <div class="col-md-6 mb-4 mb-md-0">
             <p class="text-dark-gray">Birthday</p>
-            <input type="date" name="birthday" id="birthday" class="form-control text-dark-gray" th:value="${employee} != null ? ${employee.birthday} : ''"/>
+            <input required type="date" name="birthday" id="birthday" class="form-control text-dark-gray" th:value="${employee} != null ? ${employee.birthday} : ''"/>
           </div>
           <div class="col-md-6">
             <p class="text-dark-gray">Gender</p>
-            <select id="gender" name="gender" class="form-select text-dark-gray">
-              <option th:selected="${employee.gender.name == 'MALE'}" value="0">MALE</option>
-              <option th:selected="${employee.gender.name == 'FEMALE'}" value="1">FEMALE</option>
-              <option th:selected="${employee.gender.name == 'DIV'}" value="2">DIV</option>
+            <select required id="gender" name="gender" class="form-select text-dark-gray">
+              <option th:selected="${employee != null}? ${employee.gender.name == 'MALE'}" value="MALE">MALE</option>
+              <option th:selected="${employee != null}? ${employee.gender.name == 'FEMALE'}" value="FEMALE">FEMALE</option>
+              <option th:selected="${employee != null}? ${employee.gender.name == 'DIV'}" value="DIV">DIV</option>
             </select>
           </div>
         </div>
         <div class="col">
-          <p class="text-dark-gray">Profile Picture</p>
-          <input id="profilepicture" name="profilepicture" class="form-control text-dark-gray" type="file"/>
+          <p class="text-dark-gray" th:text="${employee != null && employee.profilePic != null} ? 'Profile Picture (one already saved)' : 'Profile Picture (none yet)' " ></p>
+          <input id="profilepicture" name="profilePicture" class="form-control text-dark-gray" type="file" th:value="${employee != null && employee.profilePic?.originalFileName != null}? ${employee.profilePic?.originalFileName}"/>
         </div>
       </div>
 
@@ -66,8 +67,8 @@
         <div class="row mb-4">
           <div class="col">
             <p class="text-dark-gray">Roles</p>
-            <select name="roles" class="form-select text-dark-gray" id="roles" data-placeholder="Choose anything" multiple>
-              <option th:each="role : ${roles}" th:selected="${employee.roles.contains(role)}" th:text="${role.name}" th:value="${role.name}"></option>
+            <select required name="roles" class="form-select text-dark-gray" id="roles" data-placeholder="Choose anything" multiple>
+              <option th:each="role : ${roles}" th:selected="${employee != null}? ${employee.roles.contains(role)}" th:text="${role.name}" th:value="${role.name}"></option>
             </select>
           </div>
         </div>
@@ -75,11 +76,11 @@
         <div class="row mb-4">
           <div class="col">
             <p class="text-dark-gray">Working Type</p>
-            <select id="workingType" name="workingType" class="form-select text-dark-gray">
-              <option th:selected="${employee.workingType.name == 'FULLTIME'}" value="0">FULLTIME</option>
-              <option th:selected="${employee.workingType.name == 'PARTTIME'}" value="1">PARTTIME</option>
-              <option th:selected="${employee.workingType.name == 'MINIMAL'}" value="2">MINIMAL</option>
-              <option th:selected="${employee.workingType.name == 'VOLUNTARY'}" value="3">VOLUNTARY</option>
+            <select required id="workingType" name="workingType" class="form-select text-dark-gray">
+              <option th:selected="${employee != null}? ${employee.workingType.name == 'FULLTIME'}" value="FULLTIME">FULLTIME</option>
+              <option th:selected="${employee != null}? ${employee.workingType.name == 'PARTTIME'}" value="PARTTIME">PARTTIME</option>
+              <option th:selected="${employee != null}? ${employee.workingType.name == 'MINIMAL'}" value="MINIMAL">MINIMAL</option>
+              <option th:selected="${employee != null}? ${employee.workingType.name == 'VOLUNTARY'}" value="VOLUNTARY">VOLUNTARY</option>
             </select>
           </div>
         </div>
@@ -87,8 +88,8 @@
         <div class="row mb-4">
           <div class="col">
             <p class="text-dark-gray">Departments</p>
-            <select id="department" name="department" class="form-select text-dark-gray">
-              <option th:each="department : ${departments}" th:text="${department.name}" th:value="${department.name}"></option>
+            <select required id="department" name="department" class="form-select text-dark-gray">
+              <option th:selected="${employee != null}? ${department.name == employee.department?.name}" th:each="department : ${departments}" th:text="${department.name}" th:value="${department.name}"></option>
             </select>
           </div>
         </div>
@@ -96,18 +97,18 @@
         <div class="row mb-4">
           <div class="col">
             <p class="text-dark-gray">Entry Date</p>
-            <input type="date" name="entryDate" id="entryDate" class="form-control text-dark-gray" th:value="${employee} != null ? ${employee.entryDate} : ''">
+            <input required type="date" name="entryDate" id="entryDate" class="form-control text-dark-gray" th:value="${employee} != null ? ${employee.entryDate} : ''">
           </div>
         </div>
 
         <div th:if="${isCreate}" class="row">
           <div class="col">
             <p class="text-dark-gray">Password</p>
-            <input type="password" name="password" id="password" class="form-control text-dark-gray" placeholder="Password...">
+            <input required type="password" name="password" id="password" class="form-control text-dark-gray" placeholder="Password...">
           </div>
         </div>
 
-        <input th:if="${!isCreate}" type="hidden" name="password" id="password-hidden" value="default">
+        <input th:if="${!isCreate}" type="hidden" name="password" id="password-hidden" value="_UNCHANGED_">
 
 
       </div>

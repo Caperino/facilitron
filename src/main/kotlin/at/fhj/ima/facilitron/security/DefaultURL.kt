@@ -32,5 +32,6 @@ object DefaultURL {
 
     // API URLs
     const val API_SAVE_TIME = "/api/v1/saveTime"
+    const val FILE_UPLOAD_URL = "/pfp"
 
 }

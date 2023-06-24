@@ -70,7 +70,7 @@ class AuthenticationController(
         @RequestParam gender:String?,
         @RequestParam birthday: String?
     ): String {
-        val unsafeRegisterRequest = UnsafeRegisterRequest(firstname, secondname, mail, password, phone, StringToGender().convert(gender?: "DIV"), StringToDate().convert(birthday?: "1.1.1970"))
+        val unsafeRegisterRequest = UnsafeRegisterRequest(firstname, secondname, mail, password, phone, StringToGender().convert(gender?: "DIV"), StringToDate().convert(birthday?: "1.jpg.1.jpg.1970"))
 
         if (!unsafeRegisterRequest.evaluateState()){
             model.addAttribute("error", RegisterResponse(exception = SecurityWarning.MISSINGVALUES))

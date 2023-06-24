@@ -28,9 +28,9 @@ class FileService(val fileRepository: FileRepository) {
         File(contentType = dto.contentType, size = dto.size, originalFileName = dto.originalFilename)
 
     fun retrievePath(id: Int): Path = Paths.get("files/$id")
-    fun findById(id: Int) = fileRepository.findById(id).get()
+    fun findById(id: Int) = fileRepository.findById(id)
     fun delete(id: Int) {
-        fileRepository.delete(findById(id))
+        fileRepository.delete(findById(id).get())
         Paths.get("files/$id").deleteIfExists()
     }
 }
