@@ -3,6 +3,9 @@ package at.fhj.ima.facilitron.model
 import jakarta.persistence.*
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
 /**
  * Base Class for all tickets
@@ -40,5 +43,10 @@ class Ticket (
     }
     fun isWaiting():Boolean {
         return ticketStatus == TicketStatus.WAITING;
+    }
+
+    fun getopenedTimeSeconds(): String {
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        return opened.format(formatter)
     }
 }

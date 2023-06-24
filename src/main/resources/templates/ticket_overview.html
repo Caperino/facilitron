@@ -28,18 +28,20 @@
   <div class="search-container p-3 mb-5">
     <div class="row">
       <div class="col-lg-6 mb-4 mb-lg-0">
-        <a href="#" class="btn btn-primary fac-btn-dark-blue me-2">+ Create a Ticket</a>
-        <a href="#" class="btn btn-primary fac-btn-dark-blue">My Tickets</a>
+        <a href="/ticket_create" class="btn btn-primary fac-btn-dark-blue me-2">+ Create a Ticket</a>
+        <a href="/ticket_overview?my=true" class="btn btn-primary fac-btn-dark-blue">My Tickets</a>
       </div>
       <div class="col-lg-6">
+        <form class="form-inline" action="/ticket_overview" method="get">
         <div class="input-group fac-ticket-search justify-content-between">
           <span class="input-group-text" id="employee-search">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
               <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
             </svg>
           </span>
-          <input class="form-control" type="search" placeholder="Search Ticket" aria-label="Search">
+          <input class="form-control" type="search" name="q" placeholder="Search Ticket" aria-label="Search">
         </div>
+        </form>
       </div>
     </div>
   </div>

@@ -52,26 +52,36 @@ class FacilitronApplication(private val passwordEncoder: PasswordEncoder) {
 		departmentRepository.save(Department(name = "Accounting", description = "calculating how much money we took", head = employeeService.getEmployeeById(1)))
 
 		// Category
-		categoryRepository.save(Category(name="Hardware", description = "Ja, Hardware halt."))
-		categoryRepository.save(Category(name="Software", description = "Ja, die weiche Ware halt."))
-		categoryRepository.save(Category(name="Diverse", description = "Alles halt."))
+		categoryRepository.save(Category(name="Hardware", description = "Hardware like printers, computers, servers, etc."))
+		categoryRepository.save(Category(name="Software", description = "Software like SAP, Office, etc."))
+		categoryRepository.save(Category(name="Diverse", description = "Everything else."))
 
 		// Ticket
-		ticketRepository.save(Ticket(subject = "Dishwasher not working", description = "Dishwasher not working",
+		ticketRepository.save(Ticket(subject = "Printer not working", description = "Printer is having paper jam.",
 			category = categoryRepository.findCategoryByName("Hardware"), openedBy = employeeService.getEmployeeById(1),
-			priority = Priority.DISASTER))
-		ticketRepository.save(Ticket(subject = "Washer not working", description = "Washerdriver",
+			priority = Priority.MEDIUM))
+		ticketRepository.save(Ticket(subject = "Server down", description = "Main Cloud SAP Server is not responding. Please check ASAP.",
 			category = categoryRepository.findCategoryByName("Software"), openedBy = employeeService.getEmployeeById(2),
 			priority = Priority.DISASTER))
-		ticketRepository.save(Ticket(subject = "Not working", description = "No",
+		ticketRepository.save(Ticket(subject = "Coffeemachine broken", description = "Coffee machine grinding mechanism is broken. Please fix ASAP.",
 			category = categoryRepository.findCategoryByName("Diverse"), openedBy = employeeService.getEmployeeById(1),
 			priority = Priority.DISASTER))
 
+
 		// Comments
-		ticketCommentService.addTicketComment(TicketComment(comment = "Moin Meister, ich Problem haben.",
-			ticket = ticketRepository.findById(1).get(), commenter = employeeService.getEmployeeById(1)))
-		ticketCommentService.addTicketComment(TicketComment(comment = "HEHE.",
-			ticket = ticketRepository.findById(1).get(), commenter = employeeService.getEmployeeById(4)))
+		ticketCommentService.addTicketComment(TicketComment(comment = "Welcome to the Tech Support.\n" +
+				"We are investigating your issue. Please be patient.", ticket = ticketRepository.findById(1).get(),
+			commenter = employeeService.getEmployeeById(4)))
+		ticketCommentService.addTicketComment(TicketComment(comment = "Hello, thank you for your response.\n" +
+				"Let me know if you need any Screenshots.", ticket = ticketRepository.findById(1).get(),
+			commenter = employeeService.getEmployeeById(1)))
+		ticketCommentService.addTicketComment(TicketComment(comment = "Welcome to the Tech Support.\n" +
+				"We are investigating your issue. Please be patient.", ticket = ticketRepository.findById(2).get(),
+			commenter = employeeService.getEmployeeById(4)))
+		ticketCommentService.addTicketComment(TicketComment(comment = "Welcome to the Tech Support.\n" +
+				"We are investigating your issue. Please be patient.", ticket = ticketRepository.findById(3).get(),
+			commenter = employeeService.getEmployeeById(4)))
+
 
 	}
 

@@ -23,9 +23,14 @@ class TicketController (
     fun getPageWithAllTickets(
         req: HttpServletRequest,
         model: Model,
-        @RequestParam(required = false) q:String? = null
+        @RequestParam(required = false) q:String? = null,
+        @RequestParam(required = false) my:String? = null
     ) : String {
-        return if (q != null){
+        return if (my != null){
+            val emp = employeeService.getEmployeeById(req.getAttribute("id").toString().toInt())
+            model.addAttribute("tickets",ticketService.searchTicketsByEmployee(emp));
+            "ticket_overview"
+        } else if (q != null) {
             val cats = categoryService.getCategoriesByName(q)
             model.addAttribute("tickets",ticketService.searchTickets(cats, q))
             "ticket_overview"
@@ -83,10 +88,10 @@ class TicketController (
             return try {
                 val prio = StringToPriority().convert(priority!!)!!
                 val cat = categoryService.getCategoryByName(category!!)
-                val employee = employeeService.getEmployeeById(model.getAttribute("id").toString().toInt())
+                val employee = employeeService.getEmployeeById(req.getAttribute("id").toString().toInt())
                 val tk = Ticket(priority = prio, category = cat, subject = subject!!, description = description, openedBy = employee)
                 ticketService.openTicket(tk)
-                "ticket_overview"
+                "redirect:/ticket_overview"
             } catch (e: Exception) {
                 println("dead1")
                 model.addAttribute("error", "Couldn't open the Ticket!")

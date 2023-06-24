@@ -26,6 +26,10 @@ class TicketService (
         return returnList.toList()
     }
 
+    fun searchTicketsByEmployee(employee: Employee):List<Ticket> {
+        return ticketRepository.findTicketsByOpenedByOrClosedBy(employee, employee)
+    }
+
     /*fun getTicketCommentsByTicketId(id: Int):List<TicketComment> {
 
     }*/

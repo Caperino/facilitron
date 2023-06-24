@@ -2,6 +2,8 @@ package at.fhj.ima.facilitron.model
 
 import jakarta.persistence.*
 import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.temporal.ChronoUnit
 
 /**
  * Base Class for all ticket-comments
@@ -22,4 +24,9 @@ class TicketComment (
     val postedTime: LocalDateTime = LocalDateTime.now(),
     @ManyToOne
     val ticket:Ticket
-)
+) {
+    fun getpostedTimeSeconds(): LocalTime? {
+        return postedTime?.toLocalTime()?.truncatedTo(ChronoUnit.SECONDS)
+    }
+}
+

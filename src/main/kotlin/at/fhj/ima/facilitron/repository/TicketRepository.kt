@@ -11,6 +11,8 @@ interface TicketRepository : CrudRepository<Ticket, Int> {
 
     fun findTicketsBySubjectContainingIgnoreCaseOrCategory(subject: String, category: Category):List<Ticket>
 
+    fun findTicketsByOpenedByOrClosedBy(employee1: Employee, employee2: Employee):List<Ticket>
+
     //fun findTicketsByOpenedBy
 
     fun findTicketById(id: Int):Ticket?

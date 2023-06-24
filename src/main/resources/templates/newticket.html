@@ -24,43 +24,44 @@
   </div>
 
   <div class="mx-2 mx-md-4">
-    <!--PERSONAL INFO -->
-    <h1 class="fac-headline mb-4 p-2 border-2 border-bottom">Write a Ticket</h1>
-    <div class="rounded-content mb-4">
-      <div class="row">
-        <div class="col mb-4">
-          <p class="text-dark-gray">Ticket name</p>
-          <input type="text" name="ticketname" id="ticketname" class="form-control">
+    <form action="/ticket_create" method="get">
+      <!--PERSONAL INFO -->
+      <h1 class="fac-headline mb-4 p-2 border-2 border-bottom">Write a Ticket</h1>
+      <div class="rounded-content mb-4">
+        <div class="row">
+          <div class="col mb-4">
+            <p class="text-dark-gray">Ticket name</p>
+            <input type="text" name="subject" id="subject" class="form-control">
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col-md-6 mb-4 mb-md-0">
+            <p class="text-dark-gray">Priority</p>
+            <select id="priority" name="priority" class="form-select text-dark-gray">
+              <option selected value="LOW">Low</option>
+              <option value="MEDIUM">Medium</option>
+              <option value="HIGH">High</option>
+              <option value="DISASTER">Disaster</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <p class="text-dark-gray">Category</p>
+            <select id="category" name="category" class="form-select text-dark-gray">
+              <option th:each="cat : ${category}" th:text="${cat.name}" th:value="${cat.name}"></option>
+            </select>
+          </div>
+        </div>
+        <div class="col">
+          <p class="text-dark-gray">Description</p>
+          <textarea class="form-control text-dark-gray" name="description" id="description" rows="7"></textarea>
         </div>
       </div>
-      <div class="row mb-4">
-        <div class="col-md-6 mb-4 mb-md-0">
-          <p class="text-dark-gray">Priority</p>
-          <select id="priority" name="priority" class="form-select text-dark-gray">
-            <option selected>Low</option>
-            <option value="1">Medium</option>
-            <option value="2">High</option>
-          </select>
-        </div>
-        <div class="col-md-6">
-          <p class="text-dark-gray">Category</p>
-          <select id="category" name="category" class="form-select text-dark-gray">
-            <option selected>Hardware</option>
-            <option value="1">Software</option>
-            <option value="2">Login</option>
-          </select>
-        </div>
-      </div>
-      <div class="col">
-        <p class="text-dark-gray">Description</p>
-        <textarea class="form-control text-dark-gray" id="ticket-textarea" rows="7"></textarea>
-      </div>
-    </div>
 
-    <!-- BUTTONS -->
-    <div class="d-flex justify-content-end">
-      <a href="/create_ticket" type="submit" class="btn btn-primary fac-btn-dark-blue">Submit</a>
-    </div>
+      <!-- BUTTONS -->
+      <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary fac-btn-dark-blue">Submit</button>
+      </div>
+    </form>
   </div>
 </div>
 

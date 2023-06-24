@@ -91,7 +91,7 @@ class EmployeeController (
         return "editemployee"
     }
 
-    @PostMapping(DefaultURL.USER_EDIT)
+    /*@PostMapping(DefaultURL.USER_EDIT)
     fun userEditSave(
         model: Model,
         @RequestParam id:Int? = null,
@@ -129,5 +129,5 @@ class EmployeeController (
             employeeService.saveEmployee(employee)
         }*/
         return "redirect:employeedetails?id=${employee?.id}"
-    }
+    }*/
 }
