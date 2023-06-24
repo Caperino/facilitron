@@ -37,7 +37,7 @@ class Ocupation (
         return arrivalTime.toLocalTime().truncatedTo(ChronoUnit.SECONDS)
     }
 
-    fun getDepartureTime(): LocalTime? {
+    fun getDepartureTimeSeconds(): LocalTime? {
         return departureTime?.toLocalTime()?.truncatedTo(ChronoUnit.SECONDS)
     }
 }

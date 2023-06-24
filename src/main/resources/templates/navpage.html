@@ -11,19 +11,23 @@
 </head>
 <body>
 <div th:insert="~{header :: header}" class="header"></div>
-<div class="m-5">
-  <div class="row justify-content-md-center" style="padding: 15% 10%;">
-    <div class="col text-center my-auto p-2">
-      <a href="#" class="btn btn-primary fac-btn-dark-blue btn-lg" style="font-size: 2rem">Employees</a>
-    </div>
-    <div class="col text-center my-auto p-2">
-      <a href="#" class="btn btn-primary fac-btn-dark-blue btn-lg" style="font-size: 2rem">Support</a>
-    </div>
-    <div class="col text-center my-auto p-2">
-      <a href="#" class="btn btn-primary fac-btn-dark-blue btn-lg" style="font-size: 2rem">My Profile</a>
-    </div>
-    <div class="col text-center my-auto p-2">
-      <a href="#" class="btn btn-primary fac-btn-dark-blue btn-lg" style="font-size: 2rem">Logout</a>
+<div class="container-md px-3 py-4 content">
+  <div class="m-5">
+    <div class="row justify-content-md-center" style="padding: 15% 10%;">
+      <div class="col-md-6 text-center my-auto p-2">
+        <a href="/user_overview" class="btn btn-primary fac-btn-dark-blue btn-lg" style="font-size: 2rem">Employees</a>
+      </div>
+      <div class="col-md-6 text-center my-auto p-2">
+        <a href="/ticket_overview" class="btn btn-primary fac-btn-dark-blue btn-lg" style="font-size: 2rem">Support</a>
+      </div>
+      <div class="col-md-6 text-center my-auto p-2">
+        <a href="/user_details" class="btn btn-primary fac-btn-dark-blue btn-lg" style="font-size: 2rem">My Profile</a>
+      </div>
+      <div class="col-md-6 text-center my-auto p-2">
+        <form action="/auth/logout" method="post">
+          <button type="submit" class="btn btn-primary fac-btn-dark-blue btn-lg" style="font-size: 2rem">Logout</button>
+        </form>
+      </div>
     </div>
   </div>
 </div>

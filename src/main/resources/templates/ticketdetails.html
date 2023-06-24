@@ -16,8 +16,8 @@
   <div class="d-flex justify-content-start p-3">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">Tickets</a></li>
+        <li class="breadcrumb-item"><a href="/navigation">Home</a></li>
+        <li class="breadcrumb-item"><a href="/ticket_overview">Tickets</a></li>
         <li class="breadcrumb-item active" aria-current="page">Ticket Details</li>
       </ol>
     </nav>
@@ -92,21 +92,21 @@
 
           <!-- Employee Reply -->
           <div th:case="${ticketDetails.openedBy}">
-            <div class="d-flex justify-content-start">
-              <div class="col rounded-employee-reply" th:text="${comment.comment}"></div>
+            <div class="d-flex justify-content-end">
+              <div class="col rounded-support-reply" th:text="${comment.comment}"></div>
             </div>
-            <div class="d-flex justify-content-start p-1">
-              <p th:text="${comment.postedTime}"></p>
+            <div class="d-flex justify-content-end p-2">
+              <p th:text="${comment.commenter.firstName} + ' ' + ${comment.commenter.secondName} + ', ' + ${comment.postedTime}"></p>
             </div>
           </div>
 
           <!-- Support Reply -->
           <div th:case="*">
-            <div class="d-flex justify-content-end">
-              <div class="col rounded-support-reply" th:text="${comment.comment}"></div>
+            <div class="d-flex justify-content-start">
+              <div class="col rounded-employee-reply" th:text="${comment.comment}"></div>
             </div>
-            <div class="d-flex justify-content-end p-1">
-              <p th:text="${comment.postedTime}"></p>
+            <div class="d-flex justify-content-start p-2">
+              <p th:text="${comment.commenter.firstName} + ' ' + ${comment.commenter.secondName} + ', ' + ${comment.postedTime}"></p>
             </div>
           </div>
 
@@ -122,13 +122,15 @@
         <div class="col p-2">
           <textarea class="form-control" name="comment" id="comment" rows="7"></textarea>
         </div>
-        <button type="submit" id="CommentSubmitter" class="btn btn-primary fac-btn-dark-blue">Reply</button>
+        <div class="d-flex justify-content-end mb-4">
+          <button type="submit" id="CommentSubmitter" class="btn btn-primary fac-btn-dark-blue me-3">Reply</button>
+        </div>
       </div>
     </form>
 
     <!-- BUTTONS -->
     <div class="d-flex justify-content-end mb-4">
-      <a href="/ticket_close" class="btn btn-primary fac-btn-dark-blue me-3">Close Ticket</a>
+      <a href="/ticket_close" class="btn btn-danger fac-btn-red me-3">Close Ticket</a>
     </div>
   </div>
 </div>

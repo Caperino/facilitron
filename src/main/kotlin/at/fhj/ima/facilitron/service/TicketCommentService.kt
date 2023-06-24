@@ -11,7 +11,7 @@ class TicketCommentService (
 ){
 
     fun findTicketCommentsByTicket(tk: Ticket):List<TicketComment> {
-        return ticketCommentRepository.findTicketsCommentsByTicket(tk)
+        return ticketCommentRepository.findTicketsCommentsByTicketOrderByPostedTime(tk)
     }
 
     fun addTicketComment(com: TicketComment):Boolean {

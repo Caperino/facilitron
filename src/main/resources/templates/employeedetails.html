@@ -16,7 +16,7 @@
     <div class="d-flex justify-content-start p-3">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/navigation">Home</a></li>
                 <li class="breadcrumb-item"><a href="/user_overview">Employees</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Employee Details</li>
             </ol>
@@ -132,7 +132,7 @@
                     <tr class="table-item" th:each="occup : ${ocuptions}">
                         <th scope="row" th:text="${occup.getDate()}"></th>
                         <td th:text="${occup.getArrivalTime()}"></td>
-                        <td th:text="${occup.getDepartureTime()}"></td>
+                        <td th:text="${occup.getDepartureTimeSeconds()}"></td>
                         <td th:text="${occup.workload}"></td>
                     </tr>
                     </tbody>

@@ -20,6 +20,6 @@ class ContactController (
     ):String{
         val sent = contactService.sendEmail(name, email, message)
         model.addAttribute("Contact_Message", sent)
-        return "index"
+        return "redirect:/"
     }
 }

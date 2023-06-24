@@ -20,6 +20,7 @@ class PublicController (
         @RequestParam or:String?
     ):String{
         model.addAttribute("departments",departmentService.getAllDepartments())
+        model.addAttribute("public",true)
         return "index"
     }
 

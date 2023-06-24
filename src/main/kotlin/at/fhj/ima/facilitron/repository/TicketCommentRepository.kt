@@ -10,6 +10,6 @@ interface TicketCommentRepository : CrudRepository<TicketComment, Int> {
 
     fun findTicketCommentsByCommenterId(commenterId: Int):List<TicketComment>?
 
-    fun findTicketsCommentsByTicket(tk: Ticket):List<TicketComment>
+    fun findTicketsCommentsByTicketOrderByPostedTime(tk: Ticket):List<TicketComment>
 
 }

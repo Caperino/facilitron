@@ -5,6 +5,7 @@ import at.fhj.ima.facilitron.security.DefaultURL
 import at.fhj.ima.facilitron.service.EmployeeService
 import at.fhj.ima.facilitron.service.TicketCommentService
 import at.fhj.ima.facilitron.service.TicketService
+import jakarta.servlet.http.HttpServletRequest
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.PostMapping
@@ -21,14 +22,14 @@ class TicketCommentController(
     fun addTicketComment(
         model: Model,
         @RequestParam comment: String,
-        @RequestParam ticketId: Int
+        @RequestParam ticketId: Int,
+        req : HttpServletRequest
         ): String {
-        val employeeId = model.getAttribute("id").toString().toInt()
+        val employeeId = req.getAttribute("id").toString().toInt()
         val employee = employeeService.getEmployeeById(employeeId)
         val ticket = ticketService.getTicketDetails(ticketId)
         val ticketComment = TicketComment(comment = comment, commenter = employee, ticket = ticket)
-        model.addAttribute("ticketComments",ticketCommentService.findTicketCommentsByTicket(ticket))
         ticketCommentService.addTicketComment(ticketComment)
-        return "ticketdetails"
+        return "redirect:/ticket_details?id=${ticketId}"
     }
 }
