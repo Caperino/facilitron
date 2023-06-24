@@ -23,9 +23,9 @@ class TicketController (
     fun getPageWithAllTickets(
         req: HttpServletRequest,
         model: Model,
-        @RequestParam(required = false) q:String = ""
+        @RequestParam(required = false) q:String? = null
     ) : String {
-        return if (req.getParameter("q").isNotEmpty()){
+        return if (q != null){
             val cats = categoryService.getCategoriesByName(q)
             model.addAttribute("tickets",ticketService.searchTickets(cats, q))
             "ticket_overview"
@@ -74,24 +74,27 @@ class TicketController (
     fun createTicket(
         model: Model,
         req : HttpServletRequest,
-        @RequestParam(required = false) subject: String,
-        @RequestParam(required = false) priority: String,
-        @RequestParam(required = false) category: String,
-        @RequestParam(required = false) description: String
+        @RequestParam(required = false) subject: String? = null,
+        @RequestParam(required = false) priority: String? = null,
+        @RequestParam(required = false) category: String? = null,
+        @RequestParam(required = false) description: String? = null
     ): String {
-        if (req.getParameter("subject").isNotEmpty() || req.getParameter("priority").isNotEmpty() || req.getParameter("category").isNotEmpty() || req.getParameter("description").isNotEmpty()) {
+        if (req.getParameter("subject") != null || req.getParameter("priority") != null || req.getParameter("category") != null || req.getParameter("description") != null ) {
             return try {
-                val prio = StringToPriority().convert(priority)!!
-                val cat = categoryService.getCategoryByName(category)
+                val prio = StringToPriority().convert(priority!!)!!
+                val cat = categoryService.getCategoryByName(category!!)
                 val employee = employeeService.getEmployeeById(model.getAttribute("id").toString().toInt())
-                val tk = Ticket(priority = prio, category = cat, subject = subject, description = description, openedBy = employee)
+                val tk = Ticket(priority = prio, category = cat, subject = subject!!, description = description, openedBy = employee)
+                ticketService.openTicket(tk)
                 "ticket_overview"
             } catch (e: Exception) {
+                println("dead1")
                 model.addAttribute("error", "Couldn't open the Ticket!")
                 "newticket"
             }
         } else {
             model.addAttribute("category", categoryService.getAllCategories())
+            println("dead2")
             return "newticket"
         }
     }
