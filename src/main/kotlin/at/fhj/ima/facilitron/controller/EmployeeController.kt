@@ -90,26 +90,27 @@ class EmployeeController (
 
     @PostMapping(DefaultURL.USER_EDIT)
     fun userEditSave(
-        /*model: Model,
-        @RequestParam firstname:String,
-        @RequestParam lastname:String,
-        @RequestParam birthday:String,
-        @RequestParam gender:String,
-        @RequestParam roles:String,
-        @RequestParam workingType:String,
-        @RequestParam entryDate:String,
-        @RequestParam department:String*/
-        @ModelAttribute @Valid employee: Employee?,
-        bindingResult: BindingResult,
         model: Model,
+        @RequestParam firstname:String? = null,
+        @RequestParam lastname:String? = null,
+        @RequestParam birthday:String? = null,
+        @RequestParam gender:String? = null,
+        @RequestParam roles:List<String>? = null,
+        @RequestParam workingtype:String? = null,
+        @RequestParam entryDate:String? = null,
+        @RequestParam department:String? = null
     ): String{
-        if (bindingResult.hasErrors()){
+        if (firstname != null && lastname != null && birthday != null && gender != null && roles != null && workingtype != null && entryDate != null && department != null) {
+
+        }
+
+        /*if (bindingResult.hasErrors()){
             println("binding errors")
             return "redirect:/user_overview"
         }
         if (employee != null) {
             employeeService.saveEmployee(employee)
-        }
+        }*/
         return "redirect:employeedetails?id=${employee?.id}"
     }
 }

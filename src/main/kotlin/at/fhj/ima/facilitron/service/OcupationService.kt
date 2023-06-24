@@ -16,7 +16,7 @@ class OcupationService (
     fun saveOcupation(oc: Ocupation) {
         if (oc.type == OcupationType.DEPATURE) {
             val tmp = ocupationRepository.getOcupationByDepartureTimeIsNullAndEmployee(oc.employee)
-            tmp.departureTime = LocalDateTime.now()
+            tmp .departureTime = LocalDateTime.now()
             tmp.workload = oc.workload
             tmp.type = oc.type
             ocupationRepository.save(tmp)
