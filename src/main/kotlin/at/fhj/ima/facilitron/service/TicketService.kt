@@ -21,18 +21,15 @@ class TicketService (
     fun searchTickets(cats: List<Category>, search: String):List<Ticket> {
         val returnList : MutableList<Ticket> = mutableListOf()
         cats.forEach {
-            returnList.addAll(ticketRepository.findTicketsBySubjectContainingIgnoreCaseOrCategory(search, it))
+            returnList.addAll(ticketRepository.findTicketsByCategory(it))
         }
+        returnList.addAll(ticketRepository.findTicketsBySubjectContainingIgnoreCase(search))
         return returnList.toList()
     }
 
     fun searchTicketsByEmployee(employee: Employee):List<Ticket> {
         return ticketRepository.findTicketsByOpenedByOrClosedBy(employee, employee)
     }
-
-    /*fun getTicketCommentsByTicketId(id: Int):List<TicketComment> {
-
-    }*/
 
     fun closeTicket(tk: Ticket, employee: Employee):Boolean {
         try {
