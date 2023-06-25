@@ -248,8 +248,8 @@ class EmployeeController (
         return "redirect:/user_overview"
     }
 
-    @GetMapping(DefaultURL.USER_DELETE_URL)
-    fun closeTicket(
+    @GetMapping(DefaultURL.USER_DISABLE_URL)
+    fun setEmployeeDisabled(
         model: Model,
         @RequestParam id: Int? = null,
         req: HttpServletRequest
