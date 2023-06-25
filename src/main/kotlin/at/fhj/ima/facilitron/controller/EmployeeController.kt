@@ -143,6 +143,9 @@ class EmployeeController (
 
             if (password != null && password != "_UNCHANGED_"){
                 // incl. password
+                println("password --> $password")
+                println("mail --> $mail")
+
                 try {
                     var file: File? = null
                     if (profilePicture != null && !profilePicture.isEmpty) {
