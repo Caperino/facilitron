@@ -3,6 +3,7 @@ package at.fhj.ima.facilitron.controller
 import at.fhj.ima.facilitron.model.Priority
 import at.fhj.ima.facilitron.model.Ticket
 import at.fhj.ima.facilitron.model.TicketComment
+import at.fhj.ima.facilitron.security.DefaultClaim
 import at.fhj.ima.facilitron.security.DefaultURL
 import at.fhj.ima.facilitron.service.*
 import jakarta.servlet.http.HttpServletRequest
@@ -26,6 +27,7 @@ class TicketController (
         @RequestParam(required = false) q:String? = null,
         @RequestParam(required = false) my:String? = null
     ) : String {
+        DefaultClaim.claimSet.forEach { model.addAttribute(it, req.getAttribute(it))  }
         return if (my != null){
             val emp = employeeService.getEmployeeById(req.getAttribute("id").toString().toInt())
             model.addAttribute("tickets",ticketService.searchTicketsByEmployee(emp));
@@ -43,8 +45,10 @@ class TicketController (
     @GetMapping(DefaultURL.TICKET_DETAILS_URL)
     fun getTicketDetails(
         model: Model,
+        req:HttpServletRequest,
         @RequestParam id:Int
     ) : String {
+        DefaultClaim.claimSet.forEach { model.addAttribute(it, req.getAttribute(it))  }
         val tk : Ticket
         val com : List<TicketComment>
         try {
@@ -65,6 +69,7 @@ class TicketController (
         @RequestParam id: Int,
         req: HttpServletRequest
     ): String {
+        DefaultClaim.claimSet.forEach { model.addAttribute(it, req.getAttribute(it))  }
         val employee = employeeService.getEmployeeById(req.getAttribute("id").toString().toInt())
         val tk = ticketService.getTicketDetails(id)
         return if (ticketService.closeTicket(tk, employee)) {
@@ -84,6 +89,7 @@ class TicketController (
         @RequestParam(required = false) category: String? = null,
         @RequestParam(required = false) description: String? = null
     ): String {
+        DefaultClaim.claimSet.forEach { model.addAttribute(it, req.getAttribute(it))  }
         if (req.getParameter("subject") != null || req.getParameter("priority") != null || req.getParameter("category") != null || req.getParameter("description") != null ) {
             return try {
                 val prio = StringToPriority().convert(priority!!)!!

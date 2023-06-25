@@ -1,6 +1,7 @@
 package at.fhj.ima.facilitron.controller
 
 import at.fhj.ima.facilitron.model.*
+import at.fhj.ima.facilitron.security.DefaultClaim
 import at.fhj.ima.facilitron.security.DefaultURL
 import at.fhj.ima.facilitron.service.*
 import jakarta.servlet.http.HttpServletRequest
@@ -40,6 +41,7 @@ class EmployeeController (
         model: Model,
         @RequestParam(required = false) id:Int?
     ):String {
+        DefaultClaim.claimSet.forEach { model.addAttribute(it, req.getAttribute(it))  }
         return if (id != null){
             val emp = employeeService.getEmployeeById(id)
             model.addAttribute("employee",emp)
@@ -65,6 +67,7 @@ class EmployeeController (
         model: Model,
         @RequestParam(required = false) q:String? = ""
     ): String {
+        DefaultClaim.claimSet.forEach { model.addAttribute(it, req.getAttribute(it))  }
         return if (req.getParameter("q") != null){
             val emp = employeeService.findEmployeesByName(q!!)
             model.addAttribute("employees",emp)
@@ -77,8 +80,10 @@ class EmployeeController (
 
     @GetMapping(DefaultURL.USER_CREATE)
     fun userCreate(
-        model: Model
+        model: Model,
+        req:HttpServletRequest
     ):String {
+        DefaultClaim.claimSet.forEach { model.addAttribute(it, req.getAttribute(it))  }
         model.addAttribute("departments", departmentService.getAllDepartments())
         model.addAttribute("roles",roleService.getAllRoles())
         model.addAttribute("isCreate", true)
@@ -88,8 +93,10 @@ class EmployeeController (
     @GetMapping(DefaultURL.USER_EDIT)
     fun userEdit(
         model: Model,
+        req: HttpServletRequest,
         @RequestParam id:Int
     ):String {
+        DefaultClaim.claimSet.forEach { model.addAttribute(it, req.getAttribute(it))  }
         model.addAttribute("employee",employeeService.getEmployeeById(id))
         model.addAttribute("departments", departmentService.getAllDepartments())
         model.addAttribute("roles",roleService.getAllRoles())

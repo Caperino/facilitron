@@ -1,6 +1,7 @@
 package at.fhj.ima.facilitron.controller
 
 import at.fhj.ima.facilitron.model.TicketComment
+import at.fhj.ima.facilitron.security.DefaultClaim
 import at.fhj.ima.facilitron.security.DefaultURL
 import at.fhj.ima.facilitron.service.EmployeeService
 import at.fhj.ima.facilitron.service.TicketCommentService
@@ -25,6 +26,7 @@ class TicketCommentController(
         @RequestParam ticketId: Int,
         req : HttpServletRequest
         ): String {
+        DefaultClaim.claimSet.forEach { model.addAttribute(it, req.getAttribute(it))  }
         val employeeId = req.getAttribute("id").toString().toInt()
         val employee = employeeService.getEmployeeById(employeeId)
 
