@@ -32,7 +32,7 @@ class SecurityConfiguration(
             // when changing --> ALSO IN DefaultURL !!!
             .requestMatchers("/", "/public").permitAll()
             .requestMatchers(DefaultURL.USER_CREATE, DefaultURL.USER_EDIT).hasAnyAuthority("HR", "ADMIN")
-            .requestMatchers(DefaultURL.TICKET_CLOSE_URL).hasAnyAuthority("SUPPORT", "ADMIN")
+            //.requestMatchers(DefaultURL.TICKET_CLOSE_URL).hasAnyAuthority("SUPPORT", "ADMIN")
             .anyRequest().authenticated()
             .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

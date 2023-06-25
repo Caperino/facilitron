@@ -31,13 +31,13 @@
         <div class="row">
           <div class="col mb-4">
             <p class="text-dark-gray">Ticket name</p>
-            <input type="text" name="subject" id="subject" class="form-control">
+            <input type="text" name="subject" id="subject" class="form-control" required>
           </div>
         </div>
         <div class="row mb-4">
           <div class="col-md-6 mb-4 mb-md-0">
             <p class="text-dark-gray">Priority</p>
-            <select id="priority" name="priority" class="form-select text-dark-gray">
+            <select id="priority" name="priority" class="form-select text-dark-gray" required>
               <option selected value="LOW">Low</option>
               <option value="MEDIUM">Medium</option>
               <option value="HIGH">High</option>
@@ -46,14 +46,14 @@
           </div>
           <div class="col-md-6">
             <p class="text-dark-gray">Category</p>
-            <select id="category" name="category" class="form-select text-dark-gray">
+            <select id="category" name="category" class="form-select text-dark-gray" required>
               <option th:each="cat : ${category}" th:text="${cat.name}" th:value="${cat.name}"></option>
             </select>
           </div>
         </div>
         <div class="col">
           <p class="text-dark-gray">Description</p>
-          <textarea class="form-control text-dark-gray" name="description" id="description" rows="7"></textarea>
+          <textarea class="form-control text-dark-gray" name="description" id="description" rows="7" required></textarea>
         </div>
       </div>
 

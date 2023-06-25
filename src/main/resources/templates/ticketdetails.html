@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,7 +74,35 @@
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row mt-2" th:if="${ticketDetails.closed != null}">
+        <div class="col-md mb-3 mb-md-0">
+          <div class="d-inline-flex d-md-block text-center">
+            <div class="d-inline-flex">
+              <svg stroke="currentColor" class="fac-icon me-2" stroke-width="0" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"></path>
+              </svg>
+              <p class="text-dark-gray my-auto text-center me-2 me-md-0"><b>Closed by</b></p>
+            </div>
+            <p class="text-dark-gray my-auto text-center" th:text="${ticketDetails.closedBy.firstName} + ' ' + ${ticketDetails.closedBy.secondName}"></p>
+          </div>
+        </div>
+
+        <div class="col-md mb-3 mb-md-0">
+          <div class="d-inline-flex d-md-block text-center">
+            <div class="d-inline-flex">
+              <svg stroke="currentColor" class="fac-icon me-2" stroke-width="0" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V192H0v272zm320-196c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM192 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM64 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zM400 64h-48V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H160V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H48C21.5 64 0 85.5 0 112v48h448v-48c0-26.5-21.5-48-48-48z"></path>
+              </svg>
+              <p class="text-dark-gray my-auto text-center me-2 me-md-0"><b>Date closed</b></p>
+            </div>
+            <p class="text-dark-gray my-auto text-center" th:text="${ticketDetails.getclosedTimeSeconds()}"></p>
+          </div>
+        </div>
+
+        <div class="col-md mb-3 mb-md-0">
+          <div class="d-inline-flex d-md-block text-center">
+          </div>
+        </div>
 
       </div>
     </div>
@@ -87,7 +115,7 @@
     </div>
 
     <!-- COMPANY INFO -->
-    <h2 class="fac-headline border-2 border-bottom mb-4">Comment History</h2>
+    <h2 class="fac-headline border-2 border-bottom mb-4" th:if="${ticketComments.size()!=0}">Comment History</h2>
     <div class="rounded-content mb-4" th:if="${ticketComments.size()!=0}">
 
       <div th:each="comment : ${ticketComments}">
@@ -118,8 +146,8 @@
     </div>
 
     <!-- New Comment -->
-    <h2 class="fac-headline mb-4 p-2 border-2 border-bottom">New Comment</h2>
-    <form action="/ticket_comment" method="post">
+    <h2 class="fac-headline mb-4 p-2 border-2 border-bottom" th:if="${ticketDetails.closed == null && (#strings.contains(roles, 'ADMIN') || #strings.contains(roles, 'SUPPORT') || #strings.equals(id, ticketDetails.openedBy.id))}">New Comment</h2>
+    <form action="/ticket_comment" method="post" th:if="${ticketDetails.closed == null && (#strings.contains(roles, 'ADMIN') || #strings.contains(roles, 'SUPPORT') || #strings.equals(id, ticketDetails.openedBy.id))}">
       <input hidden="hidden" name="ticketId" th:value="${ticketDetails.id}">
       <div class="form-group mb-4">
         <div class="col p-2">
@@ -132,8 +160,8 @@
     </form>
 
     <!-- BUTTONS -->
-    <div class="d-flex justify-content-end mb-4">
-      <a href="/ticket_close" class="btn btn-danger fac-btn-red me-3">Close Ticket</a>
+    <div class="d-flex justify-content-end mb-4" th:if="${ticketDetails.closed == null && (#strings.contains(roles, 'ADMIN') || #strings.contains(roles, 'SUPPORT') || #strings.equals(id, ticketDetails.openedBy.id))}">
+      <a th:href="'/ticket_close?id=' + ${ticketDetails.id}" class="btn btn-danger fac-btn-red me-3">Close Ticket</a>
     </div>
   </div>
 </div>

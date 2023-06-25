@@ -72,6 +72,15 @@ class TicketController (
         DefaultClaim.claimSet.forEach { model.addAttribute(it, req.getAttribute(it))  }
         val employee = employeeService.getEmployeeById(req.getAttribute("id").toString().toInt())
         val tk = ticketService.getTicketDetails(id)
+
+        // check authority
+        val isAllowedPerRoles:Boolean =
+            employee.roles.map { it.name }.contains("SUPPORT") || employee.roles.map { it.name }.contains("ADMIN")
+
+        if (employee.id != tk.openedBy.id && !isAllowedPerRoles){
+            return "redirect:${DefaultURL.TICKET_URL}"
+        }
+
         return if (ticketService.closeTicket(tk, employee)) {
             "redirect:/ticket_overview"
         } else {
