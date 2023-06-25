@@ -35,7 +35,7 @@ class Employee(
     private var password:String,
     private var phone:String? = null,
     val birthday:LocalDate,
-    private var accountStatus:AccountStatus = AccountStatus.ACTIVE,
+    var accountStatus:AccountStatus = AccountStatus.ACTIVE,
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "employee_roles",

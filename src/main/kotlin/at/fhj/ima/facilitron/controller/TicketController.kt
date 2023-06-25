@@ -62,16 +62,16 @@ class TicketController (
     @GetMapping(DefaultURL.TICKET_CLOSE_URL)
     fun closeTicket(
         model: Model,
-        @RequestParam id: Int
+        @RequestParam id: Int,
+        req: HttpServletRequest
     ): String {
-        val employee = employeeService.getEmployeeById(model.getAttribute("id").toString().toInt())
+        val employee = employeeService.getEmployeeById(req.getAttribute("id").toString().toInt())
         val tk = ticketService.getTicketDetails(id)
         return if (ticketService.closeTicket(tk, employee)) {
-            model.addAttribute("tickets",ticketService.getAllTickets())
-            "ticket_overview"
+            "redirect:/ticket_overview"
         } else {
             model.addAttribute("error", "Ticket couldn't be deleted!")
-            "ticket_overview"
+            "redirect:/ticket_overview"
         }
     }
 

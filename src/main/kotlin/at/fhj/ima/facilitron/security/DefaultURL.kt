@@ -28,6 +28,7 @@ object DefaultURL {
     const val USER_DETAILS = "/user_details"
     const val USER_CREATE ="/user_create"
     const val USER_EDIT = "/user_edit"
+    const val USER_DELETE_URL = "/user_delete"
     const val NAVPAGE_URL = "/navigation"
 
     // API URLs

@@ -49,4 +49,9 @@ class Ticket (
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
         return opened.format(formatter)
     }
+
+    fun getclosedTimeSeconds(): String {
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        return closed!!.format(formatter)
+    }
 }

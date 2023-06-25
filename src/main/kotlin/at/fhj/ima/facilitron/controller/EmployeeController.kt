@@ -247,4 +247,21 @@ class EmployeeController (
         println("location --> $location")
         return "redirect:/user_overview"
     }
+
+    @GetMapping(DefaultURL.USER_DELETE_URL)
+    fun closeTicket(
+        model: Model,
+        @RequestParam id: Int? = null,
+        req: HttpServletRequest
+    ): String {
+        if (id != null){
+            val employee = employeeService.getEmployeeById(id)
+            if (employeeService.deleteEmployee(employee)){
+                model.addAttribute("succ", "User has been deleted.")
+            } else {
+                model.addAttribute("error", "We encountered an error while deleting this user.")
+            }
+        }
+        return "redirect:/user_overview"
+    }
 }

@@ -27,7 +27,7 @@
                     <a class="nav-link header-dark" href="#Contact" th:if="${public} == null ? false : true">Contact</a>
                 </div>
             </div>
-            <form action="/auth/logout" method="post">
+            <form action="/auth/logout" method="post" th:if="${public} == null ? true : false">
                 <button type="submit" class="btn btn-primary fac-btn-dark-blue" th:if="${public} == null ? true : false">Logout</button>
             </form>
         </div>
