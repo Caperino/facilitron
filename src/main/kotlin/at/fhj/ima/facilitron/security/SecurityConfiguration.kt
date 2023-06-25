@@ -31,8 +31,8 @@ class SecurityConfiguration(
             .requestMatchers("/auth/**").permitAll()
             // when changing --> ALSO IN DefaultURL !!!
             .requestMatchers("/", "/public").permitAll()
-            //.requestMatchers("/hidden-admin").hasAuthority("ADMIN") // example for authority
             .requestMatchers(DefaultURL.USER_CREATE, DefaultURL.USER_EDIT).hasAnyAuthority("HR", "ADMIN")
+            .requestMatchers(DefaultURL.TICKET_CLOSE_URL).hasAnyAuthority("SUPPORT", "ADMIN")
             .anyRequest().authenticated()
             .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

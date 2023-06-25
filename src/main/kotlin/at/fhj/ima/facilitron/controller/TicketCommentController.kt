@@ -27,7 +27,17 @@ class TicketCommentController(
         ): String {
         val employeeId = req.getAttribute("id").toString().toInt()
         val employee = employeeService.getEmployeeById(employeeId)
+
         val ticket = ticketService.getTicketDetails(ticketId)
+
+        // check authority
+        val isAllowedPerRoles:Boolean =
+            employee.roles.map { it.name }.contains("SUPPORT") || employee.roles.map { it.name }.contains("ADMIN")
+
+        if (employeeId != ticket.openedBy.id && !isAllowedPerRoles){
+            return "redirect:/ticket_details?id=${ticketId}"
+        }
+
         val ticketComment = TicketComment(comment = comment, commenter = employee, ticket = ticket)
         ticketCommentService.addTicketComment(ticketComment)
         return "redirect:/ticket_details?id=${ticketId}"
