@@ -17,5 +17,5 @@ class Department (
     val name:String,
     val description:String,
     @OneToOne(fetch = FetchType.EAGER)
-    val head:Employee
+    val head:Employee?
 )

@@ -25,7 +25,7 @@
 
     <!-- PICTURE -->
     <div class="d-flex justify-content-center mb-2">
-        <img th:src="${employee.getProfilePic() != null} ? '/public/images/' + ${employee.getProfilePic().originalFileName} + ${employee.getProfilePic().getContentType()} : '/public/images/noprofilepicture.png'" alt="User Profile" class="profile-image">
+        <img th:src="${employee.getProfilePic() != null} ? '/pfp/' + ${employee.getProfilePic().id} : '/public/images/noprofilepicture.png'" alt="User Profile" class="profile-image">
     </div>
 
     <!-- NAME -->

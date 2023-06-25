@@ -24,7 +24,7 @@ class PublicController (
         return "index"
     }
 
-    @GetMapping("/hidden")
+    /*@GetMapping("/hidden")
     fun hiddenPage(
         model: Model,
         req: HttpServletRequest,
@@ -45,6 +45,6 @@ class PublicController (
     @GetMapping(DefaultURL.PUBLIC_TEMP_TESTING)
     fun newPublicPage(model: Model):String{
         return "public"
-    }
+    }*/
 
 }

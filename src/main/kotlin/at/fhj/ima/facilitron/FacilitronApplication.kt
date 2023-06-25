@@ -31,11 +31,18 @@ class FacilitronApplication(private val passwordEncoder: PasswordEncoder) {
 		securityRoleService.saveRole("ADMIN")
 		// TODO initialise all available roles (DEV ONLY)
 
+		// Departments
+		departmentRepository.save(Department(name = "Business", description = "taking your money...", head = null/*head = employeeService.getEmployeeById(1)*/))
+		departmentRepository.save(Department(name = "IT Services", description = "helping business", head = null/*head = employeeService.getEmployeeById(1)*/))
+		departmentRepository.save(Department(name = "Development", description = "finding new ways to take your money", head = null/*head = employeeService.getEmployeeById(2)*/))
+		departmentRepository.save(Department(name = "Accounting", description = "calculating how much money we took", head = null/*head = employeeService.getEmployeeById(3)*/))
+
 		// ----- EMPLOYEES -----
-		employeeService.saveEmployee(Employee(firstName = "Max", secondName = "Mustermann", mail="max.mustermann@mustermail.com",gender=Gender.MALE, password = BCryptPasswordEncoder().encode("testpassword"), birthday = LocalDate.now(), roles = mutableSetOf(securityRoleRepository.findByName("EMPLOYEE")), workingType = WorkingType.VOLUNTARY))
-		employeeService.saveEmployee(Employee(firstName = "Timo", secondName = "Kappel", mail="tk@inc.com",gender=Gender.MALE, password = BCryptPasswordEncoder().encode("1234"), birthday = LocalDate.now(), roles = mutableSetOf(securityRoleRepository.findByName("ADMIN"), securityRoleRepository.findByName("EMPLOYEE")), workingType = WorkingType.FULLTIME))
-		employeeService.saveEmployee(Employee(firstName = "Susi", secondName = "Unbesorgt", mail="test@idk.com",gender=Gender.FEMALE, password = BCryptPasswordEncoder().encode("1234"), birthday = LocalDate.now(), roles = mutableSetOf(securityRoleRepository.findByName("HR"), securityRoleRepository.findByName("EMPLOYEE")), workingType = WorkingType.PARTTIME))
-		employeeService.saveEmployee(Employee(firstName = "Michael", secondName = "Jackson", mail="he@he.he",gender=Gender.MALE, password = BCryptPasswordEncoder().encode("hehe"), birthday = LocalDate.now(), roles = mutableSetOf(securityRoleRepository.findByName("SUPPORT"), securityRoleRepository.findByName("EMPLOYEE")), workingType = WorkingType.PARTTIME))
+		employeeService.saveEmployee(Employee(firstName = "Max", secondName = "Mustermann", mail="max.mustermann@mustermail.com",gender=Gender.MALE, password = BCryptPasswordEncoder().encode("testpassword"), birthday = LocalDate.parse("1990-06-10"), roles = mutableSetOf(securityRoleRepository.findByName("EMPLOYEE")), workingType = WorkingType.VOLUNTARY, department = departmentRepository.findById(1).get(), entryDate = LocalDate.parse("2023-01-01")))
+		employeeService.saveEmployee(Employee(firstName = "Timo", secondName = "Kappel", mail="tk@inc.com",gender=Gender.MALE, password = BCryptPasswordEncoder().encode("1234"), birthday = LocalDate.parse("2003-07-14"), roles = mutableSetOf(securityRoleRepository.findByName("ADMIN"), securityRoleRepository.findByName("EMPLOYEE")), workingType = WorkingType.FULLTIME, department = departmentRepository.findById(2).get(), entryDate = LocalDate.parse("2023-04-01")))
+		employeeService.saveEmployee(Employee(firstName = "Susi", secondName = "Unbesorgt", mail="test@idk.com",gender=Gender.FEMALE, password = BCryptPasswordEncoder().encode("1234"), birthday = LocalDate.parse("1999-04-26"), roles = mutableSetOf(securityRoleRepository.findByName("HR"), securityRoleRepository.findByName("EMPLOYEE")), workingType = WorkingType.PARTTIME, department = departmentRepository.findById(4).get(), entryDate = LocalDate.parse("2021-10-01")))
+		employeeService.saveEmployee(Employee(firstName = "Michael", secondName = "Jackson", mail="he@he.he",gender=Gender.MALE, password = BCryptPasswordEncoder().encode("hehe"), birthday = LocalDate.parse("2000-10-06"), roles = mutableSetOf(securityRoleRepository.findByName("SUPPORT"), securityRoleRepository.findByName("EMPLOYEE")), workingType = WorkingType.PARTTIME, department = departmentRepository.findById(3).get(), entryDate = LocalDate.parse("2023-02-15")))
+		employeeService.saveEmployee(Employee(firstName = "Em", secondName = "Em", mail="em@em.em",gender=Gender.DIV, password = BCryptPasswordEncoder().encode("em"), birthday = LocalDate.parse("1993-11-19"), roles = mutableSetOf(securityRoleRepository.findByName("EMPLOYEE")), workingType = WorkingType.VOLUNTARY, department = departmentRepository.findById(1).get(), entryDate = LocalDate.parse("2023-01-01")))
 
 		// Occupations
 		ocupationService.saveOcupation(Ocupation(type=OcupationType.ARRIVAL, employee = employeeService.getEmployeeById(1)))
@@ -45,11 +52,6 @@ class FacilitronApplication(private val passwordEncoder: PasswordEncoder) {
 		ocupationService.saveOcupation(Ocupation(type=OcupationType.ARRIVAL, employee = employeeService.getEmployeeById(2)))
 		ocupationService.saveOcupation(Ocupation(type=OcupationType.DEPATURE, employee = employeeService.getEmployeeById(2), workload = "Bug Fixes"))
 
-		// Departments
-		departmentRepository.save(Department(name = "Business", description = "taking your money...", head = employeeService.getEmployeeById(1)))
-		departmentRepository.save(Department(name = "IT Services", description = "helping business", head = employeeService.getEmployeeById(1)))
-		departmentRepository.save(Department(name = "Development", description = "finding new ways to take your money", head = employeeService.getEmployeeById(1)))
-		departmentRepository.save(Department(name = "Accounting", description = "calculating how much money we took", head = employeeService.getEmployeeById(1)))
 
 		// Category
 		categoryRepository.save(Category(name="Hardware", description = "Hardware like printers, computers, servers, etc."))

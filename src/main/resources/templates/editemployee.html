@@ -26,7 +26,7 @@
   <form action="/user_edit" method="post" enctype="multipart/form-data">
     <input type="hidden" name="id" th:value="${employee != null}? ${employee.id}">
     <input type="hidden" name="mail" th:value="${employee != null}? ${employee.mail}">
-    <input type="hidden" name="entryDate" th:value="${employee != null}? ${employee.entryDate}">
+    <!--<input type="hidden" name="entryDate" th:value="${employee != null}? ${employee.entryDate}">-->
     <div class="mx-2 mx-md-4">
       <!--PERSONAL INFO -->
       <h1 class="fac-headline mb-4 p-2 border-2 border-bottom">Personal Info</h1>
@@ -34,11 +34,11 @@
         <div class="row mb-4">
           <div class="col-md-6 mb-4 mb-md-0">
             <p class="text-dark-gray">Firstname</p>
-            <input required type="text" name="firstName" id="firstName" class="form-control text-dark-gray" th:value="${employee} != null ? ${employee.firstName} : ''">
+            <input required oninput="checkInput(this)" type="text" name="firstName" id="firstName" class="form-control text-dark-gray" th:value="${employee} != null ? ${employee.firstName} : ''">
           </div>
           <div class="col-md-6">
             <p class="text-dark-gray">Lastname</p>
-            <input required type="text" name="secondName" id="secondName" class="form-control text-dark-gray" th:value="${employee} != null ? ${employee.secondName} : ''">
+            <input required oninput="checkInput(this)" type="text" name="secondName" id="secondName" class="form-control text-dark-gray" th:value="${employee} != null ? ${employee.secondName} : ''">
           </div>
         </div>
         <div class="row mb-4">
@@ -103,9 +103,9 @@
 
         <div class="row">
           <div class="col">
-            <p class="text-dark-gray">Password</p>
-            <div class="btn btn-primary fac-btn-dark-orange" id="enablePWChange">Allow password change?</div>
-            <input required type="password" name="password" id="password" class="form-control text-dark-gray" value="_UNCHANGED_">
+            <p class="text-dark-gray">Password (min. 6 characters total [upper/lower, number])</p>
+            <div th:if="${!isCreate}" class="btn btn-primary fac-btn-dark-orange" id="enablePWChange">reuse old password</div>
+            <input oninput="checkPWComplexity(this)" th:disabled="${!isCreate}" required type="password" name="password" id="password" class="form-control text-dark-gray" th:value="${isCreate} ? '' : '_UNCHANGED_'">
           </div>
         </div>
 
@@ -116,7 +116,7 @@
 
       <!-- BUTTONS -->
       <div class="d-flex justify-content-end">
-        <button type="submit" class="btn btn-primary fac-btn-dark-blue mt-4 mb-4">Submit</button>
+        <button type="submit" class="btn btn-primary fac-btn-dark-blue mt-4 mb-4" id="submit-btn">Submit</button>
       </div>
     </div>
   </form>

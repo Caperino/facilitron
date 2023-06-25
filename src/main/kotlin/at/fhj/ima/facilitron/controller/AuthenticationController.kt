@@ -40,8 +40,8 @@ class AuthenticationController(
             // TODO use response message in page (SEE BELOW)
             // authResponse.exception.message
 
-            resp.status = 401
-            return DefaultView.LOGIN_VIEW
+            resp.sendRedirect(DefaultURL.PUBLIC_LANDING_URL + "#Login")
+            return DefaultView.REDIRECTOR
         }
 
         val authCookie = internalCookieService.generateAuthCookie(authResponse.token)
@@ -57,7 +57,7 @@ class AuthenticationController(
         return DefaultView.REDIRECTOR
     }
 
-    @PostMapping(DefaultURL.REGISTER_PAGE_URL)
+    /*@PostMapping(DefaultURL.REGISTER_PAGE_URL)
     fun registerHandler(
         req: HttpServletRequest,
         resp: HttpServletResponse,
@@ -110,7 +110,7 @@ class AuthenticationController(
             resp.sendRedirect(DefaultURL.USER_URL)
         }
         return DefaultView.REDIRECTOR
-    }
+    }*/
 
     @PostMapping(DefaultURL.LOGOUT_PAGE_URL)
     fun logoutHandler(
@@ -136,7 +136,7 @@ class AuthenticationController(
      * @param role which role should be assigned
      * @author TK Inc.
      */
-    @PostMapping("/auth/addrole")
+    /*@PostMapping("/auth/addrole")
     fun addRole(
         @RequestParam mail:String,
         @RequestParam role:String
@@ -144,6 +144,6 @@ class AuthenticationController(
         // TODO exception handling
         service.updateRoleAssignments(mail = mail, role = role)
         return ResponseEntity.ok("worked!")
-    }
+    }*/
 
 }

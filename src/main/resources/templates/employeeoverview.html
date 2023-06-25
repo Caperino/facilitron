@@ -53,9 +53,9 @@
           <div class="col-2 col-sm-1 fac-list-item">
             <img th:src="${em.getProfilePic() != null} ? '/pfp/' + ${em.getProfilePic().id} : '/public/images/noprofilepicture.png'" class="fac-image"/>
           </div>
-          <div class="col-3 my-auto">
-            <p class="my-auto text-dark-gray" th:text="${em.secondName} + ', ' + ${em.firstName}"></p>
-          </div>
+            <div class="col-3 my-auto">
+              <p class="my-auto text-dark-gray" th:text="${em.secondName} + ', ' + ${em.firstName}"></p>
+            </div>
           <div class="col-5 col-sm-6 my-auto">
             <!--<p class="my-auto text-dark-gray" th:text="${em.roles.size() != 0} ? ${em.concatRoles()} : ''"></p>-->
             <p class="my-auto text-dark-gray" th:text="${em.department?.name}? ${em.department.name}"></p>

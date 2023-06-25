@@ -6,6 +6,7 @@ import at.fhj.ima.facilitron.service.*
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import jakarta.validation.Valid
+import org.springframework.cglib.core.Local
 import org.springframework.core.io.FileSystemResource
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -125,11 +126,14 @@ class EmployeeController (
         @RequestParam entryDate:String? = null,
         @RequestParam password:String? = null,
     ): String{
+        val entryDateAsDate:LocalDate
+
         try {
             TypeSafety.checkMandatoryParameters(firstName, secondName, birthday, gender, department, entryDate)
+            entryDateAsDate = LocalDate.parse(entryDate)
         } catch(e:Exception){
             // TODO error handling
-            return errorOccurred("type checking failed, ${e.cause}")
+            return errorOccurred("type checking failed, ${e.message}")
         }
 
         val em:Employee
@@ -162,7 +166,7 @@ class EmployeeController (
                         birthday = LocalDate.parse(birthday),
                         roles = secRoles.filter { roles?.contains(it.name) ?: false }.toMutableSet(),
                         department = internalDepartments.filter { it.name == department }[0],
-                        entryDate = oldEm.entryDate,
+                        entryDate = entryDateAsDate,
                         workingType = WorkingType.valueOf(workingType ?: ""),
                         profilePic = file ?: oldEm.profilePic
                     )
@@ -192,7 +196,7 @@ class EmployeeController (
                         birthday = LocalDate.parse(birthday),
                         roles = secRoles.filter { roles?.contains(it.name) ?: false }.toMutableSet(),
                         department = internalDepartments.filter { it.name == department }[0],
-                        entryDate = oldEm.entryDate,
+                        entryDate = entryDateAsDate,
                         workingType = WorkingType.valueOf(workingType ?: ""),
                         profilePic = file ?: oldEm.profilePic
                     )
@@ -213,12 +217,6 @@ class EmployeeController (
                     file = fileService.createFile(profilePicture)
                 }
 
-                val ed = try {
-                    LocalDate.parse(entryDate)
-                } catch (e:Exception){
-                    LocalDate.now()
-                }
-
 
                 em = Employee(
                     firstName = firstName!!,
@@ -229,7 +227,7 @@ class EmployeeController (
                     birthday = LocalDate.parse(birthday),
                     roles = secRoles.filter { roles?.contains(it.name) ?: false }.toMutableSet(),
                     department = internalDepartments.filter { it.name == department }[0],
-                    entryDate = ed,
+                    entryDate = entryDateAsDate,
                     workingType = WorkingType.valueOf(workingType ?: ""),
                     profilePic = file
                 )
