@@ -8,148 +8,141 @@
     <link rel="stylesheet" type="text/css" href="/public/css/custom.css">
 </head>
 <body>
-<div class="content-wrapper">
-    <div th:insert="~{header :: header}" class="header"></div>
+<div th:insert="~{header :: header}" class="header"></div>
 
-    <div class="container-md px-3 py-4 content">
+<div class="container-md px-3 py-4 content">
 
-        <!-- BREADCRUMB -->
-        <div class="d-flex justify-content-start p-3">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/navigation">Home</a></li>
-                    <li class="breadcrumb-item"><a href="/user_overview">Employees</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Employee Details</li>
-                </ol>
-            </nav>
-        </div>
-
-        <!-- PICTURE -->
-        <div class="d-flex justify-content-center mb-2">
-            <img th:src="${employee.getProfilePic() != null} ? '/pfp/' + ${employee.getProfilePic().id} : '/public/images/noprofilepicture.png'" alt="User Profile" class="profile-image">
-        </div>
-
-        <!-- NAME -->
-        <div class="d-flex justify-content-center mb-4">
-            <h3 class="fac-headline mt-2" th:text="${employee.firstName} + ' ' + ${employee.secondName}"></h3>
-        </div>
-
-        <div class="mx-2 mx-md-4">
-            <!--PERSONAL INFO -->
-            <h2 class="fac-headline mb-4 p-2 border-2 border-bottom">Personal Info</h2>
-
-            <div class="rounded-content mb-4">
-                <div class="row">
-                    <div class="col-md mb-3 mb-md-0">
-                        <div class="d-inline-flex d-md-block text-center">
-                            <div class="d-inline-flex">
-                                <svg stroke="currentColor" class="fac-icon me-2" stroke-width="0" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M448 384c-28.02 0-31.26-32-74.5-32-43.43 0-46.825 32-74.75 32-27.695 0-31.454-32-74.75-32-42.842 0-47.218 32-74.5 32-28.148 0-31.202-32-74.75-32-43.547 0-46.653 32-74.75 32v-80c0-26.5 21.5-48 48-48h16V112h64v144h64V112h64v144h64V112h64v144h16c26.5 0 48 21.5 48 48v80zm0 128H0v-96c43.356 0 46.767-32 74.75-32 27.951 0 31.253 32 74.75 32 42.843 0 47.217-32 74.5-32 28.148 0 31.201 32 74.75 32 43.357 0 46.767-32 74.75-32 27.488 0 31.252 32 74.5 32v96zM96 96c-17.75 0-32-14.25-32-32 0-31 32-23 32-64 12 0 32 29.5 32 56s-14.25 40-32 40zm128 0c-17.75 0-32-14.25-32-32 0-31 32-23 32-64 12 0 32 29.5 32 56s-14.25 40-32 40zm128 0c-17.75 0-32-14.25-32-32 0-31 32-23 32-64 12 0 32 29.5 32 56s-14.25 40-32 40z"></path>
-                                </svg>
-                                <p class="text-dark-gray my-auto text-center me-2 me-md-0"><b>Birthday</b></p>
-                            </div>
-                            <div class="text-dark-gray my-auto text-center" th:text="${employee.birthday}"></div>
-                        </div>
-                    </div>
-                    <div class="col-md mb-3 mb-md-0">
-                        <div class="d-inline-flex d-md-block text-center">
-                            <div class="d-inline-flex">
-                                <svg stroke="currentColor" class="fac-icon me-2" stroke-width="0" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"></path>
-                                </svg>
-                                <div class="text-dark-gray my-auto text-center me-2 me-md-0"><b>Gender</b></div>
-                            </div>
-                            <p class="text-dark-gray my-auto text-center" th:text="${employee.gender}"></p>
-                        </div>
-                    </div>
-                    <div class="col-md">
-                        <div class="d-block text-md-center">
-                            <div class="d-inline-flex me-2 me-md-0">
-                                <svg stroke="currentColor" class="fac-icon me-2" stroke-width="0" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M460.6 147.3L353 256.9c-.8.8-.8 2 0 2.8l75.3 80.2c5.1 5.1 5.1 13.3 0 18.4-2.5 2.5-5.9 3.8-9.2 3.8s-6.7-1.3-9.2-3.8l-75-79.9c-.8-.8-2.1-.8-2.9 0L313.7 297c-15.3 15.5-35.6 24.1-57.4 24.2-22.1.1-43.1-9.2-58.6-24.9l-17.6-17.9c-.8-.8-2.1-.8-2.9 0l-75 79.9c-2.5 2.5-5.9 3.8-9.2 3.8s-6.7-1.3-9.2-3.8c-5.1-5.1-5.1-13.3 0-18.4l75.3-80.2c.7-.8.7-2 0-2.8L51.4 147.3c-1.3-1.3-3.4-.4-3.4 1.4V368c0 17.6 14.4 32 32 32h352c17.6 0 32-14.4 32-32V148.7c0-1.8-2.2-2.6-3.4-1.4z"></path><path d="M256 295.1c14.8 0 28.7-5.8 39.1-16.4L452 119c-5.5-4.4-12.3-7-19.8-7H79.9c-7.5 0-14.4 2.6-19.8 7L217 278.7c10.3 10.5 24.2 16.4 39 16.4z"></path>
-                                </svg>
-                                <p class="text-dark-gray my-auto text-center"><b>E-Mail</b></p>
-                            </div>
-                            <div class="text-dark-gray my-auto" style="color: #1e88e5" th:text="${employee.mail}"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- COMPANY INFO -->
-            <h2 class="fac-headline mb-4 p-2 border-2 border-bottom">Company Info</h2>
-            <div class="rounded-content mb-4">
-                <div class="row">
-                    <div class="col-md mb-3 mb-md-0">
-                        <div class="d-inline-flex d-md-block text-center">
-                            <div class="d-inline-flex">
-                                <svg stroke="currentColor" class="fac-icon me-2" stroke-width="0" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M0 464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V192H0v272zm320-196c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM192 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM64 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zM400 64h-48V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H160V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H48C21.5 64 0 85.5 0 112v48h448v-48c0-26.5-21.5-48-48-48z"></path>
-                                </svg>
-                                <p class="text-dark-gray my-auto text-center me-2 me-md-0"><b>Entry Date</b></p>
-                            </div>
-                            <p class="text-dark-gray my-auto text-center" th:text="${employee.entryDate}"></p>
-                        </div>
-                    </div>
-                    <div class="col-md mb-3 mb-md-0">
-                        <div class="d-inline-flex d-md-block text-md-center">
-                            <div class="d-inline-flex me-2 me-md-0">
-                                <svg stroke="currentColor" class="fac-icon me-2" stroke-width="0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill="none" d="M0 0h24v24H0z"></path><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"></path>
-                                </svg>
-                                <p class="text-dark-gray my-auto text-center"><b>Roles</b></p>
-                            </div>
-                            <p class="text-dark-gray my-auto" th:text="${employee.concatRoles()}"></p>
-                        </div>
-                    </div>
-                    <div class="col-md">
-                        <div class="d-inline-flex d-md-block text-center">
-                            <div class="d-inline-flex">
-                                <svg stroke="currentColor" class="fac-icon me-2" stroke-width="0" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M469.54 120.52a16 16 0 00-25.54-4L382.56 178a16.12 16.12 0 01-22.63 0l-26.56-26.6a16 16 0 010-22.63l61.18-61.19a16 16 0 00-4.78-25.92C343.56 21 285.88 31.78 249.51 67.88c-30.9 30.68-40.11 78.62-25.25 131.53a15.89 15.89 0 01-4.49 16L53.29 367.46a64.17 64.17 0 1090.6 90.64l153.68-166.85a15.9 15.9 0 0115.77-4.57 179.3 179.3 0 0046.22 6.37c33.4 0 62.71-10.81 83.85-31.64 39.15-38.57 45.12-103.99 26.13-140.89zM99.48 447.15a32 32 0 1128.34-28.35 32 32 0 01-28.34 28.35z"></path>
-                                </svg>
-                                <p class="text-dark-gray my-auto text-center me-2 me-md-0"><b>Working Type</b></p>
-                            </div>
-                            <p class="text-dark-gray my-auto text-center" th:text="${employee.workingType}"></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- WORKING HISTORY -->
-            <h2 class="fac-headline mb-4 p-2 border-2 border-bottom">Working History</h2>
-            <div class="rounded-content mb-4">
-                <div class="table-responsive-md">
-                    <table class="table table-stripe ">
-                        <thead class="table-item">
-                        <tr>
-                            <th scope="col" style="border-top-left-radius: 0.5rem">Date</th>
-                            <th scope="col">Arrival</th>
-                            <th scope="col">Departure</th>
-                            <th scope="col" style="border-top-right-radius: 0.5rem">Workload</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr class="table-item" th:each="occup : ${ocuptions}">
-                            <th scope="row" th:text="${occup.getDate()}"></th>
-                            <td th:text="${occup.getArrivalTime()}"></td>
-                            <td th:text="${occup.getDepartureTimeSeconds()}"></td>
-                            <td th:text="${occup.workload}"></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- BUTTONS -->
-            <!--<div class="d-flex justify-content-end">
-                <a href="#" class="btn btn-primary fac-btn-dark-blue mt-4 mb-4">Change Password</a>
-            </div> -->
-        </div>
+    <!-- BREADCRUMB -->
+    <div class="d-flex justify-content-start p-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/navigation">Home</a></li>
+                <li class="breadcrumb-item"><a href="/user_overview">Employees</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Employee Details</li>
+            </ol>
+        </nav>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-    <div th:insert="~{footer :: footer}" class="footer"></div>
+    <!-- PICTURE -->
+    <div class="d-flex justify-content-center mb-2">
+        <img th:src="${employee.getProfilePic() != null} ? '/pfp/' + ${employee.getProfilePic().id} : '/public/images/noprofilepicture.png'" alt="User Profile" class="profile-image">
+    </div>
+
+    <!-- NAME -->
+    <div class="d-flex justify-content-center mb-4">
+        <h3 class="fac-headline mt-2" th:text="${employee.firstName} + ' ' + ${employee.secondName}"></h3>
+    </div>
+
+    <div class="mx-2 mx-md-4">
+        <!--PERSONAL INFO -->
+        <h2 class="fac-headline mb-4 p-2 border-2 border-bottom">Personal Info</h2>
+
+        <div class="rounded-content mb-4">
+            <div class="row">
+                <div class="col-md mb-3 mb-md-0">
+                    <div class="d-inline-flex d-md-block text-center">
+                        <div class="d-inline-flex">
+                            <svg stroke="currentColor" class="fac-icon me-2" stroke-width="0" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M448 384c-28.02 0-31.26-32-74.5-32-43.43 0-46.825 32-74.75 32-27.695 0-31.454-32-74.75-32-42.842 0-47.218 32-74.5 32-28.148 0-31.202-32-74.75-32-43.547 0-46.653 32-74.75 32v-80c0-26.5 21.5-48 48-48h16V112h64v144h64V112h64v144h64V112h64v144h16c26.5 0 48 21.5 48 48v80zm0 128H0v-96c43.356 0 46.767-32 74.75-32 27.951 0 31.253 32 74.75 32 42.843 0 47.217-32 74.5-32 28.148 0 31.201 32 74.75 32 43.357 0 46.767-32 74.75-32 27.488 0 31.252 32 74.5 32v96zM96 96c-17.75 0-32-14.25-32-32 0-31 32-23 32-64 12 0 32 29.5 32 56s-14.25 40-32 40zm128 0c-17.75 0-32-14.25-32-32 0-31 32-23 32-64 12 0 32 29.5 32 56s-14.25 40-32 40zm128 0c-17.75 0-32-14.25-32-32 0-31 32-23 32-64 12 0 32 29.5 32 56s-14.25 40-32 40z"></path>
+                            </svg>
+                            <p class="text-dark-gray my-auto text-center me-2 me-md-0"><b>Birthday</b></p>
+                        </div>
+                        <div class="text-dark-gray my-auto text-center" th:text="${employee.birthday}"></div>
+                    </div>
+                </div>
+                <div class="col-md mb-3 mb-md-0">
+                    <div class="d-inline-flex d-md-block text-center">
+                        <div class="d-inline-flex">
+                            <svg stroke="currentColor" class="fac-icon me-2" stroke-width="0" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"></path>
+                            </svg>
+                            <div class="text-dark-gray my-auto text-center me-2 me-md-0"><b>Gender</b></div>
+                        </div>
+                        <p class="text-dark-gray my-auto text-center" th:text="${employee.gender}"></p>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="d-block text-md-center">
+                        <div class="d-inline-flex me-2 me-md-0">
+                            <svg stroke="currentColor" class="fac-icon me-2" stroke-width="0" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M460.6 147.3L353 256.9c-.8.8-.8 2 0 2.8l75.3 80.2c5.1 5.1 5.1 13.3 0 18.4-2.5 2.5-5.9 3.8-9.2 3.8s-6.7-1.3-9.2-3.8l-75-79.9c-.8-.8-2.1-.8-2.9 0L313.7 297c-15.3 15.5-35.6 24.1-57.4 24.2-22.1.1-43.1-9.2-58.6-24.9l-17.6-17.9c-.8-.8-2.1-.8-2.9 0l-75 79.9c-2.5 2.5-5.9 3.8-9.2 3.8s-6.7-1.3-9.2-3.8c-5.1-5.1-5.1-13.3 0-18.4l75.3-80.2c.7-.8.7-2 0-2.8L51.4 147.3c-1.3-1.3-3.4-.4-3.4 1.4V368c0 17.6 14.4 32 32 32h352c17.6 0 32-14.4 32-32V148.7c0-1.8-2.2-2.6-3.4-1.4z"></path><path d="M256 295.1c14.8 0 28.7-5.8 39.1-16.4L452 119c-5.5-4.4-12.3-7-19.8-7H79.9c-7.5 0-14.4 2.6-19.8 7L217 278.7c10.3 10.5 24.2 16.4 39 16.4z"></path>
+                            </svg>
+                            <p class="text-dark-gray my-auto text-center"><b>E-Mail</b></p>
+                        </div>
+                        <div class="text-dark-gray my-auto" style="color: #1e88e5" th:text="${employee.mail}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COMPANY INFO -->
+        <h2 class="fac-headline mb-4 p-2 border-2 border-bottom">Company Info</h2>
+        <div class="rounded-content mb-4">
+            <div class="row">
+                <div class="col-md mb-3 mb-md-0">
+                    <div class="d-inline-flex d-md-block text-center">
+                        <div class="d-inline-flex">
+                            <svg stroke="currentColor" class="fac-icon me-2" stroke-width="0" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0 464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V192H0v272zm320-196c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM192 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM64 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zM400 64h-48V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H160V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H48C21.5 64 0 85.5 0 112v48h448v-48c0-26.5-21.5-48-48-48z"></path>
+                            </svg>
+                            <p class="text-dark-gray my-auto text-center me-2 me-md-0"><b>Entry Date</b></p>
+                        </div>
+                        <p class="text-dark-gray my-auto text-center" th:text="${employee.entryDate}"></p>
+                    </div>
+                </div>
+                <div class="col-md mb-3 mb-md-0">
+                    <div class="d-inline-flex d-md-block text-md-center">
+                        <div class="d-inline-flex me-2 me-md-0">
+                            <svg stroke="currentColor" class="fac-icon me-2" stroke-width="0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path fill="none" d="M0 0h24v24H0z"></path><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"></path>
+                            </svg>
+                            <p class="text-dark-gray my-auto text-center"><b>Roles</b></p>
+                        </div>
+                        <p class="text-dark-gray my-auto" th:text="${employee.concatRoles()}"></p>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="d-inline-flex d-md-block text-center">
+                        <div class="d-inline-flex">
+                            <svg stroke="currentColor" class="fac-icon me-2" stroke-width="0" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M469.54 120.52a16 16 0 00-25.54-4L382.56 178a16.12 16.12 0 01-22.63 0l-26.56-26.6a16 16 0 010-22.63l61.18-61.19a16 16 0 00-4.78-25.92C343.56 21 285.88 31.78 249.51 67.88c-30.9 30.68-40.11 78.62-25.25 131.53a15.89 15.89 0 01-4.49 16L53.29 367.46a64.17 64.17 0 1090.6 90.64l153.68-166.85a15.9 15.9 0 0115.77-4.57 179.3 179.3 0 0046.22 6.37c33.4 0 62.71-10.81 83.85-31.64 39.15-38.57 45.12-103.99 26.13-140.89zM99.48 447.15a32 32 0 1128.34-28.35 32 32 0 01-28.34 28.35z"></path>
+                            </svg>
+                            <p class="text-dark-gray my-auto text-center me-2 me-md-0"><b>Working Type</b></p>
+                        </div>
+                        <p class="text-dark-gray my-auto text-center" th:text="${employee.workingType}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- WORKING HISTORY -->
+        <h2 class="fac-headline mb-4 p-2 border-2 border-bottom">Working History</h2>
+        <div class="rounded-content mb-4">
+            <div class="table-responsive-md">
+                <table class="table table-stripe ">
+                    <thead class="table-item">
+                    <tr>
+                        <th scope="col" style="border-top-left-radius: 0.5rem">Date</th>
+                        <th scope="col">Arrival</th>
+                        <th scope="col">Departure</th>
+                        <th scope="col" style="border-top-right-radius: 0.5rem">Workload</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="table-item" th:each="occup : ${ocuptions}">
+                        <th scope="row" th:text="${occup.getDate()}"></th>
+                        <td th:text="${occup.getArrivalTime()}"></td>
+                        <td th:text="${occup.getDepartureTimeSeconds()}"></td>
+                        <td th:text="${occup.workload}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+<div th:insert="~{footer :: footer}" class="footer"></div>
 </body>
 </html>
