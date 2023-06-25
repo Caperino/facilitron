@@ -10,11 +10,11 @@ function togglePWChange(){
     if (pwInput.disabled){
         pwInput.disabled = false;
         pwInput.value = "";
-        enabler.textContent = "use new password";
+        enabler.textContent = "reuse old password";
     } else {
         pwInput.disabled = true;
         pwInput.value = "_UNCHANGED_";
-        enabler.textContent = "reuse old password";
+        enabler.textContent = "use new password";
     }
     checkPWComplexity(pwInput);
 }

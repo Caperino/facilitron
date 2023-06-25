@@ -8,20 +8,21 @@
   <link rel="stylesheet" type="text/css" href="/public/css/custom.css">
 </head>
 <body>
-<div th:insert="~{header :: header}" class="header"></div>
+<div class="content-wrapper">
+  <div th:insert="~{header :: header}" class="header"></div>
 
-<div class="container-md px-3 py-4 content">
+  <div class="container-md px-3 py-4 content">
 
-  <!-- BREADCRUMB -->
-  <div class="d-flex justify-content-start p-3">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/navigation">Home</a></li>
-        <li class="breadcrumb-item"><a href="/ticket_overview">Tickets</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Create Ticket</li>
-      </ol>
-    </nav>
-  </div>
+    <!-- BREADCRUMB -->
+    <div class="d-flex justify-content-start p-3">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/navigation">Home</a></li>
+          <li class="breadcrumb-item"><a href="/ticket_overview">Tickets</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Create Ticket</li>
+        </ol>
+      </nav>
+    </div>
 
   <div class="mx-2 mx-md-4">
     <form action="/ticket_create" method="get">
@@ -55,17 +56,12 @@
           <p class="text-dark-gray">Description</p>
           <textarea class="form-control text-dark-gray" name="description" id="description" rows="7" required></textarea>
         </div>
-      </div>
-
-      <!-- BUTTONS -->
-      <div class="d-flex justify-content-end">
-        <button type="submit" class="btn btn-primary fac-btn-dark-blue">Submit</button>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-<div th:insert="~{footer :: footer}" class="footer"></div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+  <div th:insert="~{footer :: footer}" class="footer"></div>
+</div>
 </body>
 </html>

@@ -8,69 +8,71 @@
   <link rel="stylesheet" type="text/css" href="/public/css/custom.css">
 </head>
 <body>
-<div th:insert="~{header :: header}" class="header"></div>
+<div class="content-wrapper">
+  <div th:insert="~{header :: header}" class="header"></div>
 
-<div class="container-md px-3 py-4 content">
+  <div class="container-md px-3 py-4 content">
 
-  <!-- BREADCRUMB -->
-  <div class="d-flex justify-content-start p-3">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/navigation">Home</a></li>
-        <li class="breadcrumb-item"><a href="/ticket_overview">Tickets</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Ticket Details</li>
-      </ol>
-    </nav>
-  </div>
+    <!-- BREADCRUMB -->
+    <div class="d-flex justify-content-start p-3">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/navigation">Home</a></li>
+          <li class="breadcrumb-item"><a href="/ticket_overview">Tickets</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Ticket Details</li>
+        </ol>
+      </nav>
+    </div>
 
-  <!-- PICTURE -->
-  <div class="d-flex justify-content-center mb-2">
-    <img src="/public/images/ticket.png" alt="Ticket" class="profile-image">
-  </div>
+    <!-- PICTURE -->
+    <div class="d-flex justify-content-center mb-2">
+      <img src="/public/images/ticket.png" alt="Ticket" class="profile-image">
+    </div>
 
-  <!-- NAME -->
-  <div class="d-flex justify-content-center mb-4">
-    <h3 class="heading mt-2" th:text="${ticketDetails.subject}"></h3>
-  </div>
+    <!-- NAME -->
+    <div class="d-flex justify-content-center mb-4">
+      <h3 class="heading mt-2" th:text="${ticketDetails.subject}"></h3>
+    </div>
 
-  <div class="mx-2 mx-md-4">
-    <!--TICKET INFO -->
-    <h2 class="fac-headline mb-4 p-2 border-2 border-bottom">Ticket Details</h2>
-    <div class="rounded-content mb-4">
-      <div class="row">
-        <div class="col-md mb-3 mb-md-0">
-          <div class="d-inline-flex d-md-block text-center">
-            <div class="d-inline-flex">
-              <svg stroke="currentColor" class="fac-icon me-2" stroke-width="0" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"></path>
-              </svg>
-              <p class="text-dark-gray my-auto text-center me-2 me-md-0"><b>Opened by</b></p>
+    <div class="mx-2 mx-md-4">
+      <!--TICKET INFO -->
+      <h2 class="fac-headline mb-4 p-2 border-2 border-bottom">Ticket Details</h2>
+      <div class="rounded-content mb-4">
+        <div class="row">
+          <div class="col-md mb-3 mb-md-0">
+            <div class="d-inline-flex d-md-block text-center">
+              <div class="d-inline-flex">
+                <svg stroke="currentColor" class="fac-icon me-2" stroke-width="0" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"></path>
+                </svg>
+                <p class="text-dark-gray my-auto text-center me-2 me-md-0"><b>Opened by</b></p>
+              </div>
+              <p class="text-dark-gray my-auto text-center" th:text="${ticketDetails.openedBy.firstName} + ' ' + ${ticketDetails.openedBy.secondName}"></p>
             </div>
-            <p class="text-dark-gray my-auto text-center" th:text="${ticketDetails.openedBy.firstName} + ' ' + ${ticketDetails.openedBy.secondName}"></p>
           </div>
-        </div>
 
-        <div class="col-md mb-3 mb-md-0">
-          <div class="d-inline-flex d-md-block text-center">
-            <div class="d-inline-flex">
-              <svg stroke="currentColor" class="fac-icon me-2" stroke-width="0" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0 464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V192H0v272zm320-196c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM192 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM64 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zM400 64h-48V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H160V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H48C21.5 64 0 85.5 0 112v48h448v-48c0-26.5-21.5-48-48-48z"></path>
-              </svg>
-              <p class="text-dark-gray my-auto text-center me-2 me-md-0"><b>Date opened</b></p>
+          <div class="col-md mb-3 mb-md-0">
+            <div class="d-inline-flex d-md-block text-center">
+              <div class="d-inline-flex">
+                <svg stroke="currentColor" class="fac-icon me-2" stroke-width="0" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0 464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V192H0v272zm320-196c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM192 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM64 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zM400 64h-48V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H160V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H48C21.5 64 0 85.5 0 112v48h448v-48c0-26.5-21.5-48-48-48z"></path>
+                </svg>
+                <p class="text-dark-gray my-auto text-center me-2 me-md-0"><b>Date opened</b></p>
+              </div>
+              <p class="text-dark-gray my-auto text-center" th:text="${ticketDetails.getopenedTimeSeconds()}"></p>
             </div>
-            <p class="text-dark-gray my-auto text-center" th:text="${ticketDetails.getopenedTimeSeconds()}"></p>
           </div>
-        </div>
 
-        <div class="col-md">
-          <div class="d-inline-flex d-md-block text-center">
-            <div class="d-inline-flex">
-              <svg stroke="currentColor" class="fac-icon me-2" stroke-width="0" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
-              </svg>
-              <p class="text-dark-gray my-auto text-center me-2 me-md-0"><b>Priority</b></p>
+          <div class="col-md">
+            <div class="d-inline-flex d-md-block text-center">
+              <div class="d-inline-flex">
+                <svg stroke="currentColor" class="fac-icon me-2" stroke-width="0" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
+                </svg>
+                <p class="text-dark-gray my-auto text-center me-2 me-md-0"><b>Priority</b></p>
+              </div>
+              <p class="text-dark-gray my-auto text-center" th:text="${ticketDetails.priority}"></p>
             </div>
-            <p class="text-dark-gray my-auto text-center" th:text="${ticketDetails.priority}"></p>
           </div>
         </div>
       </div>
@@ -107,43 +109,43 @@
       </div>
     </div>
 
-    <div class="col p-4">
-      <div class="col rounded-details mb-4">
-          <div class="col"><b>Ticket description:</b></div>
-          <div class="col p-2" th:text="${ticketDetails.description}"></div>
-        </div>
-    </div>
+      <div class="col p-4">
+        <div class="col rounded-details mb-4">
+            <div class="col"><b>Ticket description:</b></div>
+            <div class="col p-2" th:text="${ticketDetails.description}"></div>
+          </div>
+      </div>
 
     <!-- COMPANY INFO -->
     <h2 class="fac-headline border-2 border-bottom mb-4" th:if="${ticketComments.size()!=0}">Comment History</h2>
     <div class="rounded-content mb-4" th:if="${ticketComments.size()!=0}">
 
-      <div th:each="comment : ${ticketComments}">
-        <div th:switch="${comment.commenter}">
+        <div th:each="comment : ${ticketComments}">
+          <div th:switch="${comment.commenter}">
 
-          <!-- Employee Reply -->
-          <div th:case="${ticketDetails.openedBy}">
-            <div class="d-flex justify-content-end">
-              <div class="col rounded-support-reply" th:text="${comment.comment}"></div>
+            <!-- Employee Reply -->
+            <div th:case="${ticketDetails.openedBy}">
+              <div class="d-flex justify-content-end">
+                <div class="col rounded-support-reply" th:text="${comment.comment}"></div>
+              </div>
+              <div class="d-flex justify-content-end p-2">
+                <p th:text="${comment.commenter.firstName} + ' ' + ${comment.commenter.secondName} + ', ' + ${comment.getpostedTimeSeconds()}"></p>
+              </div>
             </div>
-            <div class="d-flex justify-content-end p-2">
-              <p th:text="${comment.commenter.firstName} + ' ' + ${comment.commenter.secondName} + ', ' + ${comment.getpostedTimeSeconds()}"></p>
+
+            <!-- Support Reply -->
+            <div th:case="*">
+              <div class="d-flex justify-content-start">
+                <div class="col rounded-employee-reply" th:text="${comment.comment}"></div>
+              </div>
+              <div class="d-flex justify-content-start p-2">
+                <p th:text="${comment.commenter.firstName} + ' ' + ${comment.commenter.secondName} + ', ' + ${comment.getpostedTimeSeconds()}"></p>
+              </div>
             </div>
+
           </div>
-
-          <!-- Support Reply -->
-          <div th:case="*">
-            <div class="d-flex justify-content-start">
-              <div class="col rounded-employee-reply" th:text="${comment.comment}"></div>
-            </div>
-            <div class="d-flex justify-content-start p-2">
-              <p th:text="${comment.commenter.firstName} + ' ' + ${comment.commenter.secondName} + ', ' + ${comment.getpostedTimeSeconds()}"></p>
-            </div>
-          </div>
-
         </div>
       </div>
-    </div>
 
     <!-- New Comment -->
     <h2 class="fac-headline mb-4 p-2 border-2 border-bottom" th:if="${ticketDetails.closed == null && (#strings.contains(roles, 'ADMIN') || #strings.contains(roles, 'SUPPORT') || #strings.equals(id, ticketDetails.openedBy.id))}">New Comment</h2>
@@ -153,20 +155,16 @@
         <div class="col p-2">
           <textarea class="form-control" name="comment" id="comment" rows="7"></textarea>
         </div>
-        <div class="d-flex justify-content-end mb-4">
-          <button type="submit" id="CommentSubmitter" class="btn btn-primary fac-btn-dark-blue me-3">Reply</button>
-        </div>
-      </div>
-    </form>
+      </form>
 
     <!-- BUTTONS -->
     <div class="d-flex justify-content-end mb-4" th:if="${ticketDetails.closed == null && (#strings.contains(roles, 'ADMIN') || #strings.contains(roles, 'SUPPORT') || #strings.equals(id, ticketDetails.openedBy.id))}">
       <a th:href="'/ticket_close?id=' + ${ticketDetails.id}" class="btn btn-danger fac-btn-red me-3">Close Ticket</a>
     </div>
   </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-<div th:insert="~{footer :: footer}" class="footer"></div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+  <div th:insert="~{footer :: footer}" class="footer"></div>
+</div>
 </body>
 </html>
