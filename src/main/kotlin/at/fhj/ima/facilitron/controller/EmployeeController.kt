@@ -87,8 +87,10 @@ class EmployeeController (
         model.addAttribute("departments", departmentService.getAllDepartments())
 
         val secRoles = roleService.getAllRoles()
+        val safeSecRoles = secRoles.toMutableList()
+        safeSecRoles.removeIf { it.name == "ADMIN" }
         model.addAttribute("secRoles", secRoles)
-        model.addAttribute("safeSecRoles", (secRoles as MutableList).removeIf { it.name == "ADMIN" })
+        model.addAttribute("safeSecRoles", safeSecRoles)
 
         model.addAttribute("isCreate", true)
         return "editemployee"
@@ -105,8 +107,10 @@ class EmployeeController (
         model.addAttribute("departments", departmentService.getAllDepartments())
 
         val secRoles = roleService.getAllRoles()
+        val safeSecRoles = secRoles.toMutableList()
+        safeSecRoles.removeIf { it.name == "ADMIN" }
         model.addAttribute("secRoles", secRoles)
-        model.addAttribute("safeSecRoles", (secRoles as MutableList).removeIf { it.name == "ADMIN" })
+        model.addAttribute("safeSecRoles", safeSecRoles)
 
         model.addAttribute("isCreate", false)
         return "editemployee"
