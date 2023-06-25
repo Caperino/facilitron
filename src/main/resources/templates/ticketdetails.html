@@ -149,6 +149,7 @@
     <h2 class="fac-headline mb-4 p-2 border-2 border-bottom" th:if="${ticketDetails.closed == null && (#strings.contains(roles, 'ADMIN') || #strings.contains(roles, 'SUPPORT') || #strings.equals(id, ticketDetails.openedBy.id))}">New Comment</h2>
     <form action="/ticket_comment" method="post" th:if="${ticketDetails.closed == null && (#strings.contains(roles, 'ADMIN') || #strings.contains(roles, 'SUPPORT') || #strings.equals(id, ticketDetails.openedBy.id))}">
       <input hidden="hidden" name="ticketId" th:value="${ticketDetails.id}">
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
       <div class="form-group mb-4">
         <div class="col p-2">
           <textarea class="form-control" name="comment" id="comment" rows="7"></textarea>

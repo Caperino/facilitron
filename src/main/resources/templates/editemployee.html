@@ -24,9 +24,10 @@
   </div>
 
   <form action="/user_edit" method="post" enctype="multipart/form-data">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     <input type="hidden" name="id" th:value="${employee != null}? ${employee.id}">
     <input type="hidden" name="mail" th:value="${employee != null}? ${employee.mail}">
-    <!--<input type="hidden" name="entryDate" th:value="${employee != null}? ${employee.entryDate}">-->
+
     <div class="mx-2 mx-md-4">
       <!--PERSONAL INFO -->
       <h1 class="fac-headline mb-4 p-2 border-2 border-bottom">Personal Info</h1>
@@ -68,7 +69,7 @@
           <div class="col">
             <p class="text-dark-gray">Roles</p>
             <select required name="roles" class="form-select text-dark-gray" id="roles" data-placeholder="Choose anything" multiple>
-              <option th:each="role : ${roles}" th:selected="${employee != null}? ${employee.roles.contains(role)}" th:text="${role.name}" th:value="${role.name}"></option>
+              <option th:each="role : ${secRoles}" th:selected="${employee != null}? ${employee.roles.contains(role)}" th:text="${role.name}" th:value="${role.name}"></option>
             </select>
           </div>
         </div>
@@ -101,7 +102,7 @@
           </div>
         </div>
 
-        <div class="row">
+        <div th:if="${#strings.contains(roles, 'ADMIN') || isCreate}" class="row">
           <div class="col">
             <p class="text-dark-gray">Password (min. 6 characters total [upper/lower, number])</p>
             <div th:if="${!isCreate}" class="btn btn-primary fac-btn-dark-orange" id="enablePWChange">reuse old password</div>
@@ -109,7 +110,7 @@
           </div>
         </div>
 
-        <!--<input th:if="${!isCreate}" type="hidden" name="password" id="password-hidden" value="_UNCHANGED_">-->
+        <input th:if="${!(#strings.contains(roles, 'ADMIN')) && !isCreate}" type="hidden" name="password" id="password-hidden" value="_UNCHANGED_">
 
 
       </div>

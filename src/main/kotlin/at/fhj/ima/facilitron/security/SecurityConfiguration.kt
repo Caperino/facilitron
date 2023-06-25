@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository
 import java.lang.Exception
 
 @Configuration
@@ -25,14 +26,16 @@ class SecurityConfiguration(
     @Throws(Exception::class)
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http
-            .csrf().disable()
+            .csrf()
+            .ignoringRequestMatchers("/auth/**")
+            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+            .and()
             .authorizeHttpRequests()
             .requestMatchers("/public/**").permitAll()
             .requestMatchers("/auth/**").permitAll()
             // when changing --> ALSO IN DefaultURL !!!
             .requestMatchers("/", "/public").permitAll()
             .requestMatchers(DefaultURL.USER_CREATE, DefaultURL.USER_EDIT).hasAnyAuthority("HR", "ADMIN")
-            //.requestMatchers(DefaultURL.TICKET_CLOSE_URL).hasAnyAuthority("SUPPORT", "ADMIN")
             .anyRequest().authenticated()
             .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

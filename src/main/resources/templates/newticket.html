@@ -25,6 +25,7 @@
 
   <div class="mx-2 mx-md-4">
     <form action="/ticket_create" method="get">
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
       <!--PERSONAL INFO -->
       <h1 class="fac-headline mb-4 p-2 border-2 border-bottom">Write a Ticket</h1>
       <div class="rounded-content mb-4">

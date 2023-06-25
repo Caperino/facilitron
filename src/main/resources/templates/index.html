@@ -22,7 +22,7 @@
         <p class="landing-text-block mb-5">Facilitron is a Web Application that allows you to manage your Employees and Organization in an innovative and efficient way.</p>
         <div>
           <p class="text-center border-2 border-bottom mb-2 pb-2 landing-quote">"We value customer satisfaction and quality."</p>
-          <p class="text-end landing-quote">- Facilitron</p>
+          <p class="text-end landing-quote">- TK Inc.</p>
         </div>
       </div>
       <div class="col-md-4 text-center">
@@ -70,6 +70,7 @@
   <div class="landing-head-block-purple" id="Contact">
     <div class="form-container p-4 p-md-5">
       <form action="/contact" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
         <h1 class="mb-4 mb-md-5 text-dark-gray">Contact</h1>
         <div class="form-group mb-4">
           <input type="text" class="form-control form-field" name="name" id="name" placeholder="Name" required>

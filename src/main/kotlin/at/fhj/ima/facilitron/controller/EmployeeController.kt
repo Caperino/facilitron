@@ -85,7 +85,7 @@ class EmployeeController (
     ):String {
         DefaultClaim.claimSet.forEach { model.addAttribute(it, req.getAttribute(it))  }
         model.addAttribute("departments", departmentService.getAllDepartments())
-        model.addAttribute("roles",roleService.getAllRoles())
+        model.addAttribute("secRoles",roleService.getAllRoles())
         model.addAttribute("isCreate", true)
         return "editemployee"
     }
@@ -99,7 +99,7 @@ class EmployeeController (
         DefaultClaim.claimSet.forEach { model.addAttribute(it, req.getAttribute(it))  }
         model.addAttribute("employee",employeeService.getEmployeeById(id))
         model.addAttribute("departments", departmentService.getAllDepartments())
-        model.addAttribute("roles",roleService.getAllRoles())
+        model.addAttribute("secRoles",roleService.getAllRoles())
         model.addAttribute("isCreate", false)
         return "editemployee"
     }
@@ -120,6 +120,7 @@ class EmployeeController (
     @PostMapping(DefaultURL.USER_EDIT)
     fun userEditSave(
         model: Model,
+        req:HttpServletRequest,
         @RequestParam id:Int? = null,
         @RequestParam mail:String? = null,
         @RequestParam firstName:String? = null,
@@ -152,10 +153,9 @@ class EmployeeController (
             // override old employee
             oldEm = employeeService.getEmployeeById(id)
 
-            if (password != null && password != "_UNCHANGED_"){
+            val roleString : String = req.getAttribute("roles") as String
+            if (password != null && password != "_UNCHANGED_" && roleString.contains("ADMIN")){
                 // incl. password
-                println("password --> $password")
-                println("mail --> $mail")
 
                 try {
                     var file: File? = null
@@ -167,7 +167,7 @@ class EmployeeController (
                         id = id,
                         firstName = firstName!!,
                         secondName = secondName!!,
-                        mail = mail!!,
+                        mail = oldEm.mail,
                         gender = Gender.valueOf(gender ?: ""),
                         password = passwordEncoder.encode(password),
                         birthday = LocalDate.parse(birthday),
@@ -197,7 +197,7 @@ class EmployeeController (
                         id = id,
                         firstName = firstName!!,
                         secondName = secondName!!,
-                        mail = mail!!,
+                        mail = oldEm.mail,
                         gender = Gender.valueOf(gender ?: ""),
                         password = oldEm.password,
                         birthday = LocalDate.parse(birthday),
