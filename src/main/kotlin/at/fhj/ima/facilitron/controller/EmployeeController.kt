@@ -85,7 +85,11 @@ class EmployeeController (
     ):String {
         DefaultClaim.claimSet.forEach { model.addAttribute(it, req.getAttribute(it))  }
         model.addAttribute("departments", departmentService.getAllDepartments())
-        model.addAttribute("secRoles",roleService.getAllRoles())
+
+        val secRoles = roleService.getAllRoles()
+        model.addAttribute("secRoles", secRoles)
+        model.addAttribute("safeSecRoles", (secRoles as MutableList).removeIf { it.name == "ADMIN" })
+
         model.addAttribute("isCreate", true)
         return "editemployee"
     }
@@ -99,7 +103,11 @@ class EmployeeController (
         DefaultClaim.claimSet.forEach { model.addAttribute(it, req.getAttribute(it))  }
         model.addAttribute("employee",employeeService.getEmployeeById(id))
         model.addAttribute("departments", departmentService.getAllDepartments())
-        model.addAttribute("secRoles",roleService.getAllRoles())
+
+        val secRoles = roleService.getAllRoles()
+        model.addAttribute("secRoles", secRoles)
+        model.addAttribute("safeSecRoles", (secRoles as MutableList).removeIf { it.name == "ADMIN" })
+
         model.addAttribute("isCreate", false)
         return "editemployee"
     }
@@ -147,16 +155,18 @@ class EmployeeController (
         val em:Employee
         val oldEm:Employee
         val secRoles = roleService.getAllRoles()
+
+        val roleString : String = req.getAttribute("roles") as String
+        if (!roleString.contains("ADMIN")) (secRoles as MutableList).removeIf {it.name == "ADMIN"}
+
         val internalDepartments = departmentService.getAllDepartments()
 
         if (id != null){
             // override old employee
             oldEm = employeeService.getEmployeeById(id)
 
-            val roleString : String = req.getAttribute("roles") as String
             if (password != null && password != "_UNCHANGED_" && roleString.contains("ADMIN")){
-                // incl. password
-
+                // incl. password | ADMIN
                 try {
                     var file: File? = null
                     if (profilePicture != null && !profilePicture.isEmpty) {
@@ -186,12 +196,14 @@ class EmployeeController (
                 }
 
             } else {
-                // w/o password
+                // w/o password | HR
                 try {
                     var file: File? = null
                     if (profilePicture != null && !profilePicture.isEmpty) {
                         file = fileService.createFile(profilePicture)
                     }
+
+
 
                     em = Employee(
                         id = id,

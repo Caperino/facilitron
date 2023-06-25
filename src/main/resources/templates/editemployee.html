@@ -70,7 +70,8 @@
           <div class="col">
             <p class="text-dark-gray">Roles</p>
             <select required name="roles" class="form-select text-dark-gray" id="roles" data-placeholder="Choose anything" multiple>
-              <option th:each="role : ${secRoles}" th:selected="${employee != null}? ${employee.roles.contains(role)}" th:text="${role.name}" th:value="${role.name}"></option>
+              <option th:if="${#strings.contains(roles, 'ADMIN')}" th:each="role : ${secRoles}" th:selected="${employee != null}? ${employee.roles.contains(role)}" th:text="${role.name}" th:value="${role.name}"></option>
+              <option th:if="${!(#strings.contains(roles, 'ADMIN'))}" th:each="role : ${secRoles}" th:selected="${employee != null}? ${employee.roles.contains(role)}" th:text="${role.name}" th:value="${role.name}"></option>
             </select>
           </div>
         </div>
