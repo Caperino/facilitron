@@ -116,8 +116,7 @@ class JwtAuthenticationFilter(
                 response.addCookie(internalCookieService.deleteAuthCookie())
                 response.sendRedirect(DefaultURL.PUBLIC_LANDING_URL + "#Login")
                 return
-            }
-            else
+            } else
             {
                 println("token subject to extension")
                 val newAuthToken = jwtService.extendToken(token = jwt)

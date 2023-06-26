@@ -36,6 +36,7 @@ class SecurityConfiguration(
             // when changing --> ALSO IN DefaultURL !!!
             .requestMatchers("/", "/public").permitAll()
             .requestMatchers(DefaultURL.USER_CREATE, DefaultURL.USER_EDIT).hasAnyAuthority("HR", "ADMIN")
+            .requestMatchers(DefaultURL.USER_DISABLE_URL).hasAnyAuthority("ADMIN")
             .anyRequest().authenticated()
             .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
