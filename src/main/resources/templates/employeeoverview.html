@@ -58,7 +58,7 @@
             <div class="col-2 col-sm-1 fac-list-item">
               <img th:src="${em.getProfilePic() != null} ? '/pfp/' + ${em.getProfilePic().id} : '/public/images/noprofilepicture.png'" class="fac-image"/>
             </div>
-            <div class="col-4 my-auto">
+            <div class="col-4 my-auto" style="word-wrap:break-word;">
               <a class="my-auto text-dark-gray" th:href="'/user_details?id=' + ${em.id}" th:text="${em.secondName} + ', ' + ${em.firstName}"></a>
             </div>
             <div class="col-4 col-sm-5 my-auto">

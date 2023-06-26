@@ -39,11 +39,11 @@
           <div class="row mb-4">
             <div class="col-md-6 mb-4 mb-md-0">
               <p class="text-dark-gray">Firstname</p>
-              <input required oninput="checkInput(this)" type="text" name="firstName" id="firstName" class="form-control text-dark-gray" th:value="${employee} != null ? ${employee.firstName} : ''">
+              <input required oninput="checkInput(this)" type="text" name="firstName" id="firstName" class="form-control text-dark-gray" maxlength="40" th:value="${employee} != null ? ${employee.firstName} : ''">
             </div>
             <div class="col-md-6">
               <p class="text-dark-gray">Lastname</p>
-              <input required oninput="checkInput(this)" type="text" name="secondName" id="secondName" class="form-control text-dark-gray" th:value="${employee} != null ? ${employee.secondName} : ''">
+              <input required oninput="checkInput(this)" type="text" name="secondName" id="secondName" class="form-control text-dark-gray" maxlength="40" th:value="${employee} != null ? ${employee.secondName} : ''">
             </div>
           </div>
           <div class="row mb-4">
@@ -110,7 +110,7 @@
           <div th:if="${#strings.contains(roles, 'ADMIN') || isCreate}" class="row mb-4">
             <div class="col">
               <p class="text-dark-gray">Password (min. 6 characters total [upper/lower, number])</p>
-              <input oninput="checkPWComplexity(this)" th:disabled="${!isCreate}" required type="password" name="password" id="password" class="form-control text-dark-gray" th:value="${isCreate} ? '' : '_UNCHANGED_'">
+              <input oninput="checkPWComplexity(this)" th:disabled="${!isCreate}" required type="password" name="password" id="password" class="form-control text-dark-gray" maxlength="24" th:value="${isCreate} ? '' : '_UNCHANGED_'">
             </div>
           </div>
 

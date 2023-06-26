@@ -110,7 +110,7 @@ class TicketController (
         println(subject)
         if (!subject.isNullOrEmpty() && !priority.isNullOrEmpty()  && !category.isNullOrEmpty()  && !description.isNullOrEmpty() ) {
             if (subject!!.length > 40 || priority!!.length > 10 || category!!.length > 50 || description!!.length > 250) {
-                return errorOccurred("length checking failed, firstname, lastname or password is longer than 40 Characters")
+                return errorOccurred("length checking failed")
             }
             return try {
                 val prio = StringToPriority().convert(priority)!!
