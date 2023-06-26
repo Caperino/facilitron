@@ -29,11 +29,11 @@ class TicketCommentController(
         DefaultClaim.claimSet.forEach { model.addAttribute(it, req.getAttribute(it))  }
 
         if (comment.isNullOrEmpty()) {
-            errorOccurred("Comment couldn't be empty!",ticketId)
+            return errorOccurred("Comment couldn't be empty!",ticketId)
         }
 
         if (comment!!.length > 125) {
-            errorOccurred("Comment maximal length is 125!",ticketId)
+            return errorOccurred("Comment maximal length is 125!",ticketId)
         }
 
         val employeeId = req.getAttribute("id").toString().toInt()
