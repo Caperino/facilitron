@@ -24,6 +24,10 @@
         <li class="breadcrumb-item active" aria-current="page"><a href="/ticket_overview">Tickets</a></li>
       </ol>
     </nav>
+
+    <div class="alert alert-success" role="alert" th:if="${succ != null}" th:text="${succ}"></div>
+    <div class="alert alert-danger" role="alert" th:if="${error != null}" th:text="${error}"></div>
+
     <h1 class="fac-headline mb-4 p-2 border-2 border-bottom">Ticket Overview</h1>
 
     <div class="search-container p-3 mb-5">

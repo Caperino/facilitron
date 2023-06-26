@@ -57,7 +57,7 @@ class TicketController (
             com = ticketCommentService.findTicketCommentsByTicket(tk)
         } catch (_:Exception) {
             model.addAttribute("error","Ticket not found!")
-            return "ticket_overview"
+            return "forward:/ticket_overview"
         }
         model.addAttribute("ticketDetails",tk)
         model.addAttribute("ticketComments",com)
