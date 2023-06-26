@@ -61,8 +61,8 @@
             </div>
           </div>
           <div class="col">
-            <p class="text-dark-gray" th:text="${employee != null && employee.profilePic != null} ? 'Profile Picture (one already saved)' : 'Profile Picture (none yet)' " ></p>
-            <input id="profilepicture" name="profilePicture" class="form-control text-dark-gray" type="file" accept="image/*" th:value="${employee != null && employee.profilePic?.originalFileName != null}? ${employee.profilePic?.originalFileName}"/>
+            <p class="text-dark-gray" th:text="${employee != null && employee.profilePic != null} ? 'Profile Picture [max. 1MB] - (one already saved)' : 'Profile Picture [max. 1MB] - (none yet)' " ></p>
+            <input onchange="checkFileUpload(this)" id="profilepicture" name="profilePicture" class="form-control text-dark-gray" type="file" accept="image/*" th:value="${employee != null && employee.profilePic?.originalFileName != null}? ${employee.profilePic?.originalFileName}"/>
           </div>
         </div>
 

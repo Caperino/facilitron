@@ -19,11 +19,11 @@ function togglePWChange(){
     checkPWComplexity(pwInput);
 }
 
-let pfpIn = document.getElementById("profilepicture");
 function checkFileUpload(sender){
-    console.log(sender.files[0].type);
+    if (sender.files[0].size >= 1024000){
+        sender.value = null;
+    }
 }
-pfpIn.addEventListener("change", checkFileUpload);
 
 function checkInput(sender){
     if (forbiddenRegex.test(sender.value)){
