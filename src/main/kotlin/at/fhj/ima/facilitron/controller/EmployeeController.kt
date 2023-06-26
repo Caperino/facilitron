@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import java.awt.image.BufferedImage
 import java.io.ByteArrayOutputStream
+import java.io.InputStream
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
-import javax.imageio.ImageIO
 
 @Controller
 class EmployeeController (
@@ -79,9 +79,12 @@ class EmployeeController (
         return if (req.getParameter("q") != null){
             val emp = employeeService.findEmployeesByName(q!!)
             model.addAttribute("employees",emp)
+            model.addAttribute("imageList",picFiller(emp))
             "employeeoverview"
         } else {
-            model.addAttribute("employees",employeeService.getAllEmployees())
+            val emp = employeeService.getAllEmployees()
+            model.addAttribute("employees",emp)
+            model.addAttribute("imageList",picFiller(emp))
             "employeeoverview"
         }
     }
@@ -240,7 +243,7 @@ class EmployeeController (
 
                 } catch(e:Exception){
                     // TODO return error message and same page
-                    return errorOccurred("altering 2 failed, ${e.cause}")
+                    return errorOccurred("altering 2.png failed, ${e.cause}")
                 }
             }
 
@@ -298,5 +301,19 @@ class EmployeeController (
             }
         }
         return "redirect:/user_overview?ac=err"
+    }
+
+    fun picFiller(emps: List<Employee>):List<String> {
+        val outList = mutableListOf<String>()
+        emps.forEach {
+            if (it.profilePic != null) {
+                val rawFile = java.io.File(fileService.retrievePath(it.profilePic.id!!).toString()).readBytes()
+                val image = Base64.getEncoder().encodeToString(rawFile)
+                outList.add(image)
+            } else {
+                outList.add("_EMPTY_")
+            }
+        }
+        return outList
     }
 }

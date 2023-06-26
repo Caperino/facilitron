@@ -36,6 +36,7 @@
         </div>
         <div class="col-lg-6 mb-lg-0">
           <form class="form-inline" action="/user_overview" method="get">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
             <div class="input-group fac-employee-search">
               <span class="input-group-text" id="employee-search">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -53,10 +54,10 @@
       <ul class="list-group">
 
         <!-- LIST BEGIN -->
-        <li th:each="em: ${employees}" class="list-group-item">
+        <li th:each="em, index: ${employees}" class="list-group-item">
           <div class="row">
             <div class="col-2 col-sm-1 fac-list-item">
-              <img th:src="${em.getProfilePic() != null} ? '/pfp/' + ${em.getProfilePic().id} : '/public/images/noprofilepicture.png'" class="fac-image"/>
+              <img th:src="${imageList[index.index] != '_EMPTY_'} ? ${'data:image/jpeg;charset=utf-8;base64,' + imageList[index.index]} : '/public/images/noprofilepicture.png'" class="fac-image"/>
             </div>
             <div class="col-4 my-auto" style="word-wrap:break-word;">
               <a class="my-auto text-dark-gray" th:href="'/user_details?id=' + ${em.id}" th:text="${em.secondName} + ', ' + ${em.firstName}"></a>
