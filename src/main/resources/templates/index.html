@@ -58,7 +58,7 @@
       <div class="row">
         <div class="col-lg-4 col-md-6 col-sm-12 mb-4" th:each="department, i : ${departments}">
           <div class="card mx-auto" style="width: 18rem;">
-            <img th:src="'/public/images/Department_' + ${i.index} + '.jpg'" class="card-img-top" alt="Department Picture" style="height: 10em">
+            <img th:src="'/public/images/Department_' + ${i.index} + '.jpg'" class="card-img-top" alt="Department Picture" style="height: 10em; object-fit: cover;">
             <div class="card-body" style="min-height: 10rem;">
               <h5 class="card-title text-dark-gray" th:text="${department.name}"></h5>
               <p class="card-text text-muted" th:text="${department.description}"></p>

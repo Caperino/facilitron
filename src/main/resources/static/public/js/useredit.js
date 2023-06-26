@@ -19,6 +19,12 @@ function togglePWChange(){
     checkPWComplexity(pwInput);
 }
 
+let pfpIn = document.getElementById("profilepicture");
+function checkFileUpload(sender){
+    console.log(sender.files[0].type);
+}
+pfpIn.addEventListener("change", checkFileUpload);
+
 function checkInput(sender){
     if (forbiddenRegex.test(sender.value)){
         sender.value = sender.value.substring(0, sender.value.length-1);

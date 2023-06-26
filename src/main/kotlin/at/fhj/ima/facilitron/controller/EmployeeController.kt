@@ -43,20 +43,20 @@ class EmployeeController (
     ):String {
         DefaultClaim.claimSet.forEach { model.addAttribute(it, req.getAttribute(it))  }
         return if (id != null){
-            val emp = employeeService.getEmployeeById(id)
-            model.addAttribute("employee",emp)
-            model.addAttribute("ocuptions",ocupationService.getOcuptationOfEmployee(emp))
-            /* if (emp.profilePic != null) {
-                model.addAttribute("profilePic", emp.profilePic)
-            } */
-            "employeedetails"
+            try {
+                val emp = employeeService.getEmployeeById(id)
+                model.addAttribute("employee",emp)
+                model.addAttribute("ocuptions",ocupationService.getOcuptationOfEmployee(emp))
+                return "employeedetails"
+            } catch (e:Exception) {
+                model.addAttribute("error", "Employee not found.")
+                return "forward:/user_overview"
+            }
         } else {
             val emp = employeeService.getEmployeeById(req.getAttribute("id").toString().toInt())
             model.addAttribute("employee",emp)
             model.addAttribute("ocuptions",ocupationService.getOcuptationOfEmployee(emp))
-            /* if (emp.profilePic != null) {
-                model.addAttribute("profilePic", emp.profilePic)
-            } */
+
             "employeedetails"
         }
     }
@@ -65,9 +65,17 @@ class EmployeeController (
     fun getPageWithAllUser(
         req: HttpServletRequest,
         model: Model,
-        @RequestParam(required = false) q:String? = ""
+        @RequestParam(required = false) q:String? = "",
+        @RequestParam(required = false) ac:String?
     ): String {
         DefaultClaim.claimSet.forEach { model.addAttribute(it, req.getAttribute(it))  }
+        if (ac != null){
+            if (ac=="err"){
+                model.addAttribute("error", "We encountered an error while deleting this user.")
+            } else {
+                model.addAttribute("succ", "Employee has been deactivated.")
+            }
+        }
         return if (req.getParameter("q") != null){
             val emp = employeeService.findEmployeesByName(q!!)
             model.addAttribute("employees",emp)
@@ -271,7 +279,7 @@ class EmployeeController (
         return "redirect:/user_overview"
     }
 
-    @GetMapping(DefaultURL.USER_DISABLE_URL)
+    @PostMapping(DefaultURL.USER_DISABLE_URL)
     fun setEmployeeDisabled(
         model: Model,
         @RequestParam id: Int? = null,
@@ -280,11 +288,11 @@ class EmployeeController (
         if (id != null){
             val employee = employeeService.getEmployeeById(id)
             if (employeeService.deleteEmployee(employee)){
-                model.addAttribute("succ", "User has been deleted.")
+                return "redirect:/user_overview?ac=succ"
             } else {
-                model.addAttribute("error", "We encountered an error while deleting this user.")
+                return "redirect:/user_overview?ac=err"
             }
         }
-        return "redirect:/user_overview"
+        return "redirect:/user_overview?ac=err"
     }
 }

@@ -26,9 +26,17 @@ class TicketController (
         req: HttpServletRequest,
         model: Model,
         @RequestParam(required = false) q:String? = null,
-        @RequestParam(required = false) my:String? = null
+        @RequestParam(required = false) my:String? = null,
+        @RequestParam(required = false) ac:String?
     ) : String {
         DefaultClaim.claimSet.forEach { model.addAttribute(it, req.getAttribute(it))  }
+        if (ac != null){
+            if (ac == "err") {
+                model.addAttribute("error", "Ticket couldn't be deleted!")
+            } else {
+                model.addAttribute("succ", "Ticket has been closed.")
+            }
+        }
         return if (my != null){
             val emp = employeeService.getEmployeeById(req.getAttribute("id").toString().toInt())
             model.addAttribute("tickets",ticketService.searchTicketsByEmployee(emp));
@@ -83,10 +91,9 @@ class TicketController (
         }
 
         return if (ticketService.closeTicket(tk, employee)) {
-            "redirect:/ticket_overview"
+            "redirect:/ticket_overview?ac=succ"
         } else {
-            model.addAttribute("error", "Ticket couldn't be deleted!")
-            "redirect:/ticket_overview"
+            "redirect:/ticket_overview?ac=err"
         }
     }
 
@@ -94,28 +101,27 @@ class TicketController (
     fun createTicket(
         model: Model,
         req : HttpServletRequest,
-        @RequestParam(required = false) subject: String? = null,
-        @RequestParam(required = false) priority: String? = null,
-        @RequestParam(required = false) category: String? = null,
-        @RequestParam(required = false) description: String? = null
+        @RequestParam subject: String? = null,
+        @RequestParam priority: String? = null,
+        @RequestParam category: String? = null,
+        @RequestParam description: String? = null
     ): String {
         DefaultClaim.claimSet.forEach { model.addAttribute(it, req.getAttribute(it))  }
-        if (req.getParameter("subject") != null || req.getParameter("priority") != null || req.getParameter("category") != null || req.getParameter("description") != null ) {
+        println(subject)
+        if (!subject.isNullOrEmpty() && !priority.isNullOrEmpty()  && !category.isNullOrEmpty()  && !description.isNullOrEmpty() ) {
             return try {
-                val prio = StringToPriority().convert(priority!!)!!
-                val cat = categoryService.getCategoryByName(category!!)
+                val prio = StringToPriority().convert(priority)!!
+                val cat = categoryService.getCategoryByName(category)
                 val employee = employeeService.getEmployeeById(req.getAttribute("id").toString().toInt())
-                val tk = Ticket(priority = prio, category = cat, subject = subject!!, description = description, openedBy = employee)
+                val tk = Ticket(priority = prio, category = cat, subject = subject, description = description, openedBy = employee)
                 ticketService.openTicket(tk)
-                "redirect:/ticket_overview"
+                "redirect:${DefaultURL.TICKET_URL}"
             } catch (e: Exception) {
-                println("dead1")
                 model.addAttribute("error", "Couldn't open the Ticket!")
-                "newticket"
+                "forward:${DefaultURL.TICKET_CREATE_URL}"
             }
         } else {
             model.addAttribute("category", categoryService.getAllCategories())
-            println("dead2")
             return "newticket"
         }
     }

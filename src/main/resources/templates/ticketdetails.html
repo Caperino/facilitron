@@ -14,9 +14,6 @@
 
   <div class="container-md px-3 py-4 content">
 
-    <div class="alert alert-success" role="alert" th:if="${succ != ''}" th:text="${succ}"></div>
-    <div class="alert alert-danger" role="alert" th:if="${error != ''}" th:text="${error}"></div>
-
     <!-- BREADCRUMB -->
     <div class="d-flex justify-content-start p-3">
       <nav aria-label="breadcrumb">
@@ -27,6 +24,8 @@
         </ol>
       </nav>
     </div>
+
+    <div class="alert alert-danger" role="alert" th:if="${error != null}" th:text="${error}"></div>
 
     <!-- PICTURE -->
     <div class="d-flex justify-content-center mb-2">
