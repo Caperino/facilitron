@@ -8,10 +8,19 @@
     Light-Gray: #f5f5f5
     Dark-Gray: #424242
 */
+.html, .body {
+    height: 100%;
+    margin: 0;
+}
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 .content{
     background-color: #f5f5f5;
+    flex: 1;
     padding: 0px;
-    min-height: 81vh;
 }
 .fac-headline{
     color: #1e88e5;
@@ -90,6 +99,7 @@ a.header-dark:hover, a.footer-dark:hover, a.header-dark:focus, a.footer-dark:foc
 .landing-logo{
     min-width: 12.5em;
     width: 20vw;
+    max-width: 300px;
 }
 .background-photo{
     background-image: linear-gradient(rgba(0, 0, 0, 0.4),rgba(0, 0, 0, 0.8)), url("/public/images/Factory-Background.jpg");
@@ -134,7 +144,7 @@ a.header-dark:hover, a.footer-dark:hover, a.header-dark:focus, a.footer-dark:foc
     box-shadow: 0 5px 2px -2px rgba(0, 0, 0, 0.4);
     border: #1e88e5;
 }
-.fac-btn-purple{
+.fac-btn-dark-purple{
     background-color: #3f51b5;
     min-width: 7.5em;
     box-shadow: 0 5px 2px -2px rgba(0, 0, 0, 0.4);

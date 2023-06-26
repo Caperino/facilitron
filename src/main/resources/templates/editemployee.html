@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,124 +9,131 @@
   <link rel="icon" type="image/jpg" href="/public/images/Facilitron.jpg">
 </head>
 <body>
-<div th:insert="~{header :: header}" class="header"></div>
+<div class="content-wrapper">
+  <div th:insert="~{header :: header}" class="header"></div>
 
-<div class="container-md px-3 py-4 content">
+  <div class="container-md px-3 py-4 content">
 
-  <!-- BREADCRUMB -->
-  <div class="d-flex justify-content-start p-3">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/navigation">Home</a></li>
-        <li class="breadcrumb-item"><a href="/user_overview">Employees</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Create Employee</li>
-      </ol>
-    </nav>
+    <!-- BREADCRUMB -->
+    <div class="d-flex justify-content-start p-3">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/navigation">Home</a></li>
+          <li class="breadcrumb-item"><a href="/user_overview">Employees</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Create Employee</li>
+        </ol>
+      </nav>
+    </div>
+
+    <form action="/user_edit" method="post" enctype="multipart/form-data">
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+      <input type="hidden" name="id" th:value="${employee != null}? ${employee.id}">
+      <input type="hidden" name="mail" th:value="${employee != null}? ${employee.mail}">
+
+      <div class="mx-2 mx-md-4">
+        <!--PERSONAL INFO -->
+        <h1 class="fac-headline mb-4 p-2 border-2 border-bottom">Personal Info</h1>
+        <div class="rounded-content mb-4">
+          <div class="row mb-4">
+            <div class="col-md-6 mb-4 mb-md-0">
+              <p class="text-dark-gray">Firstname</p>
+              <input required oninput="checkInput(this)" type="text" name="firstName" id="firstName" class="form-control text-dark-gray" th:value="${employee} != null ? ${employee.firstName} : ''">
+            </div>
+            <div class="col-md-6">
+              <p class="text-dark-gray">Lastname</p>
+              <input required oninput="checkInput(this)" type="text" name="secondName" id="secondName" class="form-control text-dark-gray" th:value="${employee} != null ? ${employee.secondName} : ''">
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-6 mb-4 mb-md-0">
+              <p class="text-dark-gray">Birthday</p>
+              <input required type="date" name="birthday" id="birthday" class="form-control text-dark-gray" th:value="${employee} != null ? ${employee.birthday} : ''"/>
+            </div>
+            <div class="col-md-6">
+              <p class="text-dark-gray">Gender</p>
+              <select required id="gender" name="gender" class="form-select text-dark-gray">
+                <option th:selected="${employee != null}? ${employee.gender.name == 'MALE'}" value="MALE">MALE</option>
+                <option th:selected="${employee != null}? ${employee.gender.name == 'FEMALE'}" value="FEMALE">FEMALE</option>
+                <option th:selected="${employee != null}? ${employee.gender.name == 'DIV'}" value="DIV">DIV</option>
+              </select>
+            </div>
+          </div>
+          <div class="col">
+            <p class="text-dark-gray" th:text="${employee != null && employee.profilePic != null} ? 'Profile Picture (one already saved)' : 'Profile Picture (none yet)' " ></p>
+            <input id="profilepicture" name="profilePicture" class="form-control text-dark-gray" type="file" th:value="${employee != null && employee.profilePic?.originalFileName != null}? ${employee.profilePic?.originalFileName}"/>
+          </div>
+        </div>
+
+        <!-- COMPANY INFO -->
+        <h1 class="fac-headline mb-3 p-2 border-2 border-bottom">Company Info</h1>
+        <div class="rounded-content mb-2">
+          <div class="row mb-4">
+            <div class="col">
+              <p class="text-dark-gray">Roles</p>
+              <select required name="roles" class="form-select text-dark-gray" id="roles" data-placeholder="Choose anything" multiple>
+                <option th:if="${#strings.contains(roles, 'ADMIN')}" th:each="role : ${secRoles}" th:selected="${employee != null}? ${employee.roles.contains(role)}" th:text="${role.name}" th:value="${role.name}"></option>
+                <option th:if="${!(#strings.contains(roles, 'ADMIN'))}" th:each="role : ${safeSecRoles}" th:selected="${employee != null}? ${employee.roles.contains(role)}" th:text="${role.name}" th:value="${role.name}"></option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <div class="col">
+              <p class="text-dark-gray">Working Type</p>
+              <select required id="workingType" name="workingType" class="form-select text-dark-gray">
+                <option th:selected="${employee != null}? ${employee.workingType.name == 'FULLTIME'}" value="FULLTIME">FULLTIME</option>
+                <option th:selected="${employee != null}? ${employee.workingType.name == 'PARTTIME'}" value="PARTTIME">PARTTIME</option>
+                <option th:selected="${employee != null}? ${employee.workingType.name == 'MINIMAL'}" value="MINIMAL">MINIMAL</option>
+                <option th:selected="${employee != null}? ${employee.workingType.name == 'VOLUNTARY'}" value="VOLUNTARY">VOLUNTARY</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <div class="col">
+              <p class="text-dark-gray">Departments</p>
+              <select required id="department" name="department" class="form-select text-dark-gray">
+                <option th:selected="${employee != null}? ${department.name == employee.department?.name}" th:each="department : ${departments}" th:text="${department.name}" th:value="${department.name}"></option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <div class="col">
+              <p class="text-dark-gray">Entry Date</p>
+              <input required type="date" name="entryDate" id="entryDate" class="form-control text-dark-gray" th:value="${employee} != null ? ${employee.entryDate} : ''">
+            </div>
+          </div>
+
+          <div th:if="${#strings.contains(roles, 'ADMIN') || isCreate}" class="row mb-4">
+            <div class="col">
+              <p class="text-dark-gray">Password (min. 6 characters total [upper/lower, number])</p>
+              <input oninput="checkPWComplexity(this)" th:disabled="${!isCreate}" required type="password" name="password" id="password" class="form-control text-dark-gray" th:value="${isCreate} ? '' : '_UNCHANGED_'">
+            </div>
+          </div>
+
+          <div th:if="${#strings.contains(roles, 'ADMIN') || isCreate}" class="row mb-2">
+            <div class="col d-flex justify-content-start">
+              <div th:if="${!isCreate}" class="btn btn-primary fac-btn-dark-purple " id="enablePWChange">reuse old password</div>
+            </div>
+          </div>
+
+          <input th:if="${!(#strings.contains(roles, 'ADMIN')) && !isCreate}" type="hidden" name="password" id="password-hidden" value="_UNCHANGED_">
+
+
+        </div>
+
+        <!-- BUTTONS -->
+        <div class="d-flex justify-content-end">
+          <button type="submit" class="btn btn-primary fac-btn-dark-blue mt-4 mb-4" id="submit-btn">Submit</button>
+        </div>
+      </div>
+    </form>
   </div>
 
-  <form action="/user_edit" method="post" enctype="multipart/form-data">
-    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-    <input type="hidden" name="id" th:value="${employee != null}? ${employee.id}">
-    <input type="hidden" name="mail" th:value="${employee != null}? ${employee.mail}">
-
-    <div class="mx-2 mx-md-4">
-      <!--PERSONAL INFO -->
-      <h1 class="fac-headline mb-4 p-2 border-2 border-bottom">Personal Info</h1>
-      <div class="rounded-content mb-4">
-        <div class="row mb-4">
-          <div class="col-md-6 mb-4 mb-md-0">
-            <p class="text-dark-gray">Firstname</p>
-            <input required oninput="checkInput(this)" type="text" name="firstName" id="firstName" class="form-control text-dark-gray" th:value="${employee} != null ? ${employee.firstName} : ''">
-          </div>
-          <div class="col-md-6">
-            <p class="text-dark-gray">Lastname</p>
-            <input required oninput="checkInput(this)" type="text" name="secondName" id="secondName" class="form-control text-dark-gray" th:value="${employee} != null ? ${employee.secondName} : ''">
-          </div>
-        </div>
-        <div class="row mb-4">
-          <div class="col-md-6 mb-4 mb-md-0">
-            <p class="text-dark-gray">Birthday</p>
-            <input required type="date" name="birthday" id="birthday" class="form-control text-dark-gray" th:value="${employee} != null ? ${employee.birthday} : ''"/>
-          </div>
-          <div class="col-md-6">
-            <p class="text-dark-gray">Gender</p>
-            <select required id="gender" name="gender" class="form-select text-dark-gray">
-              <option th:selected="${employee != null}? ${employee.gender.name == 'MALE'}" value="MALE">MALE</option>
-              <option th:selected="${employee != null}? ${employee.gender.name == 'FEMALE'}" value="FEMALE">FEMALE</option>
-              <option th:selected="${employee != null}? ${employee.gender.name == 'DIV'}" value="DIV">DIV</option>
-            </select>
-          </div>
-        </div>
-        <div class="col">
-          <p class="text-dark-gray" th:text="${employee != null && employee.profilePic != null} ? 'Profile Picture (one already saved)' : 'Profile Picture (none yet)' " ></p>
-          <input id="profilepicture" name="profilePicture" class="form-control text-dark-gray" type="file" th:value="${employee != null && employee.profilePic?.originalFileName != null}? ${employee.profilePic?.originalFileName}"/>
-        </div>
-      </div>
-
-      <!-- COMPANY INFO -->
-      <h1 class="fac-headline mb-4 p-2 border-2 border-bottom">Company Info</h1>
-      <div class="rounded-content mb-4">
-        <div class="row mb-4">
-          <div class="col">
-            <p class="text-dark-gray">Roles</p>
-            <select required name="roles" class="form-select text-dark-gray" id="roles" data-placeholder="Choose anything" multiple>
-              <option th:if="${#strings.contains(roles, 'ADMIN')}" th:each="role : ${secRoles}" th:selected="${employee != null}? ${employee.roles.contains(role)}" th:text="${role.name}" th:value="${role.name}"></option>
-              <option th:if="${!(#strings.contains(roles, 'ADMIN'))}" th:each="role : ${safeSecRoles}" th:selected="${employee != null}? ${employee.roles.contains(role)}" th:text="${role.name}" th:value="${role.name}"></option>
-            </select>
-          </div>
-        </div>
-
-        <div class="row mb-4">
-          <div class="col">
-            <p class="text-dark-gray">Working Type</p>
-            <select required id="workingType" name="workingType" class="form-select text-dark-gray">
-              <option th:selected="${employee != null}? ${employee.workingType.name == 'FULLTIME'}" value="FULLTIME">FULLTIME</option>
-              <option th:selected="${employee != null}? ${employee.workingType.name == 'PARTTIME'}" value="PARTTIME">PARTTIME</option>
-              <option th:selected="${employee != null}? ${employee.workingType.name == 'MINIMAL'}" value="MINIMAL">MINIMAL</option>
-              <option th:selected="${employee != null}? ${employee.workingType.name == 'VOLUNTARY'}" value="VOLUNTARY">VOLUNTARY</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="row mb-4">
-          <div class="col">
-            <p class="text-dark-gray">Departments</p>
-            <select required id="department" name="department" class="form-select text-dark-gray">
-              <option th:selected="${employee != null}? ${department.name == employee.department?.name}" th:each="department : ${departments}" th:text="${department.name}" th:value="${department.name}"></option>
-            </select>
-          </div>
-        </div>
-
-        <div class="row mb-4">
-          <div class="col">
-            <p class="text-dark-gray">Entry Date</p>
-            <input required type="date" name="entryDate" id="entryDate" class="form-control text-dark-gray" th:value="${employee} != null ? ${employee.entryDate} : ''">
-          </div>
-        </div>
-
-        <div th:if="${#strings.contains(roles, 'ADMIN') || isCreate}" class="row">
-          <div class="col">
-            <p class="text-dark-gray">Password (min. 6 characters total [upper/lower, number])</p>
-            <div th:if="${!isCreate}" class="btn btn-primary fac-btn-dark-orange" id="enablePWChange">reuse old password</div>
-            <input oninput="checkPWComplexity(this)" th:disabled="${!isCreate}" required type="password" name="password" id="password" class="form-control text-dark-gray" th:value="${isCreate} ? '' : '_UNCHANGED_'">
-          </div>
-        </div>
-
-        <input th:if="${!(#strings.contains(roles, 'ADMIN')) && !isCreate}" type="hidden" name="password" id="password-hidden" value="_UNCHANGED_">
-
-
-      </div>
-
-      <!-- BUTTONS -->
-      <div class="d-flex justify-content-end">
-        <button type="submit" class="btn btn-primary fac-btn-dark-blue mt-4 mb-4" id="submit-btn">Submit</button>
-      </div>
-    </div>
-  </form>
+  <script src="/public/js/useredit.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+  <div th:insert="~{footer :: footer}" class="footer"></div>
 </div>
-
-<script src="/public/js/useredit.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-<div th:insert="~{footer :: footer}" class="footer"></div>
 </body>
 </html>

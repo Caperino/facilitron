@@ -9,65 +9,67 @@
   <link rel="icon" type="image/jpg" href="/public/images/Facilitron.jpg">
 </head>
 <body>
-<div th:insert="~{header :: header}" class="header"></div>
+<div class="content-wrapper">
+  <div th:insert="~{header :: header}" class="header"></div>
 
-<div class="container-md px-3 py-4 content">
+  <div class="container-md px-3 py-4 content">
 
-  <!-- BREADCRUMB -->
-  <div class="d-flex justify-content-start p-3">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/navigation">Home</a></li>
-        <li class="breadcrumb-item"><a href="/ticket_overview">Tickets</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Create Ticket</li>
-      </ol>
-    </nav>
+    <!-- BREADCRUMB -->
+    <div class="d-flex justify-content-start p-3">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/navigation">Home</a></li>
+          <li class="breadcrumb-item"><a href="/ticket_overview">Tickets</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Create Ticket</li>
+        </ol>
+      </nav>
+    </div>
+
+    <div class="mx-2 mx-md-4">
+      <form action="/ticket_create" method="get">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <!--PERSONAL INFO -->
+        <h1 class="fac-headline mb-4 p-2 border-2 border-bottom">Write a Ticket</h1>
+        <div class="rounded-content mb-4">
+          <div class="row">
+            <div class="col mb-4">
+              <p class="text-dark-gray">Ticket name</p>
+              <input type="text" name="subject" id="subject" class="form-control" required>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-6 mb-4 mb-md-0">
+              <p class="text-dark-gray">Priority</p>
+              <select id="priority" name="priority" class="form-select text-dark-gray" required>
+                <option selected value="LOW">Low</option>
+                <option value="MEDIUM">Medium</option>
+                <option value="HIGH">High</option>
+                <option value="DISASTER">Disaster</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <p class="text-dark-gray">Category</p>
+              <select id="category" name="category" class="form-select text-dark-gray" required>
+                <option th:each="cat : ${category}" th:text="${cat.name}" th:value="${cat.name}"></option>
+              </select>
+            </div>
+          </div>
+          <div class="col">
+            <p class="text-dark-gray">Description</p>
+            <textarea class="form-control text-dark-gray" name="description" id="description" rows="7" required></textarea>
+          </div>
+        </div>
+
+        <!-- BUTTONS -->
+        <div class="d-flex justify-content-end">
+          <button type="submit" class="btn btn-primary fac-btn-dark-blue">Submit</button>
+        </div>
+      </form>
+    </div>
   </div>
 
-  <div class="mx-2 mx-md-4">
-    <form action="/ticket_create" method="get">
-      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-      <!--PERSONAL INFO -->
-      <h1 class="fac-headline mb-4 p-2 border-2 border-bottom">Write a Ticket</h1>
-      <div class="rounded-content mb-4">
-        <div class="row">
-          <div class="col mb-4">
-            <p class="text-dark-gray">Ticket name</p>
-            <input type="text" name="subject" id="subject" class="form-control" required>
-          </div>
-        </div>
-        <div class="row mb-4">
-          <div class="col-md-6 mb-4 mb-md-0">
-            <p class="text-dark-gray">Priority</p>
-            <select id="priority" name="priority" class="form-select text-dark-gray" required>
-              <option selected value="LOW">Low</option>
-              <option value="MEDIUM">Medium</option>
-              <option value="HIGH">High</option>
-              <option value="DISASTER">Disaster</option>
-            </select>
-          </div>
-          <div class="col-md-6">
-            <p class="text-dark-gray">Category</p>
-            <select id="category" name="category" class="form-select text-dark-gray" required>
-              <option th:each="cat : ${category}" th:text="${cat.name}" th:value="${cat.name}"></option>
-            </select>
-          </div>
-        </div>
-        <div class="col">
-          <p class="text-dark-gray">Description</p>
-          <textarea class="form-control text-dark-gray" name="description" id="description" rows="7" required></textarea>
-        </div>
-      </div>
-
-      <!-- BUTTONS -->
-      <div class="d-flex justify-content-end">
-        <button type="submit" class="btn btn-primary fac-btn-dark-blue">Submit</button>
-      </div>
-    </form>
-  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+  <div th:insert="~{footer :: footer}" class="footer"></div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-<div th:insert="~{footer :: footer}" class="footer"></div>
 </body>
 </html>
