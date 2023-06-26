@@ -133,7 +133,7 @@
                         <tbody>
                         <tr class="table-item" th:each="occup : ${ocuptions}">
                             <th scope="row" th:text="${occup.getDate()}"></th>
-                            <td th:text="${occup.getArrivalTime()}"></td>
+                            <td th:text="${occup.getArrivalTimeSeconds()}"></td>
                             <td th:text="${occup.getDepartureTimeSeconds()}"></td>
                             <td th:text="${occup.workload}"></td>
                         </tr>

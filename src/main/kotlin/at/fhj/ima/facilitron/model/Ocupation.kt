@@ -33,7 +33,7 @@ class Ocupation (
         return arrivalTime.toLocalDate()
     }
 
-    fun getArrivalTime(): LocalTime {
+    fun getArrivalTimeSeconds(): LocalTime {
         return arrivalTime.toLocalTime().truncatedTo(ChronoUnit.SECONDS)
     }
 
