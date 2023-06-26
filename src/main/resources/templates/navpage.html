@@ -14,21 +14,30 @@
 <div class="content-wrapper">
   <div th:insert="~{header :: header}" class="header"></div>
   <div class="container-md px-3 py-4 content">
-    <div class="m-5">
-      <div class="row justify-content-md-center" style="padding: 15% 10%;">
-        <div class="col-md-6 text-center my-auto p-2">
-          <a href="/user_overview" class="btn btn-primary fac-btn-dark-blue btn-lg" style="font-size: 2rem">Employees</a>
-        </div>
-        <div class="col-md-6 text-center my-auto p-2">
-          <a href="/ticket_overview" class="btn btn-primary fac-btn-dark-blue btn-lg" style="font-size: 2rem">Support</a>
-        </div>
-        <div class="col-md-6 text-center my-auto p-2">
-          <a href="/user_details" class="btn btn-primary fac-btn-dark-blue btn-lg" style="font-size: 2rem">My Profile</a>
-        </div>
-        <div class="col-md-6 text-center my-auto p-2">
-          <form action="/auth/logout" method="post">
-            <button type="submit" class="btn btn-primary fac-btn-dark-blue btn-lg" style="font-size: 2rem">Logout</button>
-          </form>
+    <div class="navigation-title-block">
+      <div class="mx-auto mb-4 pt-4 text-center">
+        <h1 class="navigation-headline">Facilitron</h1>
+      </div>
+      <div class="mx-auto pb-5 text-center">
+        <img src="/public/images/Facilitron.svg" alt="Facilitron" class="navigation-logo"/>
+      </div>
+
+      <div class="pb-5"> <!--class="m-5"-->
+        <div class="row justify-content-md-center navigation-button-container py-3 m-auto" style="padding: 10%"> <!--style="padding: 15% 10%;"-->
+          <div class="col-md-6 text-center my-auto p-2">
+            <a href="/user_overview" class="btn btn-primary fac-btn-dark-blue btn-lg" style="font-size: 2rem">Employees</a>
+          </div>
+          <div class="col-md-6 text-center my-auto p-2">
+            <a href="/ticket_overview" class="btn btn-primary fac-btn-dark-blue btn-lg" style="font-size: 2rem">Support</a>
+          </div>
+          <div class="col-md-6 text-center my-auto p-2">
+            <a href="/user_details" class="btn btn-primary fac-btn-dark-blue btn-lg" style="font-size: 2rem">My Profile</a>
+          </div>
+          <div class="col-md-6 text-center my-auto p-2">
+            <form action="/auth/logout" method="post">
+              <button type="submit" class="btn btn-primary fac-btn-dark-blue btn-lg" style="font-size: 2rem">Logout</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>

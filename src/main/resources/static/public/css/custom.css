@@ -203,3 +203,23 @@ a.header-dark:hover, a.footer-dark:hover, a.header-dark:focus, a.footer-dark:foc
     box-shadow: 0 5px 2px -2px rgba(0, 0, 0, 0.4);
     border: #e53935;
 }
+.navigation-headline{
+    font-size: 3rem;
+    letter-spacing: 0.2em;
+    color:white;
+}
+.navigation-logo{
+    width: 50vw;
+    max-width: 300px;
+}
+.navigation-title-block{
+    /* background: linear-gradient(rgba(66, 66, 66, 0.2), rgba(66, 66, 66, 0.4)); */
+    border-radius: 1.5rem;
+
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4),rgba(0, 0, 0, 0.8)), url("/public/images/Factory-Background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.navigation-button-container{
+    background: linear-gradient(to right, rgba(77, 208, 225, 0.65), rgba(63, 81, 181, 0.65));
+}
