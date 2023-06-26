@@ -22,11 +22,20 @@ class TicketCommentController(
     @PostMapping(DefaultURL.TICKET_COMMENT_URL)
     fun addTicketComment(
         model: Model,
-        @RequestParam comment: String,
+        @RequestParam comment: String? = null,
         @RequestParam ticketId: Int,
         req : HttpServletRequest
         ): String {
         DefaultClaim.claimSet.forEach { model.addAttribute(it, req.getAttribute(it))  }
+
+        if (comment.isNullOrEmpty()) {
+            errorOccurred("Comment couldn't be empty!",ticketId)
+        }
+
+        if (comment!!.length > 125) {
+            errorOccurred("Comment maximal length is 125!",ticketId)
+        }
+
         val employeeId = req.getAttribute("id").toString().toInt()
         val employee = employeeService.getEmployeeById(employeeId)
 
@@ -40,8 +49,13 @@ class TicketCommentController(
             return "redirect:/ticket_details?id=${ticketId}"
         }
 
-        val ticketComment = TicketComment(comment = comment, commenter = employee, ticket = ticket)
+        val ticketComment = TicketComment(comment = comment!!, commenter = employee, ticket = ticket)
         ticketCommentService.addTicketComment(ticketComment)
         return "redirect:/ticket_details?id=${ticketId}"
+    }
+
+    fun errorOccurred(location:String, id:Int):String{
+        println("location --> $location")
+        return "redirect:/ticket_details?id=${id}"
     }
 }

@@ -164,6 +164,10 @@ class EmployeeController (
             return errorOccurred("type checking failed, ${e.message}")
         }
 
+        if (firstName!!.length > 40 || secondName!!.length > 40 || password!!.length > 40) {
+            return errorOccurred("length checking failed, firstname, lastname or password is longer than 40 Characters")
+        }
+
         val em:Employee
         val oldEm:Employee
         val secRoles = roleService.getAllRoles()
