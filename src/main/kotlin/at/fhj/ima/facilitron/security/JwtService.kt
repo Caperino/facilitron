@@ -61,7 +61,7 @@ class JwtService {
      * JWT ID used for possible extension
      * @param token JWT used
      * @author TK Inc.
-     * @return current token iteration [0 - 1]
+     * @return current token iteration [0 - 1.jpg]
      */
     private fun extractId(token:String):String{
         return extractClaim(token, Claims::getId)
@@ -127,7 +127,7 @@ class JwtService {
      * @return a new valid token
      */
     fun extendToken(token:String):String{
-        return generateToken(extractUsermail(token), extractPersonalDetails(token), "1")
+        return generateToken(extractUsermail(token), extractPersonalDetails(token), "1.jpg")
     }
 
     /**

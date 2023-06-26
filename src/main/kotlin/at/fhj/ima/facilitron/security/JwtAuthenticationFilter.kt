@@ -55,7 +55,7 @@ class JwtAuthenticationFilter(
         } else {
             println("no authentication token found")
 
-            response.sendRedirect(DefaultURL.LOGIN_PAGE_URL)
+            response.sendRedirect(DefaultURL.PUBLIC_LANDING_URL + "#Login")
             return
         }
 
@@ -64,7 +64,7 @@ class JwtAuthenticationFilter(
             println("invalid token format")
 
             response.addCookie(internalCookieService.deleteAuthCookie())
-            response.sendRedirect(DefaultURL.LOGIN_PAGE_URL)
+            response.sendRedirect(DefaultURL.PUBLIC_LANDING_URL + "#Login")
             return
         }
 
@@ -87,7 +87,7 @@ class JwtAuthenticationFilter(
             }catch(e : Exception){
                 println("token fully expired")
                 response.addCookie(internalCookieService.deleteAuthCookie())
-                response.sendRedirect(DefaultURL.LOGIN_PAGE_URL)
+                response.sendRedirect(DefaultURL.PUBLIC_LANDING_URL + "#Login")
                 return
             }
 
@@ -109,15 +109,14 @@ class JwtAuthenticationFilter(
                     println("----- EXCEPTION FILTER END -----")
 
                     response.addCookie(internalCookieService.deleteAuthCookie())
-                    response.sendRedirect(DefaultURL.LOGIN_PAGE_URL)
+                    response.sendRedirect(DefaultURL.PUBLIC_LANDING_URL + "#Login")
                     return
                 }
             } else if (!jwtService.allowTokenExtension(token = jwt)){
                 response.addCookie(internalCookieService.deleteAuthCookie())
-                response.sendRedirect(DefaultURL.LOGIN_PAGE_URL)
+                response.sendRedirect(DefaultURL.PUBLIC_LANDING_URL + "#Login")
                 return
-            }
-            else
+            } else
             {
                 println("token subject to extension")
                 val newAuthToken = jwtService.extendToken(token = jwt)
@@ -141,7 +140,7 @@ class JwtAuthenticationFilter(
                     println("----- - EXCEPTION FILTER - -----")
                     println("invalid token")
                     println("----- EXCEPTION FILTER END -----")
-                    response.sendRedirect(DefaultURL.LOGIN_PAGE_URL)
+                    response.sendRedirect(DefaultURL.PUBLIC_LANDING_URL + "#Login")
                     return
                 }
             }

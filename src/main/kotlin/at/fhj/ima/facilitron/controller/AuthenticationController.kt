@@ -2,6 +2,8 @@ package at.fhj.ima.facilitron.controller
 
 import at.fhj.ima.facilitron.model.*
 import at.fhj.ima.facilitron.security.*
+import at.fhj.ima.facilitron.service.StringToDate
+import at.fhj.ima.facilitron.service.StringToGender
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.beans.factory.annotation.Autowired
@@ -38,15 +40,15 @@ class AuthenticationController(
             // TODO use response message in page (SEE BELOW)
             // authResponse.exception.message
 
-            resp.status = 401
-            return DefaultView.LOGIN_VIEW
+            resp.sendRedirect(DefaultURL.PUBLIC_LANDING_URL + "#Login")
+            return DefaultView.REDIRECTOR
         }
 
         val authCookie = internalCookieService.generateAuthCookie(authResponse.token)
 
         // add authentication cookie
         resp.addCookie(authCookie)
-        resp.sendRedirect(DefaultURL.POST_LOGIN_URL)
+        resp.sendRedirect(DefaultURL.NAVPAGE_URL)
 
         // ----- Logging -----
         println("successful authentication, redirect set")
@@ -55,20 +57,20 @@ class AuthenticationController(
         return DefaultView.REDIRECTOR
     }
 
-    @PostMapping(DefaultURL.REGISTER_PAGE_URL)
+    /*@PostMapping(DefaultURL.REGISTER_PAGE_URL)
     fun registerHandler(
         req: HttpServletRequest,
         resp: HttpServletResponse,
-        model:Model,
+        model: Model,
         @RequestParam firstname:String?,
         @RequestParam secondname:String?,
         @RequestParam mail:String?,
         @RequestParam password:String?,
         @RequestParam phone:String?,
-        @RequestParam gender:Gender?,
-        @RequestParam birthday: LocalDate?
+        @RequestParam gender:String?,
+        @RequestParam birthday: String?
     ): String {
-        val unsafeRegisterRequest = UnsafeRegisterRequest(firstname, secondname, mail, password, phone, gender, birthday)
+        val unsafeRegisterRequest = UnsafeRegisterRequest(firstname, secondname, mail, password, phone, StringToGender().convert(gender?: "DIV"), StringToDate().convert(birthday?: "1.jpg.1.jpg.1970"))
 
         if (!unsafeRegisterRequest.evaluateState()){
             model.addAttribute("error", RegisterResponse(exception = SecurityWarning.MISSINGVALUES))
@@ -78,7 +80,7 @@ class AuthenticationController(
             println("ERROR REGISTERING - incomplete parameter list")
             // ----- /Logging -----
 
-            return DefaultView.REGISTER_VIEW
+            return "forward:"+DefaultURL.USER_CREATE
         }
 
         val regResponse = service.register(RegisterRequest(
@@ -99,16 +101,16 @@ class AuthenticationController(
             println("ERROR REGISTERING - leading back to register page")
             // ----- /Logging -----
 
-            return DefaultView.REGISTER_VIEW
+            return "forward:"+DefaultURL.USER_CREATE
         } else {
             // ----- Logging -----
             println("successful registering, redirect set")
             // ----- /Logging -----
 
-            resp.sendRedirect(DefaultURL.POST_REGISTER_URL)
+            resp.sendRedirect(DefaultURL.USER_URL)
         }
         return DefaultView.REDIRECTOR
-    }
+    }*/
 
     @PostMapping(DefaultURL.LOGOUT_PAGE_URL)
     fun logoutHandler(
@@ -134,7 +136,7 @@ class AuthenticationController(
      * @param role which role should be assigned
      * @author TK Inc.
      */
-    @PostMapping("/auth/addrole")
+    /*@PostMapping("/auth/addrole")
     fun addRole(
         @RequestParam mail:String,
         @RequestParam role:String
@@ -142,6 +144,6 @@ class AuthenticationController(
         // TODO exception handling
         service.updateRoleAssignments(mail = mail, role = role)
         return ResponseEntity.ok("worked!")
-    }
+    }*/
 
 }

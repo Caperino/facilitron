@@ -28,7 +28,7 @@ class UnsafeRegisterRequest(
 ) : UnsafeData {
 
     override fun evaluateState():Boolean{
-        return (firstname != null && secondname != null && mail != null && password != null)
+        return (firstname != null && secondname != null && mail != null && password != null && gender != null && birthday != null)
     }
 
 }

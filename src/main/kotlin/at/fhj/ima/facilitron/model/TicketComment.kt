@@ -1,7 +1,9 @@
 package at.fhj.ima.facilitron.model
 
 import jakarta.persistence.*
-import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.temporal.ChronoUnit
 
 /**
  * Base Class for all ticket-comments
@@ -10,6 +12,7 @@ import java.time.LocalDate
  * @param comment is the actual comment text
  * @param commenter is the employee who wrote the comment
  * @param postedTime is the time the comment was posted
+ * @param ticket is the link to the ticket
  */
 @Entity
 class TicketComment (
@@ -18,5 +21,12 @@ class TicketComment (
     val comment:String,
     @ManyToOne
     val commenter:Employee,
-    val postedTime:LocalDate = LocalDate.now()
-)
+    val postedTime: LocalDateTime = LocalDateTime.now(),
+    @ManyToOne
+    val ticket:Ticket
+) {
+    fun getpostedTimeSeconds(): LocalTime? {
+        return postedTime?.toLocalTime()?.truncatedTo(ChronoUnit.SECONDS)
+    }
+}
+
