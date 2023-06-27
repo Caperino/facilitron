@@ -1,9 +1,9 @@
 # facilitron
 **Project Member:**
-- [Timo Kappel (TK Inc. aka Smoking Skull)](https://github.com/Caperino)
-- [Stefan Jöbstl (Juan aka The Train)](https://github.com/stefanjb-it)
-- [Huba Csicsics (Meatman aka Human Socerie)](https://github.com/einfachhuba)
-- [Alexander Wolf (UI Wizard aka Ungünstig)](https://github.com/AlexW64)
+- [Timo Kappel (TK Inc.)](https://github.com/Caperino)
+- [Stefan Jöbstl (Mr. Controller)](https://github.com/stefanjb-it)
+- [Huba Csicsics (Thymian-Hendler)](https://github.com/einfachhuba)
+- [Alexander Wolf (Merch Wizard)](https://github.com/AlexW64)
 
 # Setup
 
