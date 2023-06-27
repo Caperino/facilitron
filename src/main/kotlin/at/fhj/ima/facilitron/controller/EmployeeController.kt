@@ -222,7 +222,10 @@ class EmployeeController (
                         file = fileService.createFile(profilePicture)
                     }
 
-
+                    if (oldEm.roles.map { it.name }.contains("ADMIN")){
+                        (secRoles as MutableList).add(roleService.getRolesByName(listOf("ADMIN")).filter { it.name == "ADMIN" }[0])
+                        (roles as MutableList).add("ADMIN")
+                    }
 
                     em = Employee(
                         id = id,
