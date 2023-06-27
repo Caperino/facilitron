@@ -112,9 +112,6 @@ class FacilitronApplication(private val passwordEncoder: PasswordEncoder) {
 		ticketCommentService.addTicketComment(TicketComment(comment = "Welcome to the Tech Support.\n" +
 				"We are investigating this issue. Please be patient.", ticket = ticketRepository.findById(1).get(),
 			commenter = employeeService.getEmployeeById(3)))
-		ticketCommentService.addTicketComment(TicketComment(comment = "Hello, thank you for your response.\n" +
-				"Let me know if you need any other Information.", ticket = ticketRepository.findById(1).get(),
-			commenter = employeeService.getEmployeeById(5)))
 		ticketCommentService.addTicketComment(TicketComment(comment = "Welcome to the Tech Support.\n" +
 				"We are investigating this issue. Please be patient.", ticket = ticketRepository.findById(2).get(),
 			commenter = employeeService.getEmployeeById(3)))
@@ -127,9 +124,6 @@ class FacilitronApplication(private val passwordEncoder: PasswordEncoder) {
 		ticketCommentService.addTicketComment(TicketComment(comment = "Welcome to the Tech Support.\n" +
 				"We are investigating this issue. Please be patient.", ticket = ticketRepository.findById(5).get(),
 			commenter = employeeService.getEmployeeById(3)))
-		ticketCommentService.addTicketComment(TicketComment(comment = "Hello, thank you for your response.\n" +
-				"Let me know if you need any other Information.", ticket = ticketRepository.findById(5).get(),
-			commenter = employeeService.getEmployeeById(4)))
 
 	}
 
