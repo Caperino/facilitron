@@ -22,6 +22,7 @@ function togglePWChange(){
 function checkFileUpload(sender){
     if (sender.files[0].size >= 1024000){
         sender.value = null;
+        alert("File too big!")
     }
 }
 

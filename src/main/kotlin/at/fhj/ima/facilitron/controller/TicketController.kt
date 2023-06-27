@@ -37,11 +37,11 @@ class TicketController (
                 model.addAttribute("succ", "Ticket has been closed.")
             }
         }
-        return if (my != null){
+        return if (!my.isNullOrEmpty()){
             val emp = employeeService.getEmployeeById(req.getAttribute("id").toString().toInt())
             model.addAttribute("tickets",ticketService.searchTicketsByEmployee(emp));
             "ticket_overview"
-        } else if (q != null) {
+        } else if (!q.isNullOrEmpty()) {
             val cats = categoryService.getCategoriesByName(q)
             model.addAttribute("tickets",ticketService.searchTickets(cats, q))
             "ticket_overview"
